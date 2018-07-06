@@ -1,0 +1,10 @@
+<?php
+$page_name = "";
+include 'header.php';
+?>
+<div class="jumbotron">
+	
+</div>
+<?php
+include 'footer.php';
+?>

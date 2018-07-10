@@ -61,7 +61,7 @@ if (isset($_GET['cs'])) {
 	    <hr>
 	    <div class="row">
 	        <?php
-	        $previous = "SELECT * FROM email WHERE type='$emtype' AND ID<$emID AND catID=$emcat";
+	        $previous = "SELECT * FROM email WHERE type='$emtype' AND ID<$emID AND catID=$emcat AND status=1";
 	        $query1 = mysqli_query($conn, $previous);
 	        $numrow_prev = mysqli_num_rows($query1);
 	        if ($numrow_prev >0) 
@@ -73,7 +73,7 @@ if (isset($_GET['cs'])) {
 	           $prev = 0; 
 	        }
 	        
-	        $next = "SELECT * FROM email WHERE type='$emtype' AND ID>$emID AND catID=$emcat";
+	        $next = "SELECT * FROM email WHERE type='$emtype' AND ID>$emID AND catID=$emcat AND status=1";
 	        $query2 = mysqli_query($conn, $next);
 	        $numrow_next = mysqli_num_rows($query2);
 	        if ($numrow_next > 0) 
@@ -499,12 +499,26 @@ if (isset($_GET['cs'])) {
                     </form>
                     <?php
                     if (isset($_POST['addem'])) {
-                       $name = mysqli_real_escape_string($conn,$_POST['tempname']);
-                       $type = mysqli_real_escape_string($conn,$_POST['emtype']);
-                       $group = mysqli_real_escape_string($conn,$_POST['catid']);
-                       $id = rand(0,getrandmax());
+                        $name = mysqli_real_escape_string($conn,$_POST['tempname']);
+                        $type = mysqli_real_escape_string($conn,$_POST['emtype']);
+                        $group = mysqli_real_escape_string($conn,$_POST['catid']);
+                        //check DB
+                        $sql1 = "SELECT MAX(ID) FROM email WHERE catID='$group' AND type='$type'";
+                        $sql1init = mysqli_query($conn, $sql1);
+                        $numrows = mysqli_num_rows($sql1init);
+                        if ($numrows > 0) {
+                           $rows=mysqli_fetch_assoc($sql1init);
+                           $dbid= implode(" ",$rows);
+                           $sql2="SELECT * FROM email WHERE ID=$dbid";
+                           $sql2init = mysqli_query($conn, $sql2);
+                           $numrows2 = mysqli_num_rows($sql2init);
+                           if ($numrows2 > 0) {
+                               $rows2=mysqli_fetch_assoc($sql2init);
+                               $emid= $rows2['emID']+1;
+                           }
+                        }
                        if(!empty($name)||!empty($type)||!empty($group)||!empty($id)){
-                           $add = "INSERT INTO email (type, name, catID, emID, status)  VALUES ('$type', '$name', '$group', '$id', '0')";
+                           $add = "INSERT INTO email (type, name, catID, emID, status)  VALUES ('$type', '$name', '$group', '$emid', '0')";
                            $sentdat = mysqli_query($conn, $add);
                            
                            if ($sentdat) {

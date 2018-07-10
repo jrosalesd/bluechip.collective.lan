@@ -1,13 +1,11 @@
 <div class="row">
 	<div class="col-md-3">
 		<h2>
-			Broken Agreement Email
+			Broken Settlement Agreement
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>When a customer misses a payment arrangement and the agent wants to follow up. 
-				<br>
-				<b>Template: </b>Spotloan email with logo
+				<b>Generate: </b>Use this template when the borrower has missed too many payments from its settlement arrangement. 
 				<br>
 				<b>Action: </b>Manual - RM/FR to edit and send
 			</h5>
@@ -18,12 +16,8 @@
 		if($_GET['set'] == "on"){
 			//variables to complete template
 			$brwName = trim($_GET['brwName']);
-			$arrangementDate = date_format(date_create($_GET['misspmtdate']),"F jS, Y");
-			
-			//next payment
-			$pmtnote = htmlspecialchars($_GET['pmtnote']);
+			$outBal =  htmlspecialchars($_GET['outbal']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
-			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -40,7 +34,7 @@
 				<strong>
 					Subject:
 				</strong> 
-				A quick follow up
+				Voided Settlement
 			</p>
 			<br>
 			
@@ -51,29 +45,12 @@
 		    
 			
 			<p>
-				When we last connected, you promised me that you would make a payment on <?php echo $arrangementDate;?>. I see that this payment wasn’t made. I’m willing to work with you, but I need your cooperation.
+				This is a notification that the settlement you agreed to is now null and void because you failed to make the payments as discussed. You currently owe $<?php echo number_format($outBal,2,".",",");?>. Please keep in mind that your balance changes daily to reflect the interest accrued.
 			</p>
 			<p>
-				Please give me a call at 1(888) 681-6811  or reply to this email as soon as possible.
+				As a friendly reminder, your next payment is due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
 			</p>
-			<?php
-            if ($pmtnote == 'on') {
-                ?>
-                <p>
-                    As a friendly reminder, your next schedule payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
-                </p>
-                <?php
-            }
-            ?>
-            <?php
-            if ($_GET['additional'] == 'on') {
-                ?>
-                <p>
-                    <?php echo nl2br(htmlspecialchars($_GET['additionalnote']))?>
-                </p>
-                <?php
-            }
-            ?>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -101,34 +78,16 @@
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="misspmtdate">
-								Missed Payment Date:
+							<label for="outbal">
+								Outstanding Balance:
 							</label>
-							<input type="date" class="form-control" name="misspmtdate" required>
+							<input type="number" class="form-control" name="outbal" step="0.01" required>
 						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<div class="checkbox">
-							<label for="pmtnote">
-							    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"/><b>Next Payment Notice</b>
+						<div class="form-group">
+							<label for="nextpmtdate">
+								Next Payment Date:
 							</label>
-						</div>
-						<div class="checkbox">
-							<label for="additional">
-								<input type="checkbox"  id="additional" name="additional" onclick="addnote()"/><b>Other Notes</b>
-							</label>
-						</div>
-					</div>
-					<div class="col-md-9">
-						<div class="row">
-							<div class="col-md-6">
-								<g id="pmtnotebody"></g>
-							</div>
-							<div class="col-md-6">
-								<g id="notefield"></g>
-							</div>
+							<input type="date" class="form-control" name="nextpmtdate" required>
 						</div>
 					</div>
 				</div>

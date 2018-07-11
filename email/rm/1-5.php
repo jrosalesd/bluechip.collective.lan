@@ -21,6 +21,9 @@
 			$payoffamt = $_GET['payoffam'];
 			$nextpmtdate = date_create($_GET['nextpmtdate']);
 			$nextpmtamt = $_GET['nextpmtamt'];
+			//pending pmt var
+			$pmtAmt = htmlspecialchars($_GET['pennextpmtamt']);
+			$pmtdate = date_create($_GET['datepending']);
 			
 			?>
 			<div>

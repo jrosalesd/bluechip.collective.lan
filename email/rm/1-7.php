@@ -74,7 +74,7 @@
 				</p>
 				
 				<p>
-		      		<b>4) Change your payment size.</b> Another option we have is what is called a restructure. This allows you to miss your next payment on <?php echo date_format($pmtdate,"l, F jS");?> but increases your payment amount. Meaning that you would have <?php echo $pmtnum." ".$pmtfreq;?> payments of  $<?php echo number_format($resamt,2,".",","); ?> starting on <?php echo date_format($ressdate,"l, F jS"); ?>, and ending on  <?php echo date_format($ressdateEnd,"l, F jS, Y"); ?>.
+		      		<b>4) Change your payment size.</b> <?php echo restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ressdateEnd);?>
 		      	<p>
 		    </div>
 		

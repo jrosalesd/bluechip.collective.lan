@@ -9,6 +9,16 @@ function intWeeks($s, $e){
 	}
 	return $weeks;
 }
+function restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ressdateEnd){
+    $pmtdate = date_format($pmtdate,"l, F jS");
+    $resamt = number_format($resamt,2,".",",");
+    $ressdate = date_format($ressdate,"l, F jS");
+    $ressdateEnd = date_format($ressdateEnd,"l, F jS, Y");
+    
+    $offer = "Another option we have is what is called a restructure. This allows you to miss your next payment on $pmtdate but increases your payment amount. Meanding that you would have $pmtnum $pmtfreq payments of  $$resamt startign on $ressdate, and ending on  $ressdateEnd.";
+    
+    return $offer;
+}
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){
     $resStart = strtotime($resStart);

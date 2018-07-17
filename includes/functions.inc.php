@@ -5,7 +5,7 @@ function intWeeks($s, $e){
 	if ($days <= 15) {
 		$weeks = "Keep in mind this would add an additional $weeknum weeks of interest at the end of your loan. However, This is still a much cheaper option than skipping your payment altogether.";
 	} else if ($days > 15) {
-		$weeks = "If you decide to defer this payment, keep in mind it could potentially add several extra payments to the life of your loan until made in full.";
+		$weeks = "If you decide to defer this payment, keep in mind that it could potentially add several extra payments and extend the life of your loa until made in full.";
 	}
 	return $weeks;
 }

@@ -20,11 +20,14 @@
 			$brwName = htmlspecialchars(trim($_GET['brwName']));
 			$pmtAmt = $_GET['pmtAmt'];
 			$pmtdate = date_create($_GET['pmtdate']);
+			$nextpmtdate = date_create($_GET['nextpmtdate']);
 			$pmtnum = $_GET['pmtnum'];
 			$pmtfreq = $_GET['pmtfreq'];
 			$resamt = $_GET['resamt'];
 			$ressdate = date_create($_GET['ressdate']);
-			
+			$ressdateEnd = date_create($_GET['ressdateEnd']);
+			$start = strtotime($_GET['pmtdate'])/$one_day_sec;
+			$end = strtotime($_GET['nextpmtdate'])/$one_day_sec;
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -52,14 +55,20 @@
 			</p>
 			<p>Options:<p>
 		    <div style="margin-left: 75px;">
-				<p><b>1) Pay a smaller amount</b> on <?php echo date_format($pmtdate,"l, F jS"); ?>, when your payment is due. Most customers try to make half the payment amount, That would be $<?php echo number_format(($pmtAmt/2),2,".",","); ?>.</p>
-				
-				<p><b>2) Make up your payment at a later time.</b> . Every day you accrue interest. The longer you wait the more expensive this option becomes. I’m here to work with you. Call me at 1(888) 681-6811 to set this up.</p>
+		    	<p>
+					<b>1) Pay a smaller amount</b> on <?php echo date_format($pmtdate,"l, F jS"); ?>, when your payment is due. Most customers try to make half the payment amount, That would be $<?php echo number_format(($pmtAmt/2),2,".",","); ?>.
+				</p>
 				
 				<p>
-		      		<b>3) Change your payment size.</b> If you want to miss this next payment, but don’t want your interest to get away from you, we can increase your payment amount to keep you on track. This usually costs about $10 more each payment.
-		      		<br>
-		      		We could set you up with <?php echo $pmtnum." ".$pmtfreq;?> payments of  <?php echo number_format($resamt,2,".",","); ?> starting on <?php echo date_format($ressdate,"l, F jS"); ?>.
+		    		<b>2) Double up on your next payment:</b> If you are not able to make a partial payment, a double payment of $<?php echo number_format(($pmtAmt*2),2,".",","); ?> on <?php echo date_format($nextpmtdate,"l, F jS");?> would also be an option. <?php echo intWeeks($start, $end);?>
+		    	</p>
+				
+				<p>
+					<b>3) Make up your payment at a later time.</b> . Every day you accrue interest. The longer you wait the more expensive this option becomes. I’m here to work with you. Call me at 1(888) 681-6811 to set this up.
+				</p>
+				
+				<p>
+		      		<b>4) Change your payment size.</b> Another option we have is what is called a restructure. This allows you to miss your next payment on <?php echo date_format($pmtdate,"l, F jS");?> but increases your payment amount. Meanding that you would have <?php echo $pmtnum." ".$pmtfreq;?> payments of  $<?php echo number_format($resamt,2,".",","); ?> startign on <?php echo date_format($ressdate,"l, F jS"); ?>, and ending on  <?php echo date_format($ressdateEnd,"l, F jS, Y"); ?>.
 		      	<p>
 		    </div>
 		
@@ -99,6 +108,12 @@
 							<input class="form-control" type="date" name="pmtdate" required/>
 						</div>
 						<div class="form-group">
+							<label for="nextpmtdate">
+							Following Payment Date:
+							</label>
+							<input class="form-control" type="date" name="nextpmtdate" required/>
+						</div>
+						<div class="form-group">
 							<label for="pmtAmt">
 							Regular Payment Amount:
 							</label>
@@ -117,7 +132,7 @@
 							</label>
 							<select class="form-control" name="pmtfreq" required>
 								<option value="Bi-Weekly">Bi-Weekly</option>
-								<option value="Semi-Montly">Semi-Monthly</option>
+								<option value="Semi-Monthly">Semi-Monthly</option>
 								<option value="Monthly">Monthly</option>
 							</select>
 						</div>
@@ -129,9 +144,15 @@
 						</div>
 						<div class="form-group">
 							<label for="ressdate">
-							Restructure Payment Date:
+							Restructure Start Date:
 							</label>
 							<input class="form-control" type="date" name="ressdate" required/>
+						</div>
+						<div class="form-group">
+							<label for="ressdate">
+							Restructure End Date:
+							</label>
+							<input class="form-control" type="date" name="ressdateEnd" required/>
 						</div>
 					</div>
 				</div>

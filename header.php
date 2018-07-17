@@ -11,6 +11,10 @@ $userstatus = $_SESSION['status'];
 $seclevel = $_SESSION['usersec'];
 $pass_status = $_SESSION['pass_status'];
 
+//Files to include
+include "includes/functions.inc.php"; 
+
+
 if(!isset($userid) && !isset($username)){
    header("Location: login.php?login=Session Timeout, Please Log in!");
 }

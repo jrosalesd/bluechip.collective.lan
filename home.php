@@ -255,33 +255,11 @@ include 'header.php';
                                     $cur_bal = $_GET['CurrentBalance'];
                                     $pri_bal = $_GET['CurrentPrincipal'];
                                     $rate = $_GET['apr']/100;
-                                    
                                     //next Business day
-                                    $currentYear = date('Y');
-                                    $tmpDate = date('m/d/Y');
-                                    $holidays = [ 
-                                        date("m/d/Y",mktime(0, 0, 0, 1, 1,$currentYear)), 
-                                        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 1, 1, $currentYear))), 
-                                        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 2, 1, $currentYear))), 
-                                        date("m/d/Y",strtotime("last Monday of May $currentYear")), 
-                                        date("m/d/Y",mktime(0, 0, 0, 7, 4, $currentYear)), 
-                                        date("m/d/Y",strtotime("first Monday of September $currentYear")), 
-                                        date("m/d/Y",strtotime("2 Mondays", mktime(0, 0, 0, 10, 1, $currentYear))), 
-                                        date("m/d/Y",mktime(0, 0, 0, 11, 11, $currentYear)), 
-                                        date("m/d/Y",strtotime("4 Thursdays", mktime(0, 0, 0, 11, 1, $currentYear))), 
-                                        date("m/d/Y",mktime(0, 0, 0, 12, 25, $currentYear))
-                                    ];
-                                    
-                                    $i = 1;
-                                    $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
-                                    
-                                    while (in_array($nextBusinessDay, $holidays)) {
-                                        $i++;
-                                        $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
-                                    }
-                                    
-                                    $d1 = strtotime($tmpDate)/86400;
-                                    $d2 = strtotime($nextBusinessDay)/86400;
+                                    $startdate = date("m/d/y");
+                                    $end = nextBD($startdate);
+                                    $d1 = strtotime($startdate)/86400;
+                                    $d2 = strtotime($end)/86400;
                                     $date_diff = ($d2 - $d1);
                                     
                                     $brw_pay = $cur_bal-($date_diff*(($pri_bal * $rate)/365));

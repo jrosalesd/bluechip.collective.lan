@@ -49,29 +49,9 @@
 				You’re all set to make a payment of $<?php echo number_format($pmtAmt,2,".",",");?> from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?> on <?php echo date_format($pmtdate,"l, F jS");?>.
 			</p>
 			<?php
-			if ($pmtnote == 'on') {
-				?>
-				<p>
-					As a friendly reminder, your next scheduled payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
-				</p>
-				<?php
-			}
-			if ($state_status == "No"){
-				?>
-				<p>
-					<?php echo $state_note;?>
-				</p>
-				<?php
-			}
-			?>
-			<?php
-			if ($_GET['additional'] == 'on') {
-				?>
-				<p>
-					<?php echo nl2br(htmlspecialchars($_GET['additionalnote']))?>
-				</p>
-				<?php
-			}
+			echo NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
+			echo comment($_GET['additionalnote'], $_GET['additional']);
+			echo checkState($_GET['state']);
 			?>
 			<p>
 				Let me know if anything changes so we can keep you on track.

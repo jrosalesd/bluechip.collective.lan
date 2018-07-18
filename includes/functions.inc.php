@@ -9,6 +9,7 @@ function intWeeks($s, $e){
 	}
 	return $weeks;
 }
+
 function restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ressdateEnd){
     $pmtdate = date_format($pmtdate,"l, F jS");
     $resamt = number_format($resamt,2,".",",");
@@ -19,6 +20,45 @@ function restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ress
     
     return $offer;
 }
+
+function NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote){
+    if ($pmtnote = "on") {
+        ?>
+        <p>
+            As a friendly reminder, your next schedule payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
+        </p>
+        <?php
+    }
+}
+
+function comment($comment, $s){
+    if ($s == "on") {
+       ?>
+        <p>
+            <?php echo nl2br(htmlspecialchars($comment))?>
+        </p>
+        <?php
+    }
+}
+
+function checkState($id){
+    if (!empty($id)) {
+        include 'dbh.inc.php';
+        $st_check = "SELECT * FROM servicing_states WHERE id='$id'";
+        $state_check = mysqli_query($conn, $st_check);
+        $rows_check = mysqli_num_rows($state_check);
+        if ($rows_check>0) {
+        	$row_check = mysqli_fetch_array($state_check);
+        	$state_status = $row_check['state_status'];
+        	if ($state_status == "No") {
+        		$state_note = "<p>As a friendly reminder; unfortunately, we no longer lend in your state.</p>";
+        	}
+        }
+        
+        return $state_note;
+    }
+}
+
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){
     $resStart = strtotime($resStart);

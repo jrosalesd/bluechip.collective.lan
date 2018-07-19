@@ -55,20 +55,8 @@
                 </p>
             
             <?php
-            if(isset($_GET['pendingclick'])){
-            ?>
-            <p>
-            Keep in mind, this payoff is valid as long as your pending payment from <?php echo date_format($pmtdate,"l, F jS");?>, in the amount of $<?php echo number_format($pmtAmt,2,".",",");?> clears your bank account successfully.
-            </p>
-            <?php
-            }
-            if ($state_status == "No"){
-            ?>
-            <p>
-            <?php echo $state_note;?>
-            </p>
-            <?php
-            }
+            echo pendingpmt($pmtdate, $pmtAmt,$_GET['pendingclick']);
+			echo checkState($_GET['state']);
             ?>
             <br>
             

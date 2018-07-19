@@ -59,6 +59,14 @@ function checkState($id){
     }
 }
 
+function pendingpmt($pmtdate, $pmtAmt,$s){
+    $pmtdate =  date_format($pmtdate,"l, F jS");
+    $pmtAmt = number_format($pmtAmt,2,".",",");
+    if($s){
+        $pending = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
+    }
+}
+
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){
     $resStart = strtotime($resStart);

@@ -1,4 +1,13 @@
 <?php
+function RandomString($lenght) {
+    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-&%)(+=$#@!!#$%&()*+,-./:;<=>?@[\]^_`{}~";
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
 function intWeeks($s, $e){
 	$days = $e - $s;
 	$weeknum = round($days/7);
@@ -9,7 +18,6 @@ function intWeeks($s, $e){
 	}
 	return $weeks;
 }
-
 function restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ressdateEnd){
     $pmtdate = date_format($pmtdate,"l, F jS");
     $resamt = number_format($resamt,2,".",",");
@@ -56,7 +64,37 @@ function checkState($id){
         }
         
         return $state_note;
+        $conn->close();
     }
+}
+
+function statedrop($req = false){
+    include 'dbh.inc.php';
+    $st = "SELECT * FROM servicing_states ORDER BY state_name ASC";
+    $state_q = mysqli_query($conn, $st);
+    $rows = mysqli_num_rows($state_q);
+    ?>
+    <div class="form-group">
+        <label for="state">
+            Borrower's State:
+        </label>
+        <select class="form-control"  name="state" <?php if($req == true){echo "required";}?> >
+            <option value="">Select State</option>
+            <?php
+            if($rows > 0){
+            while($row = mysqli_fetch_array($state_q)){
+            	?>
+            	<option value="<?php echo $row['id']?>" <?php if($_GET['state'] == $row['id']){echo "selected";}?>>
+            	    <?php echo $row['state_abr']." - ".$row['state_name']?>
+            	    </option>
+            	<?php
+            }
+            }
+            ?>
+        </select>
+    </div>
+    <?php
+    $conn->close();
 }
 
 function pendingpmt($pmtdate, $pmtAmt,$s){
@@ -66,6 +104,44 @@ function pendingpmt($pmtdate, $pmtAmt,$s){
         $pending = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
     }
 }
+
+function address($l = false, $loanid =""){
+    $address = "";
+    include 'dbh.inc.php';
+    $dbquery = "SELECT * FROM sp_contact where status=1 and address_type='Mailing Address'";
+    $dbinit = mysqli_query($conn, $dbquery);
+    $dbrow = mysqli_num_rows($dbinit);
+    if($dbrow > 0) {
+        $dbrow = mysqli_fetch_array($dbinit);
+        $ad = $dbrow['address1'];
+        $ad2 = $dbrow['address2'];
+        $city = $dbrow['city'];
+        $state = $dbrow['state'];
+        $zip = $dbrow['zipcode'];
+        if ($l == false) {
+            $address = "
+                <div style='margin-left: 25px;'>
+                    <p>
+                        Spotloan
+                        <br>$ad
+                        <br>$city, $state $zip
+                        <br>Attention to: $loanid
+                    </p>
+                </div>
+            ";
+        }else if ($l == true) {
+            $address = "<b>Spotloan, $ad, $city, $state $zip</b>";
+        }
+    }else {
+        $error = $conn->error();
+        $address = "something went wrong Address cannot be fetched. Error:$error";
+    }
+        
+    $conn->close();
+    echo $address;
+}
+
+
 
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){

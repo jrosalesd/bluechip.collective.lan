@@ -2,7 +2,7 @@
 $id = $_GET['id'];
 $pass_status = 0;
 
-function RandomString($length = 15) {
+function RandomString(15) {
     $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-&%)(+=$#@!!#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
     $charactersLength = strlen($characters);
     $randomString = '';

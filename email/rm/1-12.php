@@ -99,23 +99,9 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
-						<div class="form-group">
-							<label for="state">
-								Borrower's State:
-							</label>
-							<select class="form-control"  name="state" required>
-								<option value="">Select</option>
-								<?php
-								if($rows > 0){
-									while($row = mysqli_fetch_array($state_q)){
-										?>
-										<option value="<?php echo $row['id']?>" <?php if($_GET['state'] == $row['id']){echo "selected";}?>><?php echo $row['state_name']?></option>
-										<?php
-									}
-								}
-								?>
-							</select>
-						</div>
+						<?php
+                        statedrop();
+                        ?>
 					</div>
 					<div id="landform"></div>
 				</div>

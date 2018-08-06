@@ -61,7 +61,7 @@ if (isset($_GET['cs'])) {
 	    <hr>
 	    <div class="row">
 	        <?php
-	        $previous = "SELECT * FROM email WHERE type='$emtype' AND ID<$emID AND catID=$emcat AND status=1";
+	        $previous = "SELECT * FROM email WHERE type='$emtype' AND ID<$emID AND catID=$emcat AND status=1 ORDER BY name ASC";
 	        $query1 = mysqli_query($conn, $previous);
 	        $numrow_prev = mysqli_num_rows($query1);
 	        if ($numrow_prev >0) 
@@ -73,7 +73,7 @@ if (isset($_GET['cs'])) {
 	           $prev = 0; 
 	        }
 	        
-	        $next = "SELECT * FROM email WHERE type='$emtype' AND ID>$emID AND catID=$emcat AND status=1";
+	        $next = "SELECT * FROM email WHERE type='$emtype' AND ID>$emID AND catID=$emcat AND status=1 ORDER BY name ASC";
 	        $query2 = mysqli_query($conn, $next);
 	        $numrow_next = mysqli_num_rows($query2);
 	        if ($numrow_next > 0) 
@@ -259,7 +259,7 @@ if (isset($_GET['cs'])) {
                     <div class="row">
                         <ul class="zest">
                     <?php
-                    $em_menu = "SELECT * FROM email WHERE type='rm' AND catID=1 AND status>0";
+                    $em_menu = "SELECT * FROM email WHERE type='rm' AND catID=1 AND status>0 ORDER BY name ASC";
         		    $db_menu_init = mysqli_query($conn, $em_menu);
         		    $menu_rows = mysqli_num_rows($db_menu_init);
         		    $i = 1;
@@ -297,7 +297,7 @@ if (isset($_GET['cs'])) {
                     <div class="row">
                         <ul class="zest">
                     <?php
-                    $em_menu = "SELECT * FROM email WHERE type='rm' AND catID=2 AND status>0";
+                    $em_menu = "SELECT * FROM email WHERE type='rm' AND catID=2 AND status>0 ORDER BY name ASC";
         		    $db_menu_init = mysqli_query($conn, $em_menu);
         		    $menu_rows = mysqli_num_rows($db_menu_init);
         		    $i = 1;
@@ -335,7 +335,7 @@ if (isset($_GET['cs'])) {
                     <div class="row">
                         <ul class="zest">
                     <?php
-                    $em_menu = "SELECT * FROM email WHERE type='rm' AND catID=3 AND status>0";
+                    $em_menu = "SELECT * FROM email WHERE type='rm' AND catID=3 AND status>0 ORDER BY name ASC";
         		    $db_menu_init = mysqli_query($conn, $em_menu);
         		    $menu_rows = mysqli_num_rows($db_menu_init);
         		    $i = 1;
@@ -396,7 +396,7 @@ if (isset($_GET['cs'])) {
                     <div class="row">
                         <ul class="zest">
                     <?php
-                    $em_menu = "SELECT * FROM email WHERE type='fr' AND status>0";
+                    $em_menu = "SELECT * FROM email WHERE type='fr' AND status>0 ORDER BY name ASC";
         		    $db_menu_init = mysqli_query($conn, $em_menu);
         		    $menu_rows = mysqli_num_rows($db_menu_init);
         		    $i = 1;

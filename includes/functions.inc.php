@@ -18,6 +18,7 @@ function intWeeks($s, $e){
 	}
 	return $weeks;
 }
+
 function restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ressdateEnd){
     $pmtdate = date_format($pmtdate,"l, F jS");
     $resamt = number_format($resamt,2,".",",");
@@ -141,6 +142,31 @@ function address($l = false, $loanid =""){
     echo $address;
 }
 
+function nextBD($start) {
+    $start=strtotime($start);
+    $year = date('Y', $start);
+    $tempDate = date('m/d/Y', $start);
+    $holidays = [ 
+        date("m/d/Y",mktime(0, 0, 0, 1, 1,$currentYear)), 
+        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 1, 1, $currentYear))), 
+        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 2, 1, $currentYear))), 
+        date("m/d/Y",strtotime("last Monday of May $currentYear")), 
+        date("m/d/Y",mktime(0, 0, 0, 7, 4, $currentYear)), 
+        date("m/d/Y",strtotime("first Monday of September $currentYear")), 
+        date("m/d/Y",strtotime("2 Mondays", mktime(0, 0, 0, 10, 1, $currentYear))), 
+        date("m/d/Y",mktime(0, 0, 0, 11, 11, $currentYear)), 
+        date("m/d/Y",strtotime("4 Thursdays", mktime(0, 0, 0, 11, 1, $currentYear))), 
+        date("m/d/Y",mktime(0, 0, 0, 12, 25, $currentYear))
+    ];
+    $i = 1;
+    $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
+    while (in_array($nextBusinessDay, $holidays)) {
+        $i++;
+        $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
+    }
+    
+    return $nextBusinessDay;
+}
 
 
 /*
@@ -171,28 +197,3 @@ function Restructure($resStart, $payments, $amount, $frequecy){
     
 }
 */
-function nextBD($start) {
-    $start=strtotime($start);
-    $year = date('Y', $start);
-    $tempDate = date('m/d/Y', $start);
-    $holidays = [ 
-        date("m/d/Y",mktime(0, 0, 0, 1, 1,$currentYear)), 
-        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 1, 1, $currentYear))), 
-        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 2, 1, $currentYear))), 
-        date("m/d/Y",strtotime("last Monday of May $currentYear")), 
-        date("m/d/Y",mktime(0, 0, 0, 7, 4, $currentYear)), 
-        date("m/d/Y",strtotime("first Monday of September $currentYear")), 
-        date("m/d/Y",strtotime("2 Mondays", mktime(0, 0, 0, 10, 1, $currentYear))), 
-        date("m/d/Y",mktime(0, 0, 0, 11, 11, $currentYear)), 
-        date("m/d/Y",strtotime("4 Thursdays", mktime(0, 0, 0, 11, 1, $currentYear))), 
-        date("m/d/Y",mktime(0, 0, 0, 12, 25, $currentYear))
-    ];
-    $i = 1;
-    $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
-    while (in_array($nextBusinessDay, $holidays)) {
-        $i++;
-        $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
-    }
-    
-    return $nextBusinessDay;
-}

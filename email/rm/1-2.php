@@ -49,7 +49,7 @@
 				You’re all set to make a payment of $<?php echo number_format($pmtAmt,2,".",",");?> from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?> on <?php echo date_format($pmtdate,"l, F jS");?>.
 			</p>
 			<?php
-			echo NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
+			NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
 			echo comment($_GET['additionalnote'], $_GET['additional']);
 			echo checkState($_GET['state']);
 			?>

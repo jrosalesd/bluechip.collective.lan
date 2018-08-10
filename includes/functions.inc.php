@@ -8,6 +8,7 @@ function RandomString($lenght) {
     }
     return $randomString;
 }
+
 function intWeeks($s, $e){
 	$days = $e - $s;
 	$weeknum = round($days/7);
@@ -31,10 +32,10 @@ function restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ress
 }
 
 function NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote){
-    if ($pmtnote = "on") {
+    if ($pmtnote == "on") {
         ?>
         <p>
-            As a friendly reminder, your next schedule payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
+            As a friendly reminder, your next scheduled payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
         </p>
         <?php
     }
@@ -99,11 +100,12 @@ function statedrop($req = false){
 }
 
 function pendingpmt($pmtdate, $pmtAmt,$s){
+    if($s){
     $pmtdate =  date_format($pmtdate,"l, F jS");
     $pmtAmt = number_format($pmtAmt,2,".",",");
-    if($s){
-        $pending = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
+    $pending = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
     }
+    return $pending;
 }
 
 function address($l = false, $loanid =""){
@@ -140,32 +142,6 @@ function address($l = false, $loanid =""){
         
     $conn->close();
     echo $address;
-}
-
-function nextBD($start) {
-    $start=strtotime($start);
-    $year = date('Y', $start);
-    $tempDate = date('m/d/Y', $start);
-    $holidays = [ 
-        date("m/d/Y",mktime(0, 0, 0, 1, 1,$currentYear)), 
-        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 1, 1, $currentYear))), 
-        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 2, 1, $currentYear))), 
-        date("m/d/Y",strtotime("last Monday of May $currentYear")), 
-        date("m/d/Y",mktime(0, 0, 0, 7, 4, $currentYear)), 
-        date("m/d/Y",strtotime("first Monday of September $currentYear")), 
-        date("m/d/Y",strtotime("2 Mondays", mktime(0, 0, 0, 10, 1, $currentYear))), 
-        date("m/d/Y",mktime(0, 0, 0, 11, 11, $currentYear)), 
-        date("m/d/Y",strtotime("4 Thursdays", mktime(0, 0, 0, 11, 1, $currentYear))), 
-        date("m/d/Y",mktime(0, 0, 0, 12, 25, $currentYear))
-    ];
-    $i = 1;
-    $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
-    while (in_array($nextBusinessDay, $holidays)) {
-        $i++;
-        $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
-    }
-    
-    return $nextBusinessDay;
 }
 
 

@@ -1,13 +1,13 @@
 <div class="row">
 	<div class="col-md-3">
 		<h2>
-			Broken Settlement Agreement
+			Broken Settlement Agreement Email
 		</h2>
 		<font color="red">
 			<h5>
 				<b>Generate: </b>Use this template when the borrower has missed too many payments from its settlement arrangement. 
 				<br>
-				<b>Action: </b>Manual - RM/FR to edit and send
+				<b>Action: </b>Manual - git remote set-url originFR to edit and send
 			</h5>
 		</font>
 	</div>

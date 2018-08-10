@@ -47,7 +47,7 @@
                         if($numrows_sec > 0){
                             while($row_role=mysqli_fetch_array($roleq_run)){
                                 ?>
-                                <option value ="<?php echo $row_role['role_name']?>" <?php if($role==$row_role['role_name']){ echo 'selected="selected"';} ?> ><?php echo $row_role['role_name']?></option>
+                                <option value ="<?php echo $row_role['role_name']?>" <?php if($_GET['user_role']==$row_role['role_name']){ echo 'selected="selected"';} ?> ><?php echo $row_role['role_name']?></option>
                                 <?php
                             }
                         }

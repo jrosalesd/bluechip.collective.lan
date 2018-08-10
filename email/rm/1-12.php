@@ -61,6 +61,10 @@
 			}
 			?>
 			<p>I really appreciate having you as a customer!</p>
+			
+			<?php
+			echo checkState($_GET['state']);
+			?>
 			<br />
 			<?php
 			include('includes/signature.inc.php');

@@ -652,7 +652,7 @@ if (isset($_GET['cs'])) {
                 <table class='table'>
                     <thead>
                         <tr class="row">
-                            <th class="col-md-5">Type - Title</th>
+                            <th class="col-md-5">Type - Title - File</th>
                             <th class="col-md-7">Option</th>
                         </tr>
                     </thead>

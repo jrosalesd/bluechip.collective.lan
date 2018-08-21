@@ -108,7 +108,7 @@ function pendingpmt($pmtdate, $pmtAmt,$s){
     return $pending;
 }
 
-function address($l = false, $loanid =""){
+function address($l = false, $loanid = false){
     $address = "";
     include 'dbh.inc.php';
     $dbquery = "SELECT * FROM sp_contact where status=1 and address_type='Mailing Address'";
@@ -122,16 +122,29 @@ function address($l = false, $loanid =""){
         $state = $dbrow['state'];
         $zip = $dbrow['zipcode'];
         if ($l == false) {
-            $address = "
-                <div style='margin-left: 25px;'>
-                    <p>
-                        Spotloan
-                        <br>$ad
-                        <br>$city, $state $zip
-                        <br>Attention to: $loanid
-                    </p>
-                </div>
-            ";
+            if ($loanid == false) {
+                $address = "
+                    <div style='margin-left: 25px;'>
+                        <p>
+                            Spotloan
+                            <br>$ad
+                            <br>$city, $state $zip
+                        </p>
+                    </div>
+                ";
+            }else {
+                $address = "
+                    <div style='margin-left: 25px;'>
+                        <p>
+                            Spotloan
+                            <br>$ad
+                            <br>$city, $state $zip
+                            <br>Attention to: $loanid
+                        </p>
+                    </div>
+                ";
+            }
+                
         }else if ($l == true) {
             $address = "<b>Spotloan, $ad, $city, $state $zip</b>";
         }

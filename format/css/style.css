@@ -324,3 +324,53 @@ td {
 .sptitle {
   color: #3793D2;
 }
+
+.version{
+  text-align: right;
+}
+#memo {
+  z-index: 9;
+  width: 250px;
+  height: auto;
+  border: 2px solid black;
+  padding: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background-color: #d9d9d9;
+}
+
+#memoheader {
+  z-index: 10;
+  padding: 10px;
+  background: grey;
+  background-size: 100px;
+  font-style: 15px solid black;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  padding: 15px;
+}
+
+ #memofooter {
+  z-index: 10;
+  bottom: inherit;
+  padding: 10px;
+  background: grey;
+  background-size: 100px;
+  font-style: 15px solid black;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  padding: 15px;
+ }
+ 
+ .memobody {
+  z-index: 10;
+  height: 170px;
+  margin: 1px;
+  background-color: #ffffff;
+ }

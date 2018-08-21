@@ -17,6 +17,7 @@
             ?>
         </title>
     </head>
+    <g class="version">Version: 2.3</g>
 </html>
 <?php
 ob_end_flush();

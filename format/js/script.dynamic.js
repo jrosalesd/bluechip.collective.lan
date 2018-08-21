@@ -216,3 +216,5 @@ function offer() {
     var x = document.getElementById('optTwo');
     x.value = lump.toFixed(2);
 }
+
+/*Draggable objects*/

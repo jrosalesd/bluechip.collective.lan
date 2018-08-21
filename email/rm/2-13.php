@@ -5,7 +5,7 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b> use when The borrower requests to revoke ACH but there is a pending payment that cannot be stopped due to the TWO BUSINESS DAY NOTICE rule. 
+				<b>Generate: </b> Use when customer request to have a payment stopped via email but we are not able to take the action in time. 
 				<br>
 				<b>Action: </b>Manual - RM/FR to edit and send
 			</h5>
@@ -17,14 +17,10 @@
 			//variables to complete template
 			$brwName = trim($_GET['brwName']);
 			$pmtdate = date_create($_GET['pmtdate']);
-			$nxtpmtdate = date_create($_GET['nxtpmtdate']);
-			$nxtpmtamt = htmlspecialchars($_GET['nxtpmtamt']);
-			$loanid=
-			
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
-			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt']);
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -42,15 +38,10 @@
 		    </p>
 		    <br>
 		    
-		    <p>We understand that you have revoked your consent to ACH withdrawals. Spotloan requires a minimum of two business days’ notice to stop your automatic debits. Therefore, we were unable to stop the payment scheduled for <?php echo date_format($pmtdate,"l, F jS, Y");?>. We sincerely apologize for any inconvenience this may cause. We have noted the revocation of consent in your file and we will not automatically debit your account again.</p>
-		    <p>Interest will continue to accrue on your account as is the normal practice. Your next payment of $<?php echo number_format($nxtpmtamt,2,".",","); ?> is due on <?php echo date_format($nxtpmtdate,"l, F jS, Y");?>.</p>
-		   	<p>Since you have opted to no longer permit ACH withdrawals, you send us a money order payment, please mail it to our mail processor at:</p>
-		    <div class="text-center">
-		    	<?php
-		    	echo address();
-		    	?>
-		    </div>
-		    <p>It is important to mail in your payments early to allow time for processing. Be sure to also include your Spotloan ID (Number). </p>
+		    <p>Thank you for contacting Spotloan. </p>
+		    <p>We attempted to stop your payment on <?php echo date_format($pmtdate,"l, F jS"); ?>. However, due to an overwhelming amount of emails, we were unable to honor your request in a timely manner. We apologize for any inconvenience this may cause.</p>
+		    <p>Once you confirm that the payment was successful or if any fees were incurred, please provide a bank statement at your earliest convenience to resolve this matter.</p>
+		    <p>Thank you in advance for your time.</p>
 		    
 			<?php
 			NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
@@ -85,7 +76,8 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="misspmtdate">
-								Missed Payment Date:
+								Payment Date:
+								<br><small>Place the date of the payment that we will not be able to stop.</small>
 							</label>
 							<input type="date" class="form-control" name="misspmtdate" required>
 						</div>

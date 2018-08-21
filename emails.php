@@ -637,13 +637,13 @@ if (isset($_GET['cs'])) {
         <div id="data">
             <?php
             if (isset($_GET['all'])) {
-                $dataquety = "Select * FROM email";
+                $dataquety = "Select * FROM email ORDER BY catID ASC, ID ASC";
             }elseif (isset($_GET['rml'])) {
-                $dataquety = "Select * FROM email WHERE type='rm'";
+                $dataquety = "Select * FROM email WHERE type='rm' ORDER BY catID ASC, ID ASC";
             }elseif (isset($_GET['frl'])) {
-                $dataquety = "Select * FROM email WHERE type='fr'";
+                $dataquety = "Select * FROM email WHERE type='fr' ORDER BY catID ASC, ID ASC";
             }else {
-                $dataquety = "Select * FROM email";
+                $dataquety = "Select * FROM email ORDER BY catID ASC, ID ASC";
             }
             $dbrun = mysqli_query($conn, $dataquety);
             $numrows = mysqli_num_rows($dbrun);
@@ -661,7 +661,7 @@ if (isset($_GET['cs'])) {
                         while($row = mysqli_fetch_array($dbrun)){
                             ?>
                             <tr class="row">
-                                <td class="col-md-5"><?php echo strtoupper($row['type'])." - ".ucwords($row['name']);?></td>
+                                <td class="col-md-5"><?php echo strtoupper($row['type'])." - ".ucwords($row['name'])." - (".$row['catID']."-".$row['emID'].".php)";?></td>
                                 <td class="col-md-7">
                                     <div class="btn-group">
                                         <a href="?status=<?php echo $row['status'];?>&id=<?php echo $row['ID'];?>" class="btn btn-<?php if($row['status'] == 1){echo "danger";}else{echo "Success";}?>">

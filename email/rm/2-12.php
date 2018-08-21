@@ -19,7 +19,7 @@
 			$pmtdate = date_create($_GET['pmtdate']);
 			$nxtpmtdate = date_create($_GET['nxtpmtdate']);
 			$nxtpmtamt = htmlspecialchars($_GET['nxtpmtamt']);
-			$loanid=
+			$loanid = htmlspecialchars($_GET['loanid']);
 			
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
@@ -50,7 +50,7 @@
 		    	echo address();
 		    	?>
 		    </div>
-		    <p>It is important to mail in your payments early to allow time for processing. Be sure to also include your Spotloan ID (Number). </p>
+		    <p>It is important to mail in your payments early to allow time for processing. Be sure to also include your Spotloan ID <?php echo $loanid;?>. </p>
 		    
 			<?php
 			NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
@@ -80,18 +80,37 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
-						
+						<div class="form-group">
+							<label for="loanid">
+								Loan ID:
+							</label>
+							<input title="Numeric ID located in the URL" class="form-control" type="text"  name="loanid" required/>
+						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="misspmtdate">
-								Missed Payment Date:
+							<label for="pmtdate">
+								Pending Payment Date:
 							</label>
-							<input type="date" class="form-control" name="misspmtdate" required>
+							<input title="The date of the pending payment we are not able to stop" type="date" class="form-control" name="pmtdate" required>
 						</div>
 					</div>
+					<div class="col-md-4">
+                        <div class="form-group">
+                            <label for="nxtpmtdate">
+                                Next Payment Date:
+                            </label>
+                            <input class="form-control" type="date" name="nxtpmtdate" id="nxtpmtdate" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="nxtpmtamt">
+                                Next Payment Amount:
+                            </label>
+                            <input class="form-control" type="number" step="0.01" name="nxtpmtamt" id="nxtpmtamt" required/>
+                        </div>
+                    </div>
 				</div>
-				<div class="row">
+				<!--<div class="row">
 					<div class="col-md-3">
 						<div class="checkbox">
 							<label for="pmtnote">
@@ -114,7 +133,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>-->
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

@@ -18,6 +18,7 @@
 			$brwName = htmlspecialchars(trim($_GET['brwName']));
 			$pmtAmt = htmlspecialchars($_GET['pmtAmt']);
 			$pmtType = htmlspecialchars(trim($_GET['pmtType']));
+			$pmtdate = date_create($_GET['pmtdate']);
 			
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
@@ -47,26 +48,13 @@
 			<br />
 			
 			<p>
-				Thanks for contacting me. I have cancelled your <?php echo $pmtType; ?> $<?php echo number_format($pmtAmt,2,".",","); ?>.
+				Thanks for contacting me. I have cancelled your <?php echo $pmtType; ?> $<?php echo number_format($pmtAmt,2,".",","); ?> That was scheduled for <?php echo date_format($pmtdate,"l, F jS"); ?>.
 			</p>
 			
 			<?php
-            if ($pmtnote == 'on') {
-                ?>
-                <p>
-                    As a friendly reminder, your next scheduled payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
-                </p>
-                <?php
-            }
-            ?>
-            <?php
-            if ($_GET['additional'] == 'on') {
-                ?>
-                <p>
-                    <?php echo nl2br(htmlspecialchars($_GET['additionalnote']))?>
-                </p>
-                <?php
-            }
+			echo checkState($id);
+            NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
+            comment($comment, $s);
             ?>
             <br>
 			
@@ -100,9 +88,15 @@
 					<div class="col-md-4">
 						<div class="form-group">
                             <label for="pmtAmt">
-                                Payment Amount:
+                                Cancelled Payment Amount:
                             </label>
                             <input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="pmtdate">
+                                Cancelled Payment Date:
+                            </label>
+                            <input class="form-control" type="date" name="pmtdate" required/>
                         </div>
 					</div>
 					<div class="col-md-4">
@@ -111,9 +105,10 @@
                                 Payment Type:
                             </label>
                             <select class="form-control" step="0.01" name="pmtType" required>
+                            	<option value="">Select</option>
                             	<option value="payoff in the amount of">Payoff</option>
                             	<option value="extra payment for">Extra Payment</option>
-                            	<option value="double payment for">double Payment</option>
+                            	<option value="double payment for">Double Payment</option>
                             </select>
                         </div>
 					</div>

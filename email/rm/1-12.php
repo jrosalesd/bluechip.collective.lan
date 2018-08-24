@@ -48,7 +48,7 @@
 			<?php
 			if($_GET['ach'] == "on"){
 				?>
-				<p>This is an email confirmation that you made a payment of $<?php echo number_format($pmtAmt,2,".",","); ?> on <?php echo date_format($pmtdate,"l, F jS"); ?>, from your <?php echo $bankname;?> account ending in <?php echo $pmtconf;?>. Thanks!</p>
+				<p>This is an email confirmation that you made a payment of $<?php echo number_format($pmtAmt,2,".",","); ?> on <?php echo date_format($pmtdate,"l, F jS"); ?>, from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?>. Thanks!</p>
 				<?php
 			}elseif ($_GET['dc'] == "on") {
 				?>

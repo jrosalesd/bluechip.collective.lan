@@ -1,6 +1,6 @@
 <?php
-function RandomString($lenght) {
-    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-&%)(+=$#@!!#$%&()*+,-./:;<=>?@[\]^_`{}~";
+function ResetPass($length=15) {
+    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-&%)(+=$#@!#$%&()*+,-./:;<=>?@[\]^_`{}~";
     $charactersLength = strlen($characters);
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {

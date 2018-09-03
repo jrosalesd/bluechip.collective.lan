@@ -1,20 +1,14 @@
 <?php
+//Files to include
+include "functions.inc.php"; 
+
 $id = $_GET['id'];
 $pass_status = 0;
 
-function RandomString(15) {
-    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-&%)(+=$#@!!#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-}
 
 if (isset($_GET['id'])) {
     include 'dbh.inc.php';
-    $password= RandomString();
+    $password= ResetPass(15);
     $pwhashed = password_hash($password,PASSWORD_DEFAULT);
     $q = "UPDATE users SET user_password='$pwhashed', user_pass_status='$pass_status' WHERE user_id='$id'";
     $reset = mysqli_query($conn, $q);

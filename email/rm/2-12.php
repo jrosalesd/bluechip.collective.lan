@@ -42,7 +42,7 @@
 		    </p>
 		    <br>
 		    
-		    <p>We understand that you have revoked your consent to ACH withdrawals. Spotloan requires a minimum of two business days’ notice to stop your automatic debits. Therefore, we were unable to stop the payment scheduled for <?php echo date_format($pmtdate,"l, F jS, Y");?>. We sincerely apologize for any inconvenience this may cause. We have noted the revocation of consent in your file and we will not automatically debit your account again.</p>
+		    <p>We understand that you have revoked your consent to ACH withdrawals. Spotloan requires a minimum of two business days notice to stop your automatic debits. Therefore, we were unable to stop the payment scheduled for <?php echo date_format($pmtdate,"l, F jS, Y");?>. We sincerely apologize for any inconvenience this may cause. We have noted the revocation of consent in your file and we will not automatically debit your account again.</p>
 		    <p>Interest will continue to accrue on your account as is the normal practice. Your next payment of $<?php echo number_format($nxtpmtamt,2,".",","); ?> is due on <?php echo date_format($nxtpmtdate,"l, F jS, Y");?>.</p>
 		   	<p>Since you have opted to no longer permit ACH withdrawals, you send us a money order payment, please mail it to our mail processor at:</p>
 		    <div class="text-center">

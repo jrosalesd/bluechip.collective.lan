@@ -45,9 +45,11 @@
 				When we last connected, you promised me that you would make a payment on <?php echo date_format($pmtdate,"l, F jS"); ?>. I see that this payment wasn’t made. I’m willing to work with you, but I need your cooperation.
 			</p>
 			<p>
+				<?php echo brokenstl(1);?>
+			</p>
+			<p>
 				Please call me at 888-681-6811 and ask for <?php echo $SysName;?>.
 			</p>
-			<br>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -83,6 +85,9 @@
 					</div>
 					<div class="col-md-4"></div>
 				</div>
+				<?php
+				echo brokenstl(0);
+				?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

@@ -16,9 +16,6 @@
 		if($_GET['set'] == "on"){
 			//variables to complete template
 			$brwName = htmlspecialchars(trim($_GET['brwName']));
-			$pmtAmt = htmlspecialchars($_GET['pmtAmt']);
-			$pmtType = htmlspecialchars(trim($_GET['pmtType']));
-			$pmtdate = date_create($_GET['pmtdate']);
 			
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
@@ -38,7 +35,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			<p>
-				<strong>Subject:</strong> Extra Spotloan payment cancelled
+				<strong>Subject:</strong> Cancelled Payment Confirmations
 			</p>
 			<br />
 			
@@ -48,15 +45,16 @@
 			<br />
 			
 			<p>
-				Thanks for contacting me. I have cancelled your <?php echo $pmtType; ?> $<?php echo number_format($pmtAmt,2,".",","); ?> That was scheduled for <?php echo date_format($pmtdate,"l, F jS"); ?>.
+				Thanks for contacting me.
 			</p>
-			
+			<p>
+				<?php echo pmtcancelation(htmlspecialchars(trim($_GET['pmtType'])), $_GET['pmtdate'], htmlspecialchars($_GET['pmtAmt'])); ?>
+			</p>
 			<?php
 			echo checkState($id);
             NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
             comment($comment, $s);
             ?>
-            <br>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -100,43 +98,14 @@
                         </div>
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
-                            <label for="pmtType">
-                                Payment Type:
-                            </label>
-                            <select class="form-control" step="0.01" name="pmtType" required>
-                            	<option value="">Select</option>
-                            	<option value="payoff in the amount of">Payoff</option>
-                            	<option value="extra payment for">Extra Payment</option>
-                            	<option value="double payment for">Double Payment</option>
-                            </select>
-                        </div>
+						<?php
+						pmtcncldrop();
+						?>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<div class="checkbox">
-							<label for="pmtnote">
-							    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"/><b>Next Payment Notice</b>
-							</label>
-						</div>
-						<div class="checkbox">
-							<label for="additional">
-								<input type="checkbox"  id="additional" name="additional" onclick="addnote();"/><b>Other Notes</b>
-							</label>
-						</div>
-					</div>
-					<div class="col-md-9">
-						<div class="row">
-							<div class="col-md-6">
-								<g id="pmtnotebody"></g>
-							</div>
-							<div class="col-md-6">
-								<g id="notefield"></g>
-							</div>
-						</div>
-					</div>
-				</div>
+				<?php
+				nxtpendingcheck();
+				?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

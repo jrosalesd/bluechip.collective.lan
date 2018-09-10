@@ -45,7 +45,7 @@ include 'header.php';
             <p style="text-indent:20px;">We encourage you to make payments this way as we find it works for most people because they do not have to remember to mail in a payment. It is perfectly acceptable to decline auto-debit of your bank account.</p>
             <p style="text-indent:20px;">If you choose not to make payments via your bank account please be sure to mail in your payments with enough time for them to arrive on or before your payment due date or be sure to call in or log on the website to make your payment on the day it is due.</p>
             <ul style="text-indent:20px;">
-            <li><p><b><u>Spotloan, P.O. Box 927 Palatine, IL 60078-0927</u></b></p></li>
+            <li><p><b><u><?php address(1);?></u></b></p></li>
             </ul>
 
             <h4><font color="#F09646"><b>Are there any incentives for repeat borrowers or referrals?</b></font></h4>

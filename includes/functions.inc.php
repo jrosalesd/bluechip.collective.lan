@@ -157,6 +157,108 @@ function address($l = false, $loanid = false){
     echo $address;
 }
 
+function pmtcancelation($code, $date, $amt){
+    $date = date_create($date);
+    $date = date_format($date,"l, F jS");
+    $amt = "$".number_format($amt,2,".",",");
+    $script = "I have canceled your ";
+    
+    if ($code == 1) {
+      //payoff
+      $script .= "payoff in the amount of $amt that was scheduled for $date";
+    }
+    if ($code == 2) {
+        //Extra Payment
+        $script .= "extra payment in the amount of $amt that was scheduled for $date";
+    }
+    if ($code == 3) {
+        //double payment
+        $script .= "double payment in the amount of $amt that was scheduled for $date";
+    }
+    if ($code == 4) {
+        //Settlement
+        $script .= "settlement payment in the amount of $amt that was scheduled for $date. Keep in mind that missing this payment may and will void your settlement. Please contact me as soon as possible to work your settlement.";
+    }
+    
+    return $script;
+    
+    //Settlement
+}
+
+function pmtcncldrop(){
+    ?>
+    <div class="form-group">
+        <label for="pmtType">
+            Payment Type:
+        </label>
+        <select class="form-control" name="pmtType" id="pmtType" required>
+        	<option value="">Select</option>
+        	<option value="1">Payoff</option>
+        	<option value="2">Extra Payment</option>
+        	<option value="3">Double Payment</option>
+        	<option value="4">Settlement</option>
+        </select>
+    </div>
+    <?php
+}
+
+function stlbroken($s){
+    if (!empty($s)) {
+       $stl = "Please contact me in order to reschedule this payment and keep your settlement active";
+       return $stl;
+    }
+}
+
+function nxtpendingcheck(){
+    ?>
+    <div class="row">
+		<div class="col-md-3">
+			<div class="checkbox">
+				<label for="pmtnote">
+				    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"/><b>Next Payment Notice</b>
+				</label>
+			</div>
+			<div class="checkbox">
+				<label for="additional">
+					<input type="checkbox"  id="additional" name="additional" onclick="addnote();"/><b>Other Notes</b>
+				</label>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="row">
+				<div class="col-md-6">
+					<g id="pmtnotebody"></g>
+				</div>
+				<div class="col-md-6">
+					<g id="notefield"></g>
+				</div>
+			</div>
+		</div>
+	</div>
+    <?php
+}
+
+function brokenstl($t=true){
+    if ($t == true) {
+        $stl = "Please contact me in order to reschedule this payment and keep your settlement active.";
+    }
+    if ($t == false) {
+        $stl = 
+            '
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="checkbox">
+        				<label for="stlnote">
+        				    <input type="checkbox"  id="stlnote" name="stlnote" /><b>Is this a Settlement?</b>
+        				</label>
+        			</div>
+                </div>
+            </div>
+			'
+			;
+    }
+    return $stl;
+}
 
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){

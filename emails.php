@@ -8,6 +8,7 @@ if (strtotime("now") < strtotime("first Sunday of November $current") && strtoti
 }else{
 	$setDst = 0;
 }
+
 include 'includes/dbh.inc.php';
 $state_id= $_GET['state'];
 $st_check = "SELECT * FROM servicing_states WHERE id='$state_id'";
@@ -268,7 +269,7 @@ if (isset($_GET['cs'])) {
                             
                             
         	                ?>
-        	                        <li class="col-md-4"><a href="./emails.php?cs&id=<?php echo $menurow['ID'];?>"><?php echo $menurow['name'];?></a></li>
+	                        <li class="col-md-4"><a href="./emails.php?cs&id=<?php echo $menurow['ID'];?>"><?php echo $menurow['name'];?></a></li>
         	                <?php
         	                
             	            if ($i > 3) {
@@ -658,6 +659,7 @@ if (isset($_GET['cs'])) {
                     </thead>
                     <tbody>
                         <?php
+                        
                         while($row = mysqli_fetch_array($dbrun)){
                             ?>
                             <tr class="row">

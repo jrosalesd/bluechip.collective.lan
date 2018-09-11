@@ -161,7 +161,7 @@ function pmtcancelation($code, $date, $amt){
     $date = date_create($date);
     $date = date_format($date,"l, F jS");
     $amt = "$".number_format($amt,2,".",",");
-    $script = "I have canceled your ";
+    $script = "I have cancelled your ";
     
     if ($code == 1) {
       //payoff
@@ -177,7 +177,7 @@ function pmtcancelation($code, $date, $amt){
     }
     if ($code == 4) {
         //Settlement
-        $script .= "settlement payment in the amount of $amt that was scheduled for $date. Keep in mind that missing this payment may and will void your settlement. Please contact me as soon as possible to work your settlement.";
+        $script .= "settlement payment in the amount of $amt that was scheduled for $date. Keep in mind that missing this payment will void your settlement. Please contact me as soon as possible to work out your settlement.";
     }
     
     return $script;
@@ -240,7 +240,7 @@ function nxtpendingcheck(){
 
 function brokenstl($t=true){
     if ($t == true) {
-        $stl = "Please contact me in order to reschedule this payment and keep your settlement active.";
+        $stl = "Please contact me as soon as possible to work out your settlement.";
     }
     if ($t == false) {
         $stl = 

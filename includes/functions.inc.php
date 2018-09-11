@@ -177,7 +177,7 @@ function pmtcancelation($code, $date, $amt){
     }
     if ($code == 4) {
         //Settlement
-        
+        $script .= "settlement payment in the amount of $amt that was scheduled for $date. Keep in mind that missing this payment will void your settlement. Please contact me as soon as possible to work out your settlement.";
     }
     
     return $script;

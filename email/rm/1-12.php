@@ -21,6 +21,7 @@
             $bankname = nl2br(htmlspecialchars($_GET['bankname']));
             $lastfour = htmlspecialchars($_GET['lastfour']);
             $pmtconf = htmlspecialchars($_GET['pmtconf']);
+            $mailpmttype = htmlspecialchars($_GET['mailtype']);
 			
 			?>
 			<div>
@@ -58,6 +59,12 @@
 					Your confirmation ID is: <?php echo $pmtconf;?>
 				</p>
 				<?php
+			}elseif ($_GET['mail'] == "on") {
+				?>
+				<p>
+					This email is to confirm that we have received your <?php echo $mailpmttype;?> in the amount of $<?php echo number_format($pmtAmt,2,".",","); ?> on <?php echo date_format($pmtdate,"F jS, Y");?>. Thanks!
+				</p>
+				<?php
 			}
 			?>
 			<p>I really appreciate having you as a customer!</p>
@@ -91,6 +98,11 @@
 						<div class="checkbox">
 							<label for="ach">
 								<input type="checkbox"  id="ach" name="ach" onclick="achpmt()"/><b>Check if payment is via ACH</b>
+							</label>
+						</div>
+						<div class="checkbox">
+							<label for="mail">
+								<input type="checkbox"  id="mail" name="mail" onclick="mailed();"/><b>Check if payment is via Postal Mail</b>
 							</label>
 						</div>
 					</div>

@@ -76,6 +76,46 @@ function addnote(){
 
 
 //payment confirmation
+
+//Mailed Payment notification
+function mailed(){
+	var formLanding = document.getElementById('landform');
+	var status = document.getElementById('mail').checked;
+	
+	if (status){
+		formLanding.innerHTML = 
+		'<div class="col-md-4">'
+			+'<div class="form-group">'
+				+'<label for="pmtdate">'
+					+'Payment Date:'
+				+'</label>'
+				+'<input class="form-control" type="date" name="pmtdate" required/>'
+			+'</div>'
+			+'<div class="form-group">'
+				+'<label for="pmtAmt">'
+					+'Payment Amount:'
+				+'</label>'
+				+'<input class="form-control" type="number" step="0.01" name="pmtAmt" required/>'
+			+'</div>'
+		+'</div>'
+		+'<div class="col-md-4">'
+			+'<div class="form-group">'
+				+'<label for="mailtype">'
+					+'Mailed Payment Type:'
+				+'</label>'
+				+'<select class="form-control" name="mailtype" id="mailtype" required/>'
+					+'<option value="">Select</option>'
+					+'<option value="money order">Money Order</option>'
+					+'<option value="check">Check</option>'
+				+'</select>'
+			+'</div>'
+		+'</div>'
+		;
+	}else{
+		formLanding.innerHTML = '<div id="landform"></div>';
+	}
+}
+
 //ACH payment notification
 function achpmt(){
 	var formLanding = document.getElementById('landform');

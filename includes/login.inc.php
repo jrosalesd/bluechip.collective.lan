@@ -30,13 +30,21 @@
                    $user_status = $row['user_status'];
                    $passreset = $row['user_pass_status'];
                    if ($user_status == 0) {
+                       
                        header("Location: ../login.php?login=This username is inactive, Contact your Administrator.");
                        exit();
                     }elseif($passreset == 0){
+                       //Dehash Password
+                        $hashedPwdCheck = password_verify($password, $row['user_password']);
+                       if($hashedPwdCheck == false){
+                           header("Location: ../login.php?login=The password does not match.");
+                           exit();
+                       }else{
                         $_SESSION['uid'] = $row['user_id'];
                         $_SESSION['SysName'] = $row['user_shortname'];
                         header("Location: ../passreset.php");
                         exit();
+                       }
                     }else {
                        //Dehash Password
                        $hashedPwdCheck = password_verify($password, $row['user_password']);

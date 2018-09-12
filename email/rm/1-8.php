@@ -56,7 +56,7 @@
 			<p>Options:<p>
 		    <div style="margin-left: 75px;">
 		    	<p>
-					<b>1) Pay a smaller amount</b> on <?php echo date_format($pmtdate,"l, F jS"); ?>, when your payment is due. Most customers try to make half the payment amount, That would be $<?php echo number_format(($pmtAmt/2),2,".",","); ?>.
+					<b>1) Pay a smaller amount</b> on <?php echo date_format($pmtdate,"l, F jS"); ?>, when your payment is due. Most customers try to make half the payment amount, that would be $<?php echo number_format(($pmtAmt/2),2,".",","); ?>.
 				</p>
 				
 				<p>

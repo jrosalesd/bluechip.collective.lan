@@ -13,7 +13,7 @@ function intWeeks($s, $e){
 	$days = $e - $s;
 	$weeknum = round($days/7);
 	if ($days <= 15) {
-		$weeks = "Keep in mind this would add an additional $weeknum weeks of interest at the end of your loan. However, This is still a much cheaper option than skipping your payment altogether.";
+		$weeks = "Keep in mind this would add an additional $weeknum weeks of interest at the end of your loan. However, this is still a much cheaper option than skipping your payment altogether.";
 	} else if ($days > 15) {
 		$weeks = "If you decide to defer this payment, keep in mind that it could potentially add several extra payments and extend the life of your loa until made in full.";
 	}
@@ -165,15 +165,15 @@ function pmtcancelation($code, $date, $amt){
     
     if ($code == 1) {
       //payoff
-      $script .= "payoff in the amount of $amt that was scheduled for $date";
+      $script .= "payoff in the amount of $amt that was scheduled for $date.";
     }
     if ($code == 2) {
         //Extra Payment
-        $script .= "extra payment in the amount of $amt that was scheduled for $date";
+        $script .= "extra payment in the amount of $amt that was scheduled for $date.";
     }
     if ($code == 3) {
         //double payment
-        $script .= "double payment in the amount of $amt that was scheduled for $date";
+        $script .= "double payment in the amount of $amt that was scheduled for $date.";
     }
     if ($code == 4) {
         //Settlement
@@ -259,6 +259,15 @@ function brokenstl($t=true){
     }
     return $stl;
 }
+
+function restructure($start, $pmtnum, $frequecy){
+    $freqref  = array('Semi-Monthly' =>15,'Monthly' =>30,'Bi-Weekly' =>14 );
+    $frequecy = $freqref["$frequecy"];
+    $start = date_create($start);
+    
+    return date_format($start,"S Y");
+}
+
 
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){

@@ -1,7 +1,10 @@
-//check code
+
 <?php
+// check code
+
 include '../includes/dbh.inc.php';
-$sql1 = "SELECT MAX(ID) FROM email WHERE catID='2' AND type='rm'";
+include '../includes/functions.inc.php';
+/*$sql1 = "SELECT MAX(ID) FROM email WHERE catID='2' AND type='rm'";
 $sql1init = mysqli_query($conn, $sql1);
 $numrows = mysqli_num_rows($sql1init);
 if ($numrows > 0) {
@@ -16,4 +19,6 @@ if ($numrows > 0) {
        echo $emid;
    }
 }
-$conn->close();
+$conn->close();*/
+
+//echo restructure("2019-25-05", $pmtnum, "Semi-Monthly");

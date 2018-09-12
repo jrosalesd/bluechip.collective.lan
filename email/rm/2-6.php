@@ -48,14 +48,14 @@
 			</p>
 			
 			<p>
-				<?php echo $pmt_number_new." ".$pmt_freq_new;?> payments of $<?php echo number_format($pmt_new,2,".",","); ?>. <br>Your first payment would be on  <?php echo date_format($pmt_start_date,"l, F jS"); ?>  and your final payment would be on <?php echo date_format($pmt_end_date,"l, F jS"); ?>.
+				<?php echo $pmt_number_new." ".$pmt_freq_new;?> payments of $<?php echo number_format($pmt_new,2,".",","); ?>. <br>Your first payment would be on  <?php echo date_format($pmt_start_date,"l, F jS, Y"); ?>  and your final payment would be on <?php echo date_format($pmt_end_date,"l, F jS, Y"); ?>.
 			</p>
 			
 			<p>
 				Anytime your payments fall on weekends or holidays, they will be taken out the next business day available.
 			</p>
 			<p>
-				Please let me know right away if this terms work for you. I need at least 2 business days before your payment is due to make these changes.
+				Please let me know right away if these terms work for you. I need at least 2 business days before your payment is due to make these changes.
 			</p>
 			<p>
 				Again, I won't make any changes to your account until you confirm what you’d like me to do. Let me know!

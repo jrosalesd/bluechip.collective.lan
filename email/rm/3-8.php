@@ -43,10 +43,8 @@
 				Trying to reach you – please call <?php echo $SysName;?> at 1(888) 681-6811
 			</p>
 			<br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 		    
 		    
 			

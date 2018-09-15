@@ -35,29 +35,18 @@
 			<div>
 			<!-- Email Temaplate -->
 			<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+				<strong>
+					Subject:
+				</strong>
+				Here goes the subject for this email
+			</p>
+	
+			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p></p>
+		    <p>Here is the body of the the email</p>
 		    
 			<?php
-            if ($pmtnote == 'on') {
-                ?>
-                <p>
-                    As a friendly reminder, your next schedule payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
-                </p>
-                <?php
-            }
-            ?>
-            <?php
-            if ($_GET['additional'] == 'on') {
-                ?>
-                <p>
-                    <?php echo nl2br(htmlspecialchars($_GET['additionalnote']))?>
-                </p>
-                <?php
-            }
+            echo pendingpmt($pmtdate, $pmtAmt, $s, 0, 0);
             ?>
 			<?php
 			include('includes/signature.inc.php');
@@ -93,30 +82,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<div class="checkbox">
-							<label for="pmtnote">
-							    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"/><b>Next Payment Notice</b>
-							</label>
-						</div>
-						<div class="checkbox">
-							<label for="additional">
-								<input type="checkbox"  id="additional" name="additional" onclick="addnote()"/><b>Other Notes</b>
-							</label>
-						</div>
-					</div>
-					<div class="col-md-9">
-						<div class="row">
-							<div class="col-md-6">
-								<g id="pmtnotebody"></g>
-							</div>
-							<div class="col-md-6">
-								<g id="notefield"></g>
-							</div>
-						</div>
-					</div>
-				</div>
+				<?php
+	            echo pendingpmt($pmtdate, $pmtAmt, $s, 1, 0);
+	            ?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

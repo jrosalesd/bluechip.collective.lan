@@ -60,44 +60,37 @@
 			
 			<p>Your account balance is $<?php echo number_format($bal,2,".",","); ?> and your next payment of $<?php echo number_format($nxtpmt,2,".",","); ?> is due on <?php echo date_format($nxtpmt_date,"l, F jS"); ?>. As a reminder your interest does reflect on the account balance daily, this is for your benefit so that if you were to pay off early you would save on the interest. I have gone ahead and attached your remaining payment schedule.</p>
 			
-			<table class="bordered sch">
-				<thead>
-					<th class="col-sm-2">
-						Date
-					</th>
-					<th class="col-sm-3">
-						Amount
-					</th>
-				</thead>
-				<tbody>
-					<?php
-					$hist = str_ireplace("\n",",",$pmthist);
-					$hist = str_ireplace("\t",",",$hist);
-					$hist = explode(",",$hist);
-					$dates = array();
-					$amount = array();
-					foreach ($hist as $k => $v) {
-	                    if ($k % 2 == 0) {
-	                        $dates[] = date_create($v);
-	                    }
-	                    else {
-	                        $amount[] = str_ireplace("$","",$v);
-	                    }
-	                }
-					for ($i = 0; $i < count($dates); $i++) {
-						?>
-						<tr>
-							<td class="col-sm-2"><?php echo date_format($dates[$i],"D, M jS");?></td>
-							<td class="col-sm-3"><?php echo "$".number_format($amount[$i],2,".",",");?></td>
-						</tr>
-						<?php
-					}
-					?>
-				</tbody>
-					
-			</table>
+			<div class="offset25px">
+			    <ul class="schl">
+			        <?php
+        			$hist = str_ireplace("\n",",",$pmthist);
+        			$hist = str_ireplace("\t",",",$hist);
+        			$hist = explode(",",$hist);
+        			$dates = array();
+        			$amount = array();
+        			foreach ($hist as $k => $v) {
+                        if ($k % 2 == 0) {
+                            $dates[] = date_create($v);
+                        }
+                        else {
+                            $amount[] = str_ireplace("$","",$v);
+                        }
+                    }
+        			for ($i = 0; $i < count($dates); $i++) {
+        				?>
+        				<li><?php echo date_format($dates[$i],"D, M jS");?> - <?php echo "$".number_format($amount[$i],2,".",",");?></li>
+        				<?php
+        			}
+        			?>
+			    
+			    </ul>
+    			    
+			</div>
 			
 			<p>Please remember that if you do miss anymore payment on your account that you will be adding additional interest to your loan and extending the length of your loan. If you have any more questions please don't hesitate to give us a call at 888-681-6811.</p>
+			<?php
+            NxtPmt($dates[0],  $amount[0], "on");
+            ?>
 			<br>
 			
 			<?php

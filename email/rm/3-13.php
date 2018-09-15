@@ -34,47 +34,18 @@
 			<div>
 			<!-- Email Temaplate -->
 			<p><strong>Subject:</strong>Your Spotloan Status</p><br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
-		    
-		    
-			<p>
-				Thank you for your recent email regarding your loan status.
-			</p>
-			<?php
 			
-			$slq = "SELECT soldlist.Loan_ID, soldlist.Buyer, debtsalebuyers.Name, debtsalebuyers.PhoneNumber, soldlist.Sold_Date FROM soldlist, debtsalebuyers WHERE soldlist.Buyer = debtsalebuyers.Code AND soldlist.Loan_ID='$LAPro'";
-			$slq_result = mysqli_query($conn, $slq);
-			
-			if(mysqli_num_rows($slq_result) != 0){
-				$row = mysqli_fetch_array($slq_result);
-				$AgencyAbr =$row[1];
-				$Agency = $row[2]; 
-				$phone = $row[3];
-				$soldDate = date_create("$row[4]");
-			}
-			
-			?>
+			<?php echo brwname($_GET['brwName']);?>
 			
 			<p>
-				In accordance with our customary practices, Spotloan sold your loan on <?php echo date_format($soldDate,"F jS, Y"); ?> to an independent third party unaffiliated with Spotloan (debt buyer) after not receiving a payment from you in over 90 days.
-					<?php
-					if (empty($pmtAmt)) {
-						echo "We did not Received any payments on your loan";
-					}else {
-						echo "The last payment that we received from you was on ".date_format($pmtdate,"l, F jS")." for $".number_format($pmtAmt,2,".",",");
-					}
-					?>
-					. Spotloan sold and transferred to the debt buyer all of our rights, title, and interest in this loan and Spotloan has not attempted to collect on this debt since the date of the sale.
+				In accordance with our customary practices, Spotloan sold your loan on <?php echo soldfind($LAPro); ?> to an independent third party unaffiliated with Spotloan (debt buyer) after not receiving a payment from you in over 90 days.<?phpecho soldacct(0,htmlspecialchars($_GET['sldcheck']),$pmtdate,$pmtAmt);?>. Spotloan sold and transferred to the debt buyer all of our rights, title, and interest in this loan and Spotloan has not attempted to collect on this debt since the date of the sale.
 			</p>
 			<p>
 				Below is the contact information for the debt buyer should you wish to contact them about your Spotloan.
 			</p>
 			
 			<p>
-				Please contact <b><?php echo $Agency." (".$AgencyAbr.")";?></b> at <b>1-<?php echo $phone;?></b> to further assist you. your can referance your account through the Loan ID, yours is <b><?php echo $Lid;?>.</b>
+				Please contact <b><?php echo $Agency." (".$AgencyAbr.")";?></b> at <b>1-<?php echo $phone;?></b> to further assist you. You can referance your account through the Loan ID, yours is <b><?php echo $Lid;?>.</b>
 			</p>
 			<?php
 			include('includes/signature.inc.php');
@@ -119,18 +90,7 @@
 						?>
 					</div>
 					<div class="col-md-4">
-                        <div class="form-group">
-                            <label for="pmtdate">
-                                Last Successful Payment Date:
-                            </label>
-                            <input class="form-control" type="date" name="pmtdate"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="pmtAmt">
-                                Last Successful Payment Amount:
-                            </label>
-                            <input class="form-control" type="number" step="0.01" name="pmtAmt"/>
-                        </div>
+                        <?php echo soldacct(1);?>
                     </div>
 					<div class="col-md-4"></div>
 				</div>

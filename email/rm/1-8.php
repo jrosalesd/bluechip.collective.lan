@@ -44,10 +44,8 @@
 				<strong>Subject:</strong> Spot your savings! Your payment options
 			</p>
 			<br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 		    
 		    
 			<p>

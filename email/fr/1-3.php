@@ -36,13 +36,8 @@
 				</strong> 
 				Voided Settlement
 			</p>
-			<br>
 			
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
-		    
+			<?php echo brwname($_GET['brwName']);?>
 			
 			<p>
 				This is a notification that the settlement you agreed to is now null and void because you failed to make the payments as discussed. You currently owe $<?php echo number_format($outBal,2,".",",");?>. Please keep in mind that your balance changes daily to reflect the interest accrued.

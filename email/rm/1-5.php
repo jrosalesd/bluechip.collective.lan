@@ -51,7 +51,7 @@
 					Thanks for contacting me. I hope you are well.
 				</p>      
 				
-				<p>As of today your current balance is of $<?php echo number_format($currbal,2,".",","); ?>. Remember that we need a two business days notice in order to make any changes in the payment schedule. So the next available date to schedule a payoff is for <?php echo date_format($payoffdate,"l, F jS"); ?> in the amount of $<?php echo number_format($payoffamt,2,".",","); ?>. If you wish for it to be on any other date keep in mind the amount would change because of the interest that accrues daily.</p>
+				<p>As of today, your current balance is of $<?php echo number_format($currbal,2,".",","); ?>. Remember that we need a two business day notice in order to make any changes to the payment schedule. So the next available date to schedule a payoff is for <?php echo date_format($payoffdate,"l, F jS"); ?> in the amount of $<?php echo number_format($payoffamt,2,".",","); ?>. If you wish for it to be on any other date keep in mind the amount would change because of the interest that accrues daily.</p>
 				
 				<p>Let me know what you decide so I can set it up in the system.</p>
 				<?php

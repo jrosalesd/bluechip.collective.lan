@@ -45,7 +45,6 @@
 		    
 			<?php
 			NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
-			echo comment($_GET['additionalnote'], $_GET['additional']);
 			echo checkState($_GET['state']);
 			?>
 			<?php
@@ -72,30 +71,6 @@
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
 						
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<div class="checkbox">
-							<label for="pmtnote">
-							    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"/><b>Next Payment Notice</b>
-							</label>
-						</div>
-						<div class="checkbox">
-							<label for="additional">
-								<input type="checkbox"  id="additional" name="additional" onclick="addnote()"/><b>Other Notes</b>
-							</label>
-						</div>
-					</div>
-					<div class="col-md-9">
-						<div class="row">
-							<div class="col-md-6">
-								<g id="pmtnotebody"></g>
-							</div>
-							<div class="col-md-6">
-								<g id="notefield"></g>
-							</div>
-						</div>
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

@@ -62,11 +62,9 @@
 							</strong>
 							Your Spotloan Settlement Agreement
 						</p>
-						<br>
-						<p>
-							Hi <?php echo $brwName?>,
-						</p>
-						<br>
+						
+						<?php echo brwname($_GET['brwName']);?>
+						
 						<p>
 							I would like to recap our conversation and confirm that we have reached an agreement to settle your Spotloan account for the amount of $<?php echo number_format($stl,2,".",",");?>.
 						</p>

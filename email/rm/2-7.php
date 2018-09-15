@@ -22,7 +22,9 @@
 			$pmt_freq_new = htmlspecialchars($_GET['pmt_freq_new']);
 			$pmt_start_date = date_create($_GET['pmt_start_date']);
 			$pmt_end_date = date_create($_GET['pmt_end_date']);
-			
+			//pending pmt var
+            $pmtAmt = htmlspecialchars($_GET['pennextpmtamt']);
+            $pmtdate = date_create($_GET['datepending'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -51,9 +53,11 @@
 			<p>I’m glad we could make adjustments so that you can stay on track with paying off your loan.</p>
 
 		    <p>I did restructure your payment schedule as follows:</p>
-		    <p>New schedule is now <?php echo $pmt_number_new." ".$pmt_freq_new;?> payments of $<?php echo number_format($pmt_new,2,".",","); ?>.
+		    <p>Your new schedule is now <?php echo $pmt_number_new." ".$pmt_freq_new;?> payments of $<?php echo number_format($pmt_new,2,".",","); ?>.
 		    <br> Your first payment is on <?php echo date_format($pmt_start_date,"F jS, Y"); ?>, and your last payment will be on <?php echo date_format($pmt_end_date,"F jS, Y"); ?>.</p>
-		    
+		    <?php
+		    echo pendingpmt($pmtdate, $pmtAmt,$_GET['pendingclick'], 0, 1);
+		    ?>
 		    <?php
 			include('includes/signature.inc.php');
 			?>	
@@ -119,6 +123,7 @@
 						</div>
 					</div>
 				</div>
+				<?php pendingpmt(0,0,0, 1, 1);?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

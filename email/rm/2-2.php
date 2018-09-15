@@ -32,10 +32,8 @@
 			<!-- Email Temaplate -->
 			<p><strong>Subject:</strong> Check it out – Your payment history</p><br>
 			
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 		    
 		    
 			<p>Thanks for checking in on your loan. I’ve attached your payment history. Please let me know if you have any questions.</p>

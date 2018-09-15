@@ -9,9 +9,8 @@
 			<h5>
 				<b>Generate: </b>Copy and Paste 
 				<br>
-				<b>Template: </b>
 				<br>
-				<b>Action: </b>
+				<b>Usage: </b>Use email when borrower email to ask why they have not received their funds.
 			</h5>
 		</font>
     </div>

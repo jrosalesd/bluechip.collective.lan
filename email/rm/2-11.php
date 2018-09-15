@@ -40,43 +40,36 @@
 		    
 			<p>Thanks for checking in on your loan. I’ve attached your payment schedule.</p>
 			
-			<h3>Payment Schedule</h3>
-			<table class="bordered" style="margin-top:20px;margin-bottom:40px;font: 20px/30px Arial, sans-serif;">
-				<thead>
-					<th class="col-sm-2">
-						Date
-					</th>
-					<th class="col-sm-3">
-						Amount
-					</th>
-				</thead>
-				<tbody>
-					<?php
-					$hist = str_ireplace("\n",",",$pmthist);
-					$hist = str_ireplace("\t",",",$hist);
-					$hist = explode(",",$hist);
-					$dates = array();
-					$amount = array();
-					foreach ($hist as $k => $v) {
-	                    if ($k % 2 == 0) {
-	                        $dates[] = date_create($v);
-	                    }
-	                    else {
-	                        $amount[] = str_ireplace("$","",$v);
-	                    }
-	                }
-					for ($i = 0; $i < count($dates); $i++) {
-						?>
-						<tr>
-							<td class="col-sm-2"><?php echo date_format($dates[$i],"l, F jS");?></td>
-							<td class="col-sm-3"><?php echo "$".number_format($amount[$i],2,".",",");?></td>
-						</tr>
-						<?php
-					}
-					?>
-				</tbody>
-					
-			</table>
+			<h3 class="offset25px">Payment Schedule</h3>
+    		<div class="offset25px">
+    			    <ul class="schl">
+    			        <?php
+            			$hist = str_ireplace("\n",",",$pmthist);
+            			$hist = str_ireplace("\t",",",$hist);
+            			$hist = explode(",",$hist);
+            			$dates = array();
+            			$amount = array();
+            			foreach ($hist as $k => $v) {
+                            if ($k % 2 == 0) {
+                                $dates[] = date_create($v);
+                            }
+                            else {
+                                $amount[] = str_ireplace("$","",$v);
+                            }
+                        }
+            			for ($i = 0; $i < count($dates); $i++) {
+            				?>
+            				<li><?php echo date_format($dates[$i],"D, M jS");?> - <?php echo "$".number_format($amount[$i],2,".",",");?></li>
+            				<?php
+            			}
+            			?>
+    			    
+    			    </ul>
+			</div>
+			<?php
+            NxtPmt($dates[0],  $amount[0], "on");
+            ?>
+            
 			<?php
 			include('includes/signature.inc.php');
 			?>	

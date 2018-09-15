@@ -7,7 +7,7 @@
 			<h5>
 				<b>Generate: </b>When a customer sets up a payment through their online account or when they call to make special arrangements with their agent -- and then decide they can’t/don’t want to go through with it. 
 				<br>
-				<b>Action: </b>Manual - Agent to edit and sen
+				<b>Action: </b>Manual - Agent to edit and send
 			</h5>
 		</font>
     </div>
@@ -48,7 +48,7 @@
 				Thanks for contacting me.
 			</p>
 			<p>
-				<?php echo pmtcancelation(htmlspecialchars(trim($_GET['pmtType'])), $_GET['pmtdate'], htmlspecialchars($_GET['pmtAmt'])); ?>
+				<?php echo pmtcancelation(htmlspecialchars(trim($_GET['pmtType'])), $_GET['pmtdate'], htmlspecialchars($_GET['pmtAmt']),$pmtnote); ?>
 			</p>
 			<?php
 			echo checkState($id);

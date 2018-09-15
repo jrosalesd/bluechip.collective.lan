@@ -7,8 +7,9 @@
 		<font color="red">
 			<h5>
 				<b>Generate: </b>Use this email template to provide Borrowers with a Restructure Offer
-				<br>
-				<b>Action: </b>
+				<br />
+				<br />
+				<b>Usage: </b>Agents should use this email when borrower requests a restructure offer over email or when the borrower does not answer a call made to to discuss restructure options.
 			</h5>
 		</font>
     </div>

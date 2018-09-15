@@ -5,7 +5,7 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>Send email when borrower claims that he has not recieved Voide check email
+				<b>Generate: </b>Send email when borrower claims that he or she has not recieved the voided check email.
 				<br>
 			</h5>
 		</font>

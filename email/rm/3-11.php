@@ -33,10 +33,8 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 		    
 		    <p>
 				<?php echo $comment;?>

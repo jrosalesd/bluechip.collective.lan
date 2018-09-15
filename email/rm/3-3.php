@@ -61,10 +61,8 @@
 			</p>
 			<br>
 			
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>		    
+
+			<?php echo brwname($_GET['brwName']);?>		    
 			
 			<p>Thanks for contacting me. I hope you are well.</p>
 			<p>In regards to your e-mail, the funds arrive within 1-2 business days after you've confirmed the e-mail; these said,  funds were set to arrive either <?php echo date_format($day1,"l, F jS"); ?> or <?php echo date_format($day2,"l, F jS"); ?>, any time during business hours.</p>

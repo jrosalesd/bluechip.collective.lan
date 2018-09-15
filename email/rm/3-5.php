@@ -39,10 +39,8 @@
 				<strong>Subject:</strong> We’ve updated your info!
 			</p>
 			<br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>		    
+
+			<?php echo brwname($_GET['brwName']);?>		    
 			
 			<p>
 				Thanks for letting me know about the changes to your bank account. I really appreciate it! Everything has been updated in our system.

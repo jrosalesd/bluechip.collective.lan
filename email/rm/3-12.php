@@ -70,10 +70,8 @@
 			<!-- Email Temaplate -->
 			<p><strong>Subject:</strong> Your Spotloan Online Access</p>
 			<br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 		    
 
 		    <p>In regards to the online account, Once you have signed the loan agreement, click ‘next step’</p>

@@ -39,10 +39,8 @@
 				<strong>Subject:</strong> $<?php echo number_format($pmtAmt,2,".",","); ?> Spotloan payment confirmation
 			</p>
 			<br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 		    
 		    
 			<p><b>Payment Receipt</b></p>

@@ -40,7 +40,7 @@
 		    
 			
 			<p>
-				Hope you're having a wonderful day. Here's a confirmation email that your account has been paid-off. Thank you for working with me.
+				Hope you're having a wonderful day. Here's a confirmation email that your account has been settled. Thank you for working with me.
 			</p>
 			<?php
 			if ($state_status == "No"){

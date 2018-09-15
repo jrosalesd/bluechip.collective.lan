@@ -43,10 +43,8 @@
 			</p>
 			<br>
 			
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 		    
 			<p>
 				To pay off your account you will need to call us two business days in advance to set up the payoff. When you pay off your account through ACH, you will need to wait 5-7 business days from the day the payment is processed to reapply.

@@ -35,10 +35,8 @@
 			<!-- Email Temaplate -->
 			<p><strong>Subject:</strong> Your payment, your way</p>
 			<br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 		    
 			
 			<p>In order to update the banking information so that the payment of $<?php echo number_format($pmtAmt,2,".",","); ?> due on <?php echo date_format($pmtdate,"l, F jS"); ?>, comes from a different account. you will need to call us at 888-681-6811 and provide the following information:

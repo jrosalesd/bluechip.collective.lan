@@ -40,10 +40,8 @@
 			</p>
 			<br>
 			
-			<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+	
+			<?php echo brwname($_GET['brwName']);?>
 		    
 			<p>
 				You’re all set to make a payment of $<?php echo number_format($pmtAmt,2,".",",");?> from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?> on <?php echo date_format($pmtdate,"l, F jS");?>.

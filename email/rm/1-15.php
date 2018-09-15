@@ -100,9 +100,6 @@
 				Also your <?php echo $bankname;?> account appears as <?php echo strtolower($return);?> in our system. Let me know if you will change your banking information so I can update the system before your future payments.
 			</p>
 			<p>
-				Also you can make debit card payments, just call us the day you want to make the payment and we can charge it. Remember that if you want to make a regular payment with a card, let us know 2 business days before, in order for us to stop the payment from coming out from your banking account through ACH.
-			</p>
-			<p>
 				Again, I won't make any changes to your account until you confirm what you’d like me to do. Let me know!
 			</p>
 			<br />

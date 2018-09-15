@@ -36,10 +36,8 @@
 			<!-- Email Temaplate -->
 			<p><strong>Subject:</strong> Whoops! You’ve missed a Spotloan payment</p>
 			<br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 		    
 		    
 			

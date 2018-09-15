@@ -34,13 +34,9 @@
 		    	Hi <?php echo ucfirst($brwName);?>,
 		    </p>
 		    <br>
-		    
-		    <p>Your final payment is still being processed by our system, and should clear on <?php echo date_format($pmtdate,"l, F jS"); ?>. If you wish to reapply you may do so, all you need to do is go to our website and submit a new application, just like the first time.</p>
-
-		    <p>Keep in mind that if your final payment is returned and you are approved for a new loan, you will be responsible for both balances.</p>
-		
-		    <p>If you have any questions or concerns, don't hesitate to give us a call or send us an email and any one of our Relationship Managers will be more than pleased to assist you.</p>
-		    
+            <?php
+            echo finalpmtstate(htmlspecialchars($_GET['state']), $pmtdate);
+            ?>	    
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -73,8 +69,13 @@
                             <input class="form-control" type="date" name="pmtdate" required/>
                         </div>
 					</div>
-					<div class="col-md-4"></div>
+					<div class="col-md-4">
+					    <?php
+        				statedrop(1);
+        				?>
+					</div>
 				</div>
+        				
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

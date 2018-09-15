@@ -45,22 +45,7 @@
 			<p>Hurray! I’m so glad you’ve decided to re-authorize automatic debits from your account. It’s definitely the easiest way to ensure your payments get made on time.</p>
 			
 			<?php
-            if ($pmtnote == 'on') {
-                ?>
-                <p>
-                    As a friendly reminder, your next scheduled payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
-                </p>
-                <?php
-            }
-            ?>
-            <?php
-            if ($_GET['additional'] == 'on') {
-                ?>
-                <p>
-                    <?php echo nl2br(htmlspecialchars($_GET['additionalnote']))?>
-                </p>
-                <?php
-            }
+            NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
             ?>
 			<p>Please let me know if you have any questions.</p>
             <br>
@@ -92,30 +77,9 @@
 					<div class="col-md-4"></div>
 					<div class="col-md-4"></div>
 				</div>
-				<div class="row">
-							<div class="col-md-3">
-								<div class="checkbox">
-									<label for="pmtnote">
-									    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"/><b>Next Payment Notice</b>
-									</label>
-								</div>
-								<div class="checkbox">
-									<label for="additional">
-										<input type="checkbox"  id="additional" name="additional" onclick="addnote();"/><b>Other Notes</b>
-									</label>
-								</div>
-							</div>
-							<div class="col-md-9">
-								<div class="row">
-									<div class="col-md-6">
-										<g id="pmtnotebody"></g>
-									</div>
-									<div class="col-md-6">
-										<g id="notefield"></g>
-									</div>
-								</div>
-							</div>
-						</div>
+				<?php
+				nxtpendingcheck();
+				?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

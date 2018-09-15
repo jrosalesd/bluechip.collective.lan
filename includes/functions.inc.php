@@ -31,16 +31,6 @@ function restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ress
     return $offer;
 }
 
-function NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote){
-    if ($pmtnote == "on") {
-        ?>
-        <p>
-            As a friendly reminder, your next scheduled payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
-        </p>
-        <?php
-    }
-}
-
 function comment($comment, $s){
     if ($s == "on") {
        ?>
@@ -66,6 +56,45 @@ function checkState($id){
         }
         
         return $state_note;
+        $conn->close();
+    }
+}
+
+function finalpmtstate($id, $pmtdate){
+    $pmtdate = date_format($pmtdate,"l, F jS");
+    if (!empty($id)) {
+        include 'dbh.inc.php';
+        $st_check = "SELECT * FROM servicing_states WHERE id='$id'";
+        $state_check = mysqli_query($conn, $st_check);
+        $rows_check = mysqli_num_rows($state_check);
+        if ($rows_check>0) {
+        	$row_check = mysqli_fetch_array($state_check);
+        	$state_status = $row_check['state_status'];
+        	if ($state_status == "No") {
+        		$email = 
+        		"
+        		<p>
+        		    Your final payment is still being processed by our system, and should clear on $pmtdate.
+        		</p>
+        		<p>
+        		    As a friendly reminder; unfortunately, we no longer lend in your state.
+        		</p>
+        		"
+        		;
+        	}else{
+        	    $email= 
+        	    "		    
+		        <p>Your final payment is still being processed by our system, and should clear on $pmtdate. If you wish to re-apply you may do so, all you need to do is go to our website and submit a new application, just like the first time.</p>
+
+		        <p>Keep in mind that if your final payment is returned and you are approved for a new loan, you will be responsible for both balances.</p>
+		
+		        <p>If you have any questions or concerns, don't hesitate to give us a call or send us an email and any one of our Relationship Managers will be more than pleased to assist you.</p>
+	            "
+        	    ;
+        	}
+        }
+        
+        return $email;
         $conn->close();
     }
 }
@@ -99,13 +128,37 @@ function statedrop($req = false){
     $conn->close();
 }
 
-function pendingpmt($pmtdate, $pmtAmt,$s){
-    if($s){
-    $pmtdate =  date_format($pmtdate,"l, F jS");
-    $pmtAmt = number_format($pmtAmt,2,".",",");
-    $pending = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
+function pendingpmt($pmtdate, $pmtAmt, $s, $frm=false, $res = false){
+    if ($frm == false) {
+        if($s){
+            $pmtdate =  date_format($pmtdate,"l, F jS");
+            $pmtAmt = number_format($pmtAmt,2,".",",");
+            if ($res == true) {
+                $pending = "<p>Keep in mind, this restructure is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
+            }else{
+                $pending = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
+            }
+        }
+        return $pending;
+    }elseif ($frm == true) {
+       ?>
+        <div>
+            <div>
+                <div class="checkbox">
+                    <label for="pendingclick">
+                        <input type="checkbox"  id="pendingclick" name="pendingclick" onclick="pendingpmt()"/><b>Is there any PENDING PAYMENTS?</b>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <div class="col-md-4">
+                    <g id="pendingForm"></g>
+                </div>
+            </div>
+        </div>
+       <?php
     }
-    return $pending;
+
 }
 
 function address($l = false, $loanid = false){
@@ -157,7 +210,7 @@ function address($l = false, $loanid = false){
     echo $address;
 }
 
-function pmtcancelation($code, $date, $amt){
+function pmtcancelation($code, $date, $amt, $nxtpmt){
     $date = date_create($date);
     $date = date_format($date,"l, F jS");
     $amt = "$".number_format($amt,2,".",",");
@@ -177,7 +230,11 @@ function pmtcancelation($code, $date, $amt){
     }
     if ($code == 4) {
         //Settlement
-        $script .= "settlement payment in the amount of $amt that was scheduled for $date. Keep in mind that missing this payment will void your settlement. Please contact me as soon as possible to work out your settlement.";
+        if ($nxtpmt == "on") {
+           $script .= "settlement payment in the amount of $amt that was scheduled for $date. Keep in mind that missing this payment could void your settlement. Please contact me as soon as possible to work out your settlement.";
+        }else{
+            $script .= "settlement payment in the amount of $amt that was scheduled for $date. Keep in mind that missing this payment will void your settlement. Please contact me as soon as possible to work out your settlement.";
+        }
     }
     
     return $script;
@@ -218,24 +275,24 @@ function nxtpendingcheck(){
 				    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"/><b>Next Payment Notice</b>
 				</label>
 			</div>
-			<div class="checkbox">
-				<label for="additional">
-					<input type="checkbox"  id="additional" name="additional" onclick="addnote();"/><b>Other Notes</b>
-				</label>
-			</div>
 		</div>
-		<div class="col-md-9">
-			<div class="row">
-				<div class="col-md-6">
-					<g id="pmtnotebody"></g>
-				</div>
-				<div class="col-md-6">
-					<g id="notefield"></g>
-				</div>
-			</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<g id="pmtnotebody"></g>
 		</div>
 	</div>
     <?php
+}
+
+function NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote){
+    if ($pmtnote == "on") {
+        ?>
+        <p>
+            As a friendly reminder, your next scheduled payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
+        </p>
+        <?php
+    }
 }
 
 function brokenstl($t=true){
@@ -268,6 +325,69 @@ function restructure($start, $pmtnum, $frequecy){
     return date_format($start,"S Y");
 }
 
+function soldacct($frm=false, $check="off", $pmtdate = "today", $pmtAmt = "0"){
+    
+    if($frm == false){
+        if($check == "on"){
+            $pmtAmt =  "$".number_format($pmtAmt,2,".",",");
+            $pmtdate = date_format($pmtdate,"l, F jS");
+            $script = "The last payment that we received from you was on $pmtdate for $pmtAmt";
+        }else{
+            $script ="We did not receive any payments on your loan";
+        }
+        return $script;
+    }if ($frm == true) {
+        $form = 
+        '
+        <div>
+			<div class="checkbox">
+				<label for="sldcheck">
+				    <input type="checkbox"  id="sldcheck" name="sldcheck" onclick="soldpmt()"/><b>Check if there were any payments</b>
+				</label>
+			</div>
+        </div>
+        <div id="sldland" name="sldland"></div>
+        '
+        ;
+        return $form;
+    }
+}
+
+function soldfind($LAPro){
+    if (!empty($LAPro)) {
+       include 'dbh.inc.php';
+       $slq = "SELECT soldlist.Loan_ID, soldlist.Buyer, debtsalebuyers.Name, debtsalebuyers.PhoneNumber, soldlist.Sold_Date FROM soldlist, debtsalebuyers WHERE soldlist.Buyer = debtsalebuyers.Code AND soldlist.Loan_ID='$LAPro'";
+		$slq_result = mysqli_query($conn, $slq);
+		
+		if(mysqli_num_rows($slq_result) != 0){
+			$row = mysqli_fetch_array($slq_result);
+			$AgencyAbr =$row[1];
+			$Agency = $row[2]; 
+			$phone = $row[3];
+			$soldDate = date_create("$row[4]");
+			$output = date_format($soldDate,"F jS, Y");
+		}else{
+		    $output = '</p><div class="alert alert-warning offset25px"><b>Check LA Pro Account number, This loan was not found on the Database.</b></div><p>';
+		}
+        $conn->close();
+    }else{
+        $output = '</p><div class="alert alert-warning offset25px"><b>Check LA Pro Account number, This loan was not found on the Database.</b></div><p>';
+    }
+    return $output;
+}
+
+function brwname($name){
+    $name = htmlspecialchars(trim($name));
+    $name = ucfirst($name);
+    $script = 
+    "
+    <p>Hi $name,</p>
+    <br />
+    <p>Thank you for contacting Spotloan.</p>
+    "
+    ;
+    return $script;
+}
 
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){

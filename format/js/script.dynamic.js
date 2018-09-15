@@ -257,4 +257,33 @@ function offer() {
     x.value = lump.toFixed(2);
 }
 
+//sold account payments
+function soldpmt(){
+	var outputopn, status, landingform, outputcls;
+	status = document.getElementById('sldcheck').checked;
+	landingform = document.getElementById('sldland');
+	if (status) {
+		outputopn =
+		'<div id="sldland" name="sldland">'
+			+'<div class="form-group">'
+				+'<label for="pmtdate">'
+					+'Last Successful Payment Date:'
+				+'</label>'
+				+'<input class="form-control" type="date" name="pmtdate"/>'
+			+'</div>'
+			+'<div class="form-group">'
+				+'<label for="pmtAmt">'
+				+'Last Successful Payment Amount:'
+				+'</label>'
+				+'<input class="form-control" type="number" step="0.01" name="pmtAmt"/>'
+			+'</div>'
+		+'</div>'
+		;
+		landingform.innerHTML = outputopn;
+	}else{
+		outputcls = '<div id="sldland" name="sldland"></div>';
+		landingform.innerHTML = outputcls;
+	}
+}
+
 /*Draggable objects*/

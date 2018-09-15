@@ -49,42 +49,34 @@
 				Remember it is best to drop your payment in the mail 7-10 business days before the due date so it has time to get to us! I have attached your payment schedule for your reference and if the mail ever becomes too much of a hassle just give us a call and we can easily set up automatic payments.
 			</p>
 			<p>Here is you Payment schedule:</p>
-			<table class="bordered sch">
-				<thead>
-					<th class="col-sm-2">
-						Date
-					</th>
-					<th class="col-sm-3">
-						Amount
-					</th>
-				</thead>
-				<tbody>
-					<?php
-					$hist = str_ireplace("\n",",",$pmthist);
-					$hist = str_ireplace("\t",",",$hist);
-					$hist = explode(",",$hist);
-					$dates = array();
-					$amount = array();
-					foreach ($hist as $k => $v) {
-	                    if ($k % 2 == 0) {
-	                        $dates[] = date_create($v);
-	                    }
-	                    else {
-	                        $amount[] = str_ireplace("$","",$v);
-	                    }
-	                }
-					for ($i = 0; $i < count($dates); $i++) {
-						?>
-						<tr>
-							<td class="col-sm-2"><?php echo date_format($dates[$i],"l, F jS");?></td>
-							<td class="col-sm-3"><?php echo "$".number_format($amount[$i],2,".",",");?></td>
-						</tr>
-						<?php
-					}
-					?>
-				</tbody>
-					
-			</table>
+			<div class="offset25px">
+    			    <ul class="schl">
+    			        <?php
+            			$hist = str_ireplace("\n",",",$pmthist);
+            			$hist = str_ireplace("\t",",",$hist);
+            			$hist = explode(",",$hist);
+            			$dates = array();
+            			$amount = array();
+            			foreach ($hist as $k => $v) {
+                            if ($k % 2 == 0) {
+                                $dates[] = date_create($v);
+                            }
+                            else {
+                                $amount[] = str_ireplace("$","",$v);
+                            }
+                        }
+            			for ($i = 0; $i < count($dates); $i++) {
+            				?>
+            				<li><?php echo date_format($dates[$i],"D, M jS");?> - <?php echo "$".number_format($amount[$i],2,".",",");?></li>
+            				<?php
+            			}
+            			?>
+    			    
+    			    </ul>
+			</div>
+			<?php
+            NxtPmt($dates[0],  $amount[0], "on");
+            ?>
 			<p>Thanks again for choosing Spotloan!</p>
 			<br>
 			

@@ -36,10 +36,8 @@
 			<!-- Email Temaplate -->
 			<p><strong>Subject:</strong> Whoops! You’ve missed a Spotloan payment</p>
 			<br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+
+			<?php echo brwname($_GET['brwName']);?>
 			
 			<p>
 				I sent you a payment confirmation email two days ago. Unfortunately, <?php echo $bankname;?> just told me that your payment of $<?php echo number_format($pmtAmt,2,".",","); ?> on <?php echo date_format($pmtdate,"l, F jS"); ?>, didn’t go through because <?php echo $return;?>. This means that the payment confirmation you received is incorrect and we have added a $10 fee to your loan balance.

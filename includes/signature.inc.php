@@ -1,14 +1,6 @@
-<!--
-<p>
-	Our Help Desk hours of operation are Monday - Friday from 7:00am CST - 4:30pm CST.
-</p>
-<p>
-	For immediate service, please feel free to contact us at 1-888-681-6811 Monday - Friday 7am - 8pm CST or Saturdays 9am - 6pm CST.
-</p>
--->
-<br>
+
+<?php hoursOfOperation($status);?>
 <p>Sincerely,</p>
-<br>
 <div>
     <p >
         <g class="text-capitalize">

@@ -187,7 +187,7 @@
 		                    ?>
 						</p>
 						<p>
-							When you make payments, it is critical that the auto-debits payments be successfully completed and not returned; and that mailed payments arrive by the due date, not just be postmarked. If you do not make your payments in full and on time, this settlement agreement will be void and you will be responsible for repaying the full outstanding balance at the time of default. This would include any interest that would have accrued on that balance if this settlement agreement did not exist (minus any payments you made).
+							When you make payments, it is critical that the auto-debits payments be successfully completed and not returned; and that mailed payments arrive by the due date, not just be postmarked. If you do not make your payments in full and on time, this settlement agreement will be voided and you will be responsible for repaying the full outstanding balance at the time of default. This would include any interest that would have accrued on that balance if this settlement agreement did not exist (minus any payments you made).
 						</p>
 						<p>
 							Thank you for resolving this debt and fulfilling your commitment. Please let me know if you have any questions or if there’s anything else I can do to help.
@@ -219,12 +219,12 @@
 							<input type="hidden" name="cs"/>
 							<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label for="bal">
 											Oustading Balance
 										</label>
-										<input class="form-control" type="text" id="bal" onchange="settlement()">
+										<input class="form-control" type="number" id="bal" onchange="settlement()">
 									</div>
 									<div class="form-group">
 										<label for="disc">
@@ -238,9 +238,14 @@
 										</label>
 										<input class="form-control" type="text" id="pmtnums">
 									</div>
+									<div class="form-group">
+										<label for="frst">
+											<input type="checkbox" id="frst" onclick="enterform()">is there a initial payment?
+										</label>
+									</div>
+									<div id="frst_enter"></div>
 								</div>
-								<div class="col-md-9">
-									
+								<div class="col-md-8">
 									<p id="stl0"></p>
 								</div>
 							</div>
@@ -340,6 +345,23 @@
 						        +"This can be solved in " + pmtnum + " payments of $" + pmts.toFixed(2);
 						        y.value = stl.toFixed(2);
 						        z.value = pmtnum;
+						    }
+						    function enterform(){
+						    	var status, landform, leaveform, child;
+						    	status = document.getElementById('frst').checked;
+						    	landform = document.getElementById('frst_enter');
+						    	leaveform = '<div id="frst_enter"></div>';
+						    	
+						    	if (status) {
+						    		child = 
+						    		'<div class="form-group" id="frst_enter">'
+						    			+'<label for="pmtnums">'
+											+'Additional Payment amount'
+										+'</label>'
+										+'<input class="form-control" type="text" id="pmtnums">'
+						    		+'</div>'
+						    		;
+						    	}
 						    }
 						</script>
 						<?php

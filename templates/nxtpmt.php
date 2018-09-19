@@ -1,8 +1,8 @@
 
 //next payment
-						$pmtnote = htmlspecialchars($_GET['pmtnote']);
-						$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
-						$nextpmtamt = htmlspecialchars($_GET['nextpmtamt']);
+			$pmtnote = htmlspecialchars($_GET['pmtnote']);
+			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt']);
 
 
         <div class="row">

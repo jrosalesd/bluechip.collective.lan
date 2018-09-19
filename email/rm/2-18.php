@@ -5,9 +5,8 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b> When a customer does not honor settlement agreement. 
+				<b>Template Usage: </b>Use this template when A customer notifies Spotloan of an address update. 
 				<br>
-				<b>Action: </b>Manual - RM/FR to edit and send
 			</h5>
 		</font>
 	</div>
@@ -41,14 +40,12 @@
 				Here goes the subject for this email
 			</p>
 	
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName']);
+			
+			addressupdate(1, $_GET['street'], $_GET['city'], $_GET['state'],$_GET['zip']);
 		    
-		    <p>Here is the body of the the email</p>
-		    
-			<?php
-            echo pendingpmt($pmtdate, $pmtAmt, $s, 0, 0);
-            ?>
-			<?php
+		    NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
+			
 			include('includes/signature.inc.php');
 			?>	
 			</div>
@@ -73,18 +70,11 @@
 						</div>
 						
 					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="misspmtdate">
-								Missed Payment Date:
-							</label>
-							<input type="date" class="form-control" name="misspmtdate" required>
-						</div>
+					<div class="col-md-8">
+						<?php addressupdate();?>
 					</div>
 				</div>
-				<?php
-	            echo pendingpmt($pmtdate, $pmtAmt, $s, 1, 0);
-	            ?>
+				<?php nxtpmtcheck();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

@@ -84,7 +84,7 @@
 					</div>
 				</div>
 				<?php
-				 nxtpendingcheck();
+				 nxtpmtcheck();
 				 ?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email

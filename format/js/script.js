@@ -16,8 +16,6 @@ function calc(){
          document.getElementById("demo0").innerHTML = interest2;
 }
 
-
-
 function todayForCc() {
       var d =new Date();
       var pmt = document.getElementById("123Pay").value;
@@ -69,10 +67,10 @@ function txtMemo(){
                + a + ".";
   document.getElementById("riaOutcome").innerHTML = outCome;
 }
+
 function clearnotearea(){
     document.getElementById("riaOutcome").innerHTML = ""
 }
-
 
 function dstChange(){
     var d = new Date();

@@ -109,7 +109,7 @@
 					<div class="col-md-4"></div>
 				</div>
 				<?php
-				nxtpendingcheck();
+				nxtpmtcheck();
 				?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email

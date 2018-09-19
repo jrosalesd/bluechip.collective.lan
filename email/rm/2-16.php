@@ -5,9 +5,8 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b> When a customer does not honor settlement agreement. 
+				<b>Template Usage: </b>When a customer request ACH to be turned on.
 				<br>
-				<b>Action: </b>Manual - RM/FR to edit and send
 			</h5>
 		</font>
 	</div>
@@ -15,13 +14,11 @@
 		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = trim($_GET['brwName']);
-			$balance = htmlspecialchars($_GET['balance']);
-			
+			$lastfour = htmlspecialchars($_GET['lastfour']);
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
-			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt']);
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -43,11 +40,12 @@
 	
 			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p>Here is the body of the the email</p>
+		    <p>Per your request, the automatic debit option for your upcoming payments has been activated using your bank account that is now on file, ending in <?php echo $lastfour;?>.</p>
 		    
-			<?php
-            echo pendingpmt($pmtdate, $pmtAmt, $s, 0, 0);
-            ?>
+		    <p>If you have any additional questions or concerns, please don’t hesitate to contact us. </p>
+		    
+		    <?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
+		    
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -71,19 +69,19 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
-						
-					</div>
-					<div class="col-md-4">
 						<div class="form-group">
-							<label for="misspmtdate">
-								Missed Payment Date:
-							</label>
-							<input type="date" class="form-control" name="misspmtdate" required>
-						</div>
+                            <label for="lastfour">
+                                Last 4 Bank Account:
+                            </label>
+                            <input class="form-control" type="text" maxlength="4"  name="lastfour" required/>
+                        </div>
+					</div>
+					<div class="col-md-6">
+						
 					</div>
 				</div>
 				<?php
-	            echo pendingpmt($pmtdate, $pmtAmt, $s, 1, 0);
+	        	nxtpmtcheck();
 	            ?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email

@@ -5,9 +5,8 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b> When a customer does not honor settlement agreement. 
+				<b>Template Usage: </b> Use this template when a customer revokes ACH in any format 
 				<br>
-				<b>Action: </b>Manual - RM/FR to edit and send
 			</h5>
 		</font>
 	</div>
@@ -43,7 +42,10 @@
 	
 			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p>Here is the body of the the email</p>
+		    <p>
+		    	Thank you for contacting Spotloan. We understand that you have revoked your consent to automatic debit withdrawals. We have noted your revocation and we will not attempt to automatically debit your account again.
+		    </p>
+		    <p><?php echo pendingpayment(1, $_GET['pmtdate'], $_GET['pmtdamt'])?></p>
 		    
 			<?php
             echo pendingpmt($pmtdate, $pmtAmt, $s, 0, 0);
@@ -84,6 +86,7 @@
 				</div>
 				<?php
 	            echo pendingpmt($pmtdate, $pmtAmt, $s, 1, 0);
+	            pendingpayment(0);
 	            ?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email

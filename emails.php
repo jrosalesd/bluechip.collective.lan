@@ -29,6 +29,8 @@ $rows = mysqli_num_rows($state_q);
 $dbquery = "SELECT * FROM sp_contact where status=1 and address_type='Mailing Address'";
 $dbinit = mysqli_query($conn, $dbquery);
 $dbrow = mysqli_num_rows($dbinit);
+
+
 ?>
 
 <?php
@@ -431,6 +433,7 @@ if (isset($_GET['cs'])) {
         </div>
     <?php
 }else{
+    
     if ($seclevel >= 2) {
     header("Location: index.php");
     }else{
@@ -464,41 +467,8 @@ if (isset($_GET['cs'])) {
             <div>
                 <?php
                 if (isset($_GET['new'])) {
-                    ?>
-                    <form method="POST">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="tempname">Template Name</label>
-                                    <input class="form-control" type="text" name="tempname" id="tempname"/>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="emtype">Email Type</label>
-                                    <select class="form-control" name="emtype" id="emtype">
-                                        <option value="">Select One</option>
-                                        <option value="rm">Relationship Manager</option>
-                                        <option value="fr">Collection Manager</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="catid">Email Group</label>
-                                    <select  class="form-control" name="catid" id="catid">
-                                        <option value="">Select One</option>
-                                        <option value="1">Specific To Payment Issues</option>
-                                        <option value="2">General Payment Issues</option>
-                                        <option value="3">General Emails</option>
-                                        <option value="1">FRGen</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit"  class="btn btn-primary col-md-2" name="addem">Add</button>    
-                    </form>
-                    <?php
+                    emails(1);
+                    
                     if (isset($_POST['addem'])) {
                         $name = mysqli_real_escape_string($conn,$_POST['tempname']);
                         $type = mysqli_real_escape_string($conn,$_POST['emtype']);
@@ -539,6 +509,7 @@ if (isset($_GET['cs'])) {
                 
         </div>
         <?php
+        
         if (isset($_GET['status'])) {
             $id = $_GET['id'];
             $status = $_GET['status'];
@@ -547,13 +518,25 @@ if (isset($_GET['cs'])) {
             }elseif ($status == 0) {
                 $status = 1;
             }
+            if (isset($_GET['rml'])) {
+            $urlset = "rml";
+            }if (isset($_GET['all'])) {
+                $urlset = "all";
+            }if (isset($_GET['frl'])) {
+                $urlset = "frl";
+            }if (isset($_GET['new'])) {
+                $urlset = "new";
+            }else {
+                $urlset = "";
+            }
+            
             $delete = "UPDATE email SET status = '$status' WHERE ID='$id'";
             $init = mysqli_query($conn, $delete);
             if ($init) {
-                header("Refresh:0; url=?msg=Update complete ");
+                header("Refresh:0; url=?$urlset&msg=Update complete ");
                 exit();
             }else{
-                header("Refresh:0; url=?msg=Something went wrong, please try again.");
+                header("Refresh:0; url=?$urlset&msg=Something went wrong, please try again.");
                 exit();
             }
             
@@ -571,7 +554,7 @@ if (isset($_GET['cs'])) {
                     <tr>
                         <td>
                             <?php 
-                            echo ucwords($row['name']);
+                            echo ucwords($row['name'])." [Filename: $docname.php]";
                             ?>
                         </td>
                         <td>
@@ -646,6 +629,17 @@ if (isset($_GET['cs'])) {
             }else {
                 $dataquety = "Select * FROM email ORDER BY catID ASC, ID ASC";
             }
+            if (isset($_GET['rml'])) {
+    $urlset = "rml";
+    }if (isset($_GET['all'])) {
+        $urlset = "all";
+    }if (isset($_GET['frl'])) {
+        $urlset = "frl";
+    }if (isset($_GET['new'])) {
+        $urlset = "new";
+    }else {
+        $urlset = "";
+    }
             $dbrun = mysqli_query($conn, $dataquety);
             $numrows = mysqli_num_rows($dbrun);
             if ($numrows > 0) {
@@ -666,7 +660,7 @@ if (isset($_GET['cs'])) {
                                 <td class="col-md-5"><?php echo strtoupper($row['type'])." - ".ucwords($row['name'])." - (".$row['catID']."-".$row['emID'].".php)";?></td>
                                 <td class="col-md-7">
                                     <div class="btn-group">
-                                        <a href="?status=<?php echo $row['status'];?>&id=<?php echo $row['ID'];?>" class="btn btn-<?php if($row['status'] == 1){echo "danger";}else{echo "Success";}?>">
+                                        <a href="?status=<?php echo $row['status'];?>&id=<?php echo $row['ID'];?>&<?php echo $urlset;?>" class="btn btn-<?php if($row['status'] == 1){echo "danger";}else{echo "Success";}?>">
                                             <?php if($row['status'] == 1){echo "De-Activate";}else{echo "Activate";}?>
                                         </a>
                                         <a href="?edit&id=<?php echo $row['ID'];?>" class="btn btn-warning">

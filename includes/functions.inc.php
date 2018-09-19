@@ -210,6 +210,64 @@ function address($l = false, $loanid = false){
     echo $address;
 }
 
+function addressupdate($type=0, $street="", $city="", $state="",$zip=""){
+    if ($type == 0) {
+        ?>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="street">Street Address:</label>
+                    <input class="form-control" type="text" name="street" id="street"/>
+                </div>
+                        
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input class="form-control" type="text" name="city" id="city"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <?php statedrop(1);?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="zip">Zipcode:</label>
+                        <input class="form-control" type="text" name="zip" id="zip"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+    }if ($type == 1) {
+        include 'dbh.inc.php';
+        $street = ucwords(mysqli_real_escape_string($conn,$street));
+        $city = ucwords(mysqli_real_escape_string($conn,$city));
+        $state = mysqli_real_escape_string($conn,$state);
+        $zip =mysqli_real_escape_string($conn,$zip);
+        //Get state
+        $state_query="SELECT * FROM servicing_states where id=$state";
+        $dataPull = mysqli_query($conn, $state_query);
+        $numrows = mysqli_num_rows($dataPull);
+        if ($numrows > 0) {
+            $row = mysqli_fetch_array($dataPull);
+            $abbr = $row['state_abr'];
+            $service = $row['state_status'];
+            $state_name = $row['state_name'];
+        }
+        $addessupdate = "<p>Per your request, Spotloan has updated your address to the following: $street, $city, $abbr $zip.</p>";
+        if ($service == No) {
+            $addessupdate .= "<p>Please keep in mind, we no longer offer loans in $state_name. We apologize for any inconvenience.</p>";
+        }
+        
+        $conn->close();
+        
+        echo $addessupdate;
+    }
+    
+}
+
 function pmtcancelation($code, $date, $amt, $nxtpmt){
     $date = date_create($date);
     $date = date_format($date,"l, F jS");
@@ -266,7 +324,7 @@ function stlbroken($s){
     }
 }
 
-function nxtpendingcheck(){
+function nxtpmtcheck(){
     ?>
     <div class="row">
 		<div class="col-md-3">
@@ -289,7 +347,7 @@ function NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote){
     if ($pmtnote == "on") {
         ?>
         <p>
-            As a friendly reminder, your next scheduled payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
+            As a friendly reminder, your next scheduled payment is due on <?php echo date_format($nextpmtdate,"l, F jS");?>, in the regular amount of $<?php echo number_format($nextpmtamt,2,".",",");?>.
         </p>
         <?php
     }
@@ -376,17 +434,143 @@ function soldfind($LAPro){
     return $output;
 }
 
-function brwname($name){
+function brwname($name,$mode = 0){
     $name = htmlspecialchars(trim($name));
     $name = ucfirst($name);
-    $script = 
-    "
-    <p>Hi $name,</p>
-    <br />
-    <p>Thank you for contacting Spotloan.</p>
-    "
-    ;
+    
+    
+    if ($mode == 0) {
+       $script = 
+        "
+        <p>Hi $name,</p>
+        <p>Thank you for contacting Spotloan.</p>
+        "
+        ;
+    }
+    if ($mode == 1) {
+        $script =
+        "
+        <p>Hi $name,</p>
+        ";
+    }
     return $script;
+}
+
+function emails($type){
+    
+    include 'dbh.inc.php';
+    if($type == 1){
+        ?>
+        <form method="POST">
+            <div class="row">
+                 <div class="col-sm-4">
+                     <div class="form-group">
+                        <label for="tempname">Template Name</label>
+                        <input class="form-control" type="text" name="tempname" id="tempname"/>
+                    </div>
+                 </div>
+                 <div class="col-sm-4">
+                     <div class="form-group">
+                        <label for="catid">Email Group</label>
+                        <select  class="form-control" name="catid" id="catid">
+                            <option value="">Select One</option>
+                            <?php
+                            $em_cat = "Select * FROM em_cat";
+                            $dbquery_cat = mysqli_query($conn, $em_cat);
+                            $numrows_cat = mysqli_num_rows($dbquery_cat);
+                             if ($numrows_cat > 0) {
+                                while($em_row_cat = mysqli_fetch_array($dbquery_cat)){
+                                    ?>
+                                    <option value="<?php echo $em_row_cat['cat_id'];?>"><?php echo $em_row_cat['cat_name'];?></option>
+                                    <?php
+                                }
+                            }else {
+                                echo "Check Code";
+                            }
+                            ?>
+                        </select>
+                     </div>
+                 </div>
+                 <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="emtype">Email Type</label>
+                        <select class="form-control" name="emtype" id="emtype">
+                            <option value ="">Select One</option>
+                            <?php
+                            $em_type = "SELECT * FROM emtype";
+                            $dbquery = mysqli_query($conn, $em_type);
+                            $numrows = mysqli_num_rows($dbquery);
+                             if ($numrows > 0) {
+                                
+                                while($em_row = mysqli_fetch_array($dbquery)){
+                                    ?>
+                                    <option value="<?php echo $em_row['code'];?>"><?php echo $em_row['name'];?></option>
+                                    <?php
+                                }
+                            }else {
+                                echo "Check Code";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                 </div>
+            </div>
+            <button type="submit"  class="btn btn-primary col-md-2" name="addem">Add</button>
+        </form>
+        <?php
+    }
+    $conn->close();
+}
+
+function pendingpayment($type, $status = "off", $pmtAmt = "", $pmtdate =""){
+    if ($status == "on") {
+        $pmtdate = date_create($pmtdate);
+        $pmtdate =  date_format($pmtdate,"l, F jS");
+        $pmtAmt = "$".number_format($pmtAmt,2,".",",");
+        if ($type == 1) {
+        //ACH Revokation
+        $pendingNote = "<p>Unfortunately, we were unable to stop your pending payment of $pmtAmt on $pmtdate. As a reminder, we need a two business day notice for payment modifications. This payment will be the last one attempted from your account.</p>";
+        }elseif ($type == 2) {
+            //restructure
+            $pendingNote = "<p>Keep in mind, this restructure is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
+        }elseif ($type == 3) {
+            //payoff
+            $pendingNote = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
+        }
+    }if ($status == "off") {
+        if($type == 0){
+            ?>
+            <div>
+                <div>
+                    <div class="checkbox">
+                        <label for="pendingclick">
+                            <input type="checkbox"  id="pendingclick" name="pendingclick" onclick="pendingpmt()"/><b>Is there any PENDING PAYMENTS?</b>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-md-4">
+                        <g id="pendingForm"></g>
+                    </div>
+                </div>
+            </div>
+           <?php
+        }
+    }
+    
+    return $pendingNote;
+}
+
+function hoursOfOperation($status = true){
+    if ($status == 1) {
+        $operations = 
+        "<p>Our Help Desk hours of operation are Monday - Friday from 7:00am CST - 4:30pm CST.</p>
+        <p>For immediate service or to make payment arrangements, please feel free to contact us at 1-888-681-6811, Monday - Friday 7:00am - 8:00pm CST or Saturdays 9:00am - 6:00pm CST.</p>
+        <br>
+        ";
+    }else {
+        $operations = "<br>";
+    }
 }
 
 /*

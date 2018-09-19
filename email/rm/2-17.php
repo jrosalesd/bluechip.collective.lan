@@ -5,9 +5,8 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b> When a customer does not honor settlement agreement. 
+				<b>Template Usage: </b> Use this template when a current customer requests either another loan or requests additional funds.
 				<br>
-				<b>Action: </b>Manual - RM/FR to edit and send
 			</h5>
 		</font>
 	</div>
@@ -34,20 +33,12 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p>
-				<strong>
-					Subject:
-				</strong>
-				Here goes the subject for this email
-			</p>
-	
+			
+			
 			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p>Here is the body of the the email</p>
-		    
-			<?php
-            echo pendingpmt($pmtdate, $pmtAmt, $s, 0, 0);
-            ?>
+		    <p>Thank you for contacting Spotloan. Unfortunately, we are only able to offer one loan at a time. After paying off your current loan, you may re-apply. </p>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -73,18 +64,7 @@
 						</div>
 						
 					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="misspmtdate">
-								Missed Payment Date:
-							</label>
-							<input type="date" class="form-control" name="misspmtdate" required>
-						</div>
-					</div>
 				</div>
-				<?php
-	            echo pendingpmt($pmtdate, $pmtAmt, $s, 1, 0);
-	            ?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

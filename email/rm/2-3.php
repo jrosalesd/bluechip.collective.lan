@@ -1,28 +1,24 @@
 <div class="row">
-    <div class="col-md-3">
-        <h2>
-			Account Balance Email
+	<div class="col-md-3">
+		<h2>
+			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>When a customer asks an agent what their account balance is.
+				<b>Template Usage: </b>Use this template when a customer requests their balance.
 				<br>
-				<b>Action: </b>Manual - Agent to edit and send
 			</h5>
 		</font>
-    </div>
-    <div class="col-md-9" id="embody" style="border-left: solid;">
-        <?php
+	</div>
+	<div class="col-md-9" style="border-left: solid;">
+		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
-			$pmtAmt = htmlspecialchars($_GET['pmtAmt']);
-			
+			//$status = 0;
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
-			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt']);
-			
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -35,38 +31,13 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+				
+			<?php echo brwname($_GET['brwName']);?>
 		    
+		    <p>Thank you for contacting Spotloan. Your account balance is $[Outstanding Loan Balance] and your next payment of $[Scheduled Payment Amount] is due on [Next Scheduled Payment Date (Tuesday, January 7)].</p>
 		    
-			<p>
-				You’ve just made my “Favorite Customer of the Day” list! Thanks for checking in on your loan. Your account balance is $<?php echo number_format($pmtAmt,2,".",","); ?>.
-			</p>
-			<?php
-            if ($pmtnote == 'on') {
-                ?>
-                <p>
-                    As a friendly reminder, your next scheduled payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
-                </p>
-                <?php
-            }
-            ?>
-            <?php
-            if ($_GET['additional'] == 'on') {
-                ?>
-                <p>
-                    <?php echo nl2br(htmlspecialchars($_GET['additionalnote']))?>
-                </p>
-                <?php
-            }
-            ?>
-            <p>
-				Remember, your account balance changes daily to reflect interest.
-            </p>
-            <br>
-            
+			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -90,26 +61,21 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
+						<div class="form-group">
+							<label for="bal">Account's Outstanding Balance:</label>
+							<input class="form-control" type="number" step="0.01" name="bal" required/>
+						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
-                            <label for="pmtAmt">
-                                Account Balance:
-                            </label>
-                            <input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
-                        </div>
+						
 					</div>
-					<div class="col-md-4"></div>
 				</div>
-				<?php
-				nxtpendingcheck();
-				?>
-				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
+				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>
 			</form>
 			<?php
 		}
 		?>
-    </div>
+	</div>
 </div>

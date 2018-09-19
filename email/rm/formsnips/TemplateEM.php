@@ -5,9 +5,8 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b> When a customer does not honor settlement agreement. 
+				<b>Template Usage: </b> 
 				<br>
-				<b>Action: </b>Manual - RM/FR to edit and send
 			</h5>
 		</font>
 	</div>
@@ -45,9 +44,8 @@
 		    
 		    <p>Here is the body of the the email</p>
 		    
-			<?php
-            echo pendingpmt($pmtdate, $pmtAmt, $s, 0, 0);
-            ?>
+			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -83,7 +81,7 @@
 					</div>
 				</div>
 				<?php
-	            echo pendingpmt($pmtdate, $pmtAmt, $s, 1, 0);
+	            pendingpayment(0);
 	            ?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email

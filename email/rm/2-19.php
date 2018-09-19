@@ -5,9 +5,8 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b> When a customer does not honor settlement agreement. 
+				<b>Template Usage: </b>Use this template when a consumer reaches out about application issues.
 				<br>
-				<b>Action: </b>Manual - RM/FR to edit and send
 			</h5>
 		</font>
 	</div>
@@ -15,13 +14,12 @@
 		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = trim($_GET['brwName']);
-			$balance = htmlspecialchars($_GET['balance']);
-			
+			$status = 0;
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
 			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
+			
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -34,20 +32,15 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p>
-				<strong>
-					Subject:
-				</strong>
-				Here goes the subject for this email
-			</p>
-	
-			<?php echo brwname($_GET['brwName']);?>
+			
+			<?php echo brwname($_GET['brwName'],1);?>
 		    
-		    <p>Here is the body of the the email</p>
+		    <p>Thank you for contacting Spotloan regarding your most recent application.</p>
 		    
-			<?php
-            echo pendingpmt($pmtdate, $pmtAmt, $s, 0, 0);
-            ?>
+		    <p>To complete this process, please give us a call at 1-888-681-6811 Monday - Friday 7am - 8pm CST or Saturdays 9am - 6pm CST at your earliest convenience. </p>
+		    
+			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -73,18 +66,7 @@
 						</div>
 						
 					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="misspmtdate">
-								Missed Payment Date:
-							</label>
-							<input type="date" class="form-control" name="misspmtdate" required>
-						</div>
-					</div>
 				</div>
-				<?php
-	            echo pendingpmt($pmtdate, $pmtAmt, $s, 1, 0);
-	            ?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

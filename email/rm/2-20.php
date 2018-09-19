@@ -5,9 +5,8 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b> When a customer does not honor settlement agreement. 
+				<b>Template Usage: </b>Use this template when a customer asks what they will need to fill out a Spotloan application.
 				<br>
-				<b>Action: </b>Manual - RM/FR to edit and send
 			</h5>
 		</font>
 	</div>
@@ -34,20 +33,22 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p>
-				<strong>
-					Subject:
-				</strong>
-				Here goes the subject for this email
-			</p>
-	
+			
 			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p>Here is the body of the the email</p>
+		    <p>To apply for a Spotloan, you will need:</p>
+		    <div class="offset25px">
+		    	<ul class="p_list">
+		    		<li>--A regular source of income.</li>
+		    		<li>--A valid email address and phone number.</li>
+		    		<li>--To be at least 18 years of age.</li>
+		    		<li>--Your own checking or savings account at a qualifying bank or credit union. (Non-traditional or prepaid accounts are not Spotloan-friendly).</li>
+		    	</ul>
+		    </div>
+		    <p>Please let us know if you have any other questions.</p>
 		    
-			<?php
-            echo pendingpmt($pmtdate, $pmtAmt, $s, 0, 0);
-            ?>
+			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -73,18 +74,7 @@
 						</div>
 						
 					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="misspmtdate">
-								Missed Payment Date:
-							</label>
-							<input type="date" class="form-control" name="misspmtdate" required>
-						</div>
-					</div>
 				</div>
-				<?php
-	            echo pendingpmt($pmtdate, $pmtAmt, $s, 1, 0);
-	            ?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

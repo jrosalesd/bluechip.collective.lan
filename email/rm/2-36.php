@@ -67,7 +67,7 @@
 					<div class="col-md-4">
 						<div class='form-group'>
 							<label for='nostoppmt'>
-								Date Of Non Stop Payment:s
+								Date Of Non Stop Payment:
 							</label>
 							<input class='form-control' type='date' step='0.01' id='nostoppmt' name='nostoppmt' required/>
 						</div>

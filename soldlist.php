@@ -86,7 +86,7 @@ $msg=$_GET['msg'];
                                         <td><?php echo $row[3]; ?></td>
                                         <td><?php echo $row[4]; ?></td>
                                         <td>
-                                            <a class="btn btn-success" href="emails.php?cs&id=41&LAPro=<?php echo $row[0]; ?>"><span class="fa fa-envelope-o" style="font-size:16px"></span> Send Email</a>
+                                            <a class="btn btn-success" href="emails.php?cs&id=88&LAPro=<?php echo $row[0]; ?>"><span class="fa fa-envelope-o" style="font-size:16px"></span> Send Email</a>
                                         </td>
                                     </tr>
                                     <?php

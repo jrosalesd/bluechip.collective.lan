@@ -67,7 +67,7 @@
 						</div>
 						<div class="form-group">
 							<label for="pastdue">
-								Borrower´s First Name:
+								Days Past Due:
 							</label>
 							<input class="form-control" type="text" name="pastdue" id="pastdue" required/>
 						</div>

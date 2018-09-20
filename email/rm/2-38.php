@@ -35,7 +35,7 @@
 			
 			<?php echo brwname($_GET['brwName'],1);?>
 		    
-		    <p><?php echo paidoffloan($_GET['state']);?></p>
+		    <p>Congratulations, you have paid off your Spotloan! To apply for another loan, please visit our website at www.spotloan.com to complete a new application.</p>
 		    
 			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
 			
@@ -62,7 +62,7 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
-						<?php echo paidoffloan();?>
+						<?php //echo paidoffloan();?>
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

@@ -38,7 +38,7 @@
 			<?php echo brwname($_GET['brwName'],1);?>
 		    
 		    
-			<p>hank you for contacting Spotloan. Per your request, here is your new payment schedule:</p>
+			<p>Thank you for contacting Spotloan. Per your request, here is your new payment schedule:</p>
 			<div class="offset25px">
 				<p>
 					<b>NEW SCHEDULE:</b>

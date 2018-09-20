@@ -813,6 +813,10 @@ function sp($mode=0,$date="", $amtinit="", $newamt=""){
     }
 }
 
+function paidoffloan(){
+    
+}
+
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){
     $resStart = strtotime($resStart);

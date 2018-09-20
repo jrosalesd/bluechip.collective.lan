@@ -1,15 +1,11 @@
 <div class="row">
     <div class="col-md-3">
         <h2>
-			Restructure Loan Offer Email  
-			<small>(RM should probably call on this one)</small>
+			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>Use this email template to provide Borrowers with a Restructure Offer
-				<br />
-				<br />
-				<b>Usage: </b>Agents should use this email when borrower requests a restructure offer over email or when the borrower does not answer a call made to to discuss restructure options.
+				<b>Template Usage: </b>Use this template when a borrower says their current payment schedule doesn’t work for them. 
 			</h5>
 		</font>
     </div>
@@ -38,30 +34,25 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p><strong>Subject:</strong> Restructure Offer.</p><br>
 			
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
-		    <p>
-				Thank you for contacting me about your Spotloan. This option is called a restructure and this is our offer:
-			</p>
+			<?php echo brwname($_GET['brwName']);?>
+			<p>We want to ensure that your payments are taken according to the days you get paid.</p>
+			<p>Here is what we can offer you:</p>
+			<div class="offset25px">
+				<p>
+					<b>NEW SCHEDULE:</b>
+					<br>Payment Frequency: <?php echo $pmt_freq_new;?>
+					<br>First Payment Date: <?php echo date_format($pmt_start_date,"F jS, Y");?>
+					<br>Last Payment Date: <?php echo date_format($pmt_end_date,"F jS, Y");?>
+					<br>Payment Amount: $<?php echo number_format($pmt_new,2,".",",");?>
+				</p>
+			</div>
 			
-			<p>
-				<?php echo $pmt_number_new." ".$pmt_freq_new;?> payments of $<?php echo number_format($pmt_new,2,".",","); ?>. <br>Your first payment would be on  <?php echo date_format($pmt_start_date,"l, F jS, Y"); ?>  and your final payment would be on <?php echo date_format($pmt_end_date,"l, F jS, Y"); ?>.
-			</p>
+			<p>Any time your payments fall on weekends or holidays, they will be taken the next business day. <b>I will not make any changes to your payment schedule until you confirm.</b></p>
 			
-			<p>
-				Anytime your payments fall on weekends or holidays, they will be taken out the next business day available.
-			</p>
-			<p>
-				Please let me know right away if these terms work for you. I need at least 2 business days before your payment is due to make these changes.
-			</p>
-			<p>
-				Again, I won't make any changes to your account until you confirm what you’d like me to do. Let me know!
-			</p>
-			<br>
+			<?php echo pendingpayment(2, $_GET['pendingclick'], $_GET['pennextpmtamt'], $_GET['datepending']);?>
+			
+			<p>As a friendly reminder, your next payment is due on <?php echo nextpayment(1,$_GET['nextpmtdate']);?>, for the regular amount of <?php echo nextpayment(2,$_GET['nextpmtamt']);?>.</p>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -86,6 +77,7 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
+						<?php echo nextpayment();?>
 					</div>
 					<div class="col-md-4">
 						<p>Restructure Offer Details</p>
@@ -103,12 +95,12 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
+						<!--<div class="form-group">
 							<label for="pmt_number_new">
 								Number Of Payments:
 							</label>
 							<input class="form-control" type="text" name="pmt_number_new" required/>
-						</div>
+						</div>-->
 						<div class="form-group">
 							<label for="pmt_new">
 								New Payment Amount:
@@ -128,6 +120,7 @@
 						</div>
 					</div>
 				</div>
+				<?php pendingpayment(0)?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

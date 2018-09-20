@@ -5,9 +5,8 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>When a customer emails their RM or help@ asking for a payment deferral, an agent can generate this response email.
+				<b>Template Usage: </b>Use this template when a borrower requests to defer their payment.
 				<br>
-				<b>Action: </b>Manual - Agent to edit and send
 			</h5>
 		</font>
     </div>
@@ -15,7 +14,6 @@
         <?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
 			$pmtAmt = $_GET['pmtAmt'];
 			$pmtdate = date_create($_GET['pmtdate']);
 			$nextpmtdate = date_create($_GET['nextpmtdate']);
@@ -39,49 +37,30 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p>
-				<strong>Subject:</strong>
-				1, 2, 3 – Options to keep your Spotloan loan on track
-			</p>
-			<br>
 			
-
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],2);?>
 		    
 		    
 			
 			<p>Thanks for contacting me. I’m always happy to help with payment changes.</p>
 
-		    <p>Making changes to your Spotloan gets expensive fast – it can extend the life of your loan and add more interest. As your Manager, I want to help you save money.</p>
+		    <p>I have the below options for you to decide which will work best for your situation. <b>I will wait to make changes until I hear back from you.</b></p>
 		
-		    <p>Check out your options and let me know what you want to do. I’ll wait to make changes until I hear back from you.</p>
-		
-		    <p>If you absolutely need to change your payment plan, here are your options:<p>
+		    <p>If you absolutely need to change your payment plan, please select from the following options:<p>
 		
 		    <div style="margin-left: 75px;">
+		    	<p>1. Pay a smaller amount on <?php echo date_format($pmtdate,"l, F jS"); ?>, when your payment is due. This is your best option. </p>
+		    	<p>2. Make up your payment at a later time. However, this will still cause your loan to accrue interest every day until the payment is made. The longer you wait, the more expensive this option becomes.</p>
 		      	<p>
-		      	<b>1) Pay a smaller amount</b> on <?php echo date_format($pmtdate,"l, F jS"); ?>, when your payment is due. <b>This is your best option.</b> Most customers try to make half the payment amount, that would be $<?php echo number_format(($pmtAmt/2),2,".",","); ?>.
+		      		3. Adjust  your payment size. If you want to miss this next payment, but don’t want your interest to get away from you, we can increase your payment amount to keep you on track.
+		      		<br />This is how your adjustment payment schedule will look:
+		      		<br /><?php echo restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ressdateEnd);?>
 		      	</p>
-		
-		      	<p>
-		    		<b>2) Double up on your next payment:</b> If you are not able to make a partial payment, a double payment of $<?php echo number_format(($pmtAmt*2),2,".",","); ?> on <?php echo date_format($nextpmtdate,"l, F jS");?> would also be an option. <?php echo intWeeks($start, $end);?>
-		    	</p>
-				
-				<p>
-					<b>3) Make up your payment at a later time.</b> . Every day you accrue interest. The longer you wait the more expensive this option becomes. I’m here to work with you. Call me at 1(888) 681-6811 to set this up.
-				</p>
-				
-				<p>
-		      		<b>4) Change your payment size.</b> <?php echo restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ressdateEnd);?>
-		      	<p>
+		      		
 		    </div>
 		
-		    <p><b>All of these options will cost you more because of additional interest that happens when you extend your loan terms.</b> Please let me know right away what option above works best for you. I need at least <b><u>2 business days</u></b> before your payment is due to make these changes.</p>
-		    
-		    <p>Again, I won't make any changes to your account until you confirm what you’d like me to do. Let me know!</p>
-		    
-		    <br>
-		    
+		    <p>Please let me know right away which option above works best for you. I need at least two business days before your payment is due to make these changes. <b>I will not make any changes to your account until you confirm what you would like me to do.</b></p>
+		    		    
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -105,26 +84,11 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
-						
-					</div>
-					<div class="col-md-4">
 						<div class="form-group">
 							<label for="pmtdate">
 							Next Payment Date:
 							</label>
 							<input class="form-control" type="date" name="pmtdate" required/>
-						</div>
-						<div class="form-group">
-							<label for="nextpmtdate">
-							Following Payment Date:
-							</label>
-							<input class="form-control" type="date" name="nextpmtdate" required/>
-						</div>
-						<div class="form-group">
-							<label for="pmtAmt">
-							Regular Payment Amount:
-							</label>
-							<input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
 						</div>
 					</div>
 					<div class="col-md-4">

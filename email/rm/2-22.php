@@ -5,7 +5,7 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests to defer a payment, but it’s within the two business day window.
+				<b>Template Usage: </b>Use this template when a borrower wants to update their banking information via email.  
 				<br>
 			</h5>
 		</font>
@@ -15,8 +15,6 @@
 		if($_GET['set'] == "on"){
 			//variables to complete template
 			//$status = false;
-			$pmtAmt = $_GET['pmtAmt'];
-			$pmtdate = date_create($_GET['pmtdate']);
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
@@ -36,7 +34,17 @@
 
 			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p>As a reminder, we require a two business day notice to make changes to your payment due dates. This means that I will not be able to adjust your payment of $<?php echo number_format($pmtAmt,2,".",","); ?> that is due <?php echo date_format($nextpmtdate,"l, F jS");?>. Please call us if we can assist with any other options going forward.</p>
+		    <p>For security reasons, we are unable to update your banking information via email. Please call us at your earliest convenience and we would be happy to assist you. Your payment of <?php echo nextpayment(2,$_GET['nextpmtamt']);?>, due on <?php echo nextpayment(1,$_GET['nextpmtdate']);; ?>, can then be drawn from the updated bank account on file. Please have the following information available at the time of your call: </p>
+		    <div class="offset50px">
+		    	<ul class="p_list_disc">
+		    		<li>Routing Number</li>
+		    		<li>Account Number</li>
+		    		<li>Type of Account (Checking or Savings)</li>
+		    	</ul>
+		    </div>
+		    <p>Please keep in mind, we require a two-business day notice in order to make any changes on your Spotloan account.</p>
+		    
+			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -63,19 +71,11 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
-                        <label for="pmtdate">
-                            Payment Date:
-                        </label>
-                        <input class="form-control" type="date" name="pmtdate" required/>
-	                    </div>
-	                    <div class="form-group">
-	                        <label for="pmtAmt">
-	                            Payment Amount:
-	                        </label>
-	                        <input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
-	                    </div>
-					</div>
+                    	<div>
+							<h3>Next Payment</h3>
+						</div>
+                    	<?php echo nextpayment();?>
+                    </div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email

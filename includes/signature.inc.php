@@ -1,8 +1,14 @@
 
-<?php hoursOfOperation($status);?>
+<?php 
+if (isset($status) && $status == false) {
+    hoursOfOperation($status);
+}else {
+    hoursOfOperation();
+}
+?>
 <p>Sincerely,</p>
 <div>
-    <p >
+    <p>
         <g class="text-capitalize">
             <?php 
             if($role == "Help@ Representative"){
@@ -12,12 +18,11 @@
             }
             ?>
         </g>
-        
-            <?php 
-            if($role != "Help@ Representative"){
-                echo "<br>".$role;
-            }
-            ?>
+        <?php 
+        if($role != "Help@ Representative"){
+            echo "<br>".$role;
+        }
+        ?>
         <br>
         <?php
         if($role == "Debt Consolidation"){

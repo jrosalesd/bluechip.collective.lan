@@ -5,6 +5,19 @@
 			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt']);
 
 
+<div class='form-group' id='pmtnote'>
+				<label for='nextpmtdate'>
+					Next Payment Date
+				</label>
+				<input class='form-control' type='date' id='nextpmtdate' name='nextpmtdate' required/>
+			</div>
+			<div class='form-group'>
+				<label for='nextpmtamt'>
+					Next Payment Amount
+				</label>
+				<input class='form-control' type='number' step='0.01' id='nextpmtamt' name='nextpmtamt' required/>
+			</div>
+			
         <div class="row">
 								<div class="col-md-3">
 									<div class="checkbox">
@@ -29,43 +42,21 @@
 									</div>
 								</div>
 							</div>
-        
-        
-                            <?php
-                            if ($pmtnote == 'on') {
-                                ?>
-                                <p>
-                                    As a friendly reminder, your next schedule payment of $<?php echo number_format($nextpmtamt,2,".",",");?> will be due on <?php echo date_format($nextpmtdate,"l, F jS");?>.
-                                </p>
-                                <?php
-                            }
-                            ?>
-                            <?php
-                            if ($_GET['additional'] == 'on') {
-                                ?>
-                                <p>
-                                    <?php echo nl2br(htmlspecialchars($_GET['additionalnote']))?>
-                                </p>
-                                <?php
-                            }
-                            ?>
 -----------------------------------
 //number format//
 
 <?php echo number_format($pmtAmt,2,".",","); ?>
 <?php echo date_format($pmtdate,"l, F jS"); ?>
 
-<p>
-Hi <?php echo $brwName;?>,
-</p>
-<br>
 
 -------------------------
-
+//Banking information
+$bankname = htmlspecialchars($_GET['bankname']);
+$lastfour = htmlspecialchars($_GET['lastfour']);
 
 <?php echo $bankname;?>
 <?php echo $lastfour;?>
-bank information
+
 
 
                                     <div class="col-md-4">

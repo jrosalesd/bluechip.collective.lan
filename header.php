@@ -186,4 +186,4 @@ $conn->close();
         <br>
         <br>
         <br>
-        <body class="container-fluid" onload="localtime()">
+        <body class="container" onload="localtime()">

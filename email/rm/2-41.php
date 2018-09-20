@@ -1,21 +1,21 @@
 <div class="row">
     <div class="col-md-3">
         <h2>
-			Sold Account inquiry
+			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>When customer request information about an account that has already been sold to a thind party Collection Agency.
+				<b>Template Usage: </b>Use this template when a Borrower requests information on their sold account.
 				<br>
-				<b>Action: </b>Manual - Agent to edit and send 
 			</h5>
 		</font>
     </div>
     <div class="col-md-9" id="embody" style="border-left: solid;">
         <?php
 		if($_GET['set'] == "on"){
+			
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
+			
 			$LAPro =htmlspecialchars(trim($_GET['LAPro']));
 			$Lid =  htmlspecialchars(trim($_GET['Lid']));
 			$pmtAmt = htmlspecialchars($_GET['pmtAmt']);
@@ -33,20 +33,19 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p><strong>Subject:</strong>Your Spotloan Status</p><br>
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],1);?>
 			
+			<p>Thank you for your recent <?php echo $comm?> regarding your loan status.</p>
 			<p>
-				In accordance with our customary practices, Spotloan sold your loan on <?php echo soldfind($LAPro); ?> to an independent third party unaffiliated with Spotloan (debt buyer) after not receiving a payment from you in over 90 days.<?phpecho soldacct(0,htmlspecialchars($_GET['sldcheck']),$pmtdate,$pmtAmt);?>. Spotloan sold and transferred to the debt buyer all of our rights, title, and interest in this loan and Spotloan has not attempted to collect on this debt since the date of the sale.
+				In accordance with our customary practices, Spotloan sold your loan on <?php echo soldfind($LAPro); ?>, to an independent third party (debt buyer) unaffiliated with Spotloan after not receiving a payment from you in over 90 days. <?php echo soldacct(0,htmlspecialchars($_GET['sldcheck']),$pmtdate,$pmtAmt);?>. Spotloan sold and transferred to the debt buyer all of our rights, title, and interest in this loan and has not attempted to collect on this debt since the date of the sale.
 			</p>
 			<p>
-				Below is the contact information for the debt buyer should you wish to contact them about your Spotloan.
+				Below is the contact information for the debt buyer should you wish to contact them about your loan.
 			</p>
 			
-			<p>
-				Please contact <b><?php echo $Agency." (".$AgencyAbr.")";?></b> at <b>1-<?php echo $phone;?></b> to further assist you. You can referance your account through the Loan ID, yours is <b><?php echo $Lid;?>.</b>
-			</p>
+			<?php echo soldfind($LAPro, 1)?>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	

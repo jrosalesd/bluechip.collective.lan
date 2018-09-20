@@ -1,22 +1,23 @@
 <div class="row">
-    <div class="col-md-3">
-        <h2>
+	<div class="col-md-3">
+		<h2>
 			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests their payment history.
-				<br>
+				<b>Template Usage: </b>Use this template when you called a borrower and they did not pick up.
 			</h5>
 		</font>
-    </div>
-    <div class="col-md-9" id="embody" style="border-left: solid;">
-        <?php
+	</div>
+	<div class="col-md-9" style="border-left: solid;">
+		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
-			$pmthist =  nl2br($_GET['pmthist']);
-			
+			//$status = false;
+			//next payment
+			$pmtnote = htmlspecialchars($_GET['pmtnote']);
+			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -29,20 +30,11 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'], 1);?>
 		    
-			<p>You can find your payment history below. Please let me know if you have any questions.</p>
-			<h3>Date - Status - Amount</h3>
-			<p>
-				<?php
-				$pmthist = str_ireplace("\t"," - ",$pmthist);
-				$pmthist = str_ireplace(" "," - ",$pmthist);
-				echo $pmthist;
-				?>
-			</p>
-		    
+		    <?php echo phonenumber($_GET['phone']);?>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -67,24 +59,21 @@
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
 					</div>
-					<div class="col-md-8">
+					<div class="col-md-4">
 						<div class="form-group">
-							<label for="brwName">
-								Date - Status - Amount
+							<label for="phone">
+								Phone Number Called:
 							</label>
-							<textarea class="form-control text-left " name="pmthist" rows="10" required></textarea>
+							<input class="form-control" type="text" placeholder="(125)-123-1253" name="phone" required/>
 						</div>
-							
 					</div>
 				</div>
-				
-				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
+				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>
 			</form>
-			
 			<?php
 		}
 		?>
-    </div>
+	</div>
 </div>

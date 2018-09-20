@@ -20,13 +20,51 @@ function intWeeks($s, $e){
 	return $weeks;
 }
 
+function nextBD($start,$count = 1,$method = 0){ 
+    $start = htmlspecialchars($start);
+    $tmpDate = $start;
+    $start = strtotime($start);
+    $currentYear = date('Y',$start);
+    $holidays = [ 
+        date("m/d/Y",mktime(0, 0, 0, 1, 1,$currentYear)), 
+        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 1, 1, $currentYear))), 
+        date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 2, 1, $currentYear))), 
+        date("m/d/Y",strtotime("last Monday of May $currentYear")), 
+        date("m/d/Y",mktime(0, 0, 0, 7, 4, $currentYear)), 
+        date("m/d/Y",strtotime("first Monday of September $currentYear")), 
+        date("m/d/Y",strtotime("2 Mondays", mktime(0, 0, 0, 10, 1, $currentYear))), 
+        date("m/d/Y",mktime(0, 0, 0, 11, 11, $currentYear)), 
+        date("m/d/Y",strtotime("4 Thursdays", mktime(0, 0, 0, 11, 1, $currentYear))), 
+        date("m/d/Y",mktime(0, 0, 0, 12, 25, $currentYear))
+    ];
+    
+    $i = $count;
+    $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
+    
+    while (in_array($nextBusinessDay, $holidays)) {
+        $i++;
+        $nextBusinessDay = date('m/d/Y', strtotime($tmpDate . ' +' . $i . ' Weekday'));
+    }
+    if ($method == 0) {
+    return $nextBusinessDay;
+    }if ($method == 1) {
+        $nextBusinessDay = strtotime($nextBusinessDay);
+        return $nextBusinessDay;
+    }if ($method == 3) {
+        // formated dddd, mmmm dd
+        $nextBusinessDay = date_create($nextBusinessDay);
+        $nextBusinessDay = date_format($nextBusinessDay,"l, F jS");
+        return $nextBusinessDay;
+    }
+}
+
 function restructureOffer($pmtdate, $pmtnum, $pmtfreq, $resamt, $ressdate, $ressdateEnd){
     $pmtdate = date_format($pmtdate,"l, F jS");
-    $resamt = number_format($resamt,2,".",",");
+    $resamt = "$".number_format($resamt,2,".",",");
     $ressdate = date_format($ressdate,"l, F jS");
     $ressdateEnd = date_format($ressdateEnd,"l, F jS, Y");
     
-    $offer = "Another option we have is what is called a restructure. This allows you to miss your next payment on $pmtdate but increases your payment amount. Meaning that you would have $pmtnum $pmtfreq payments of  $$resamt starting on $ressdate, and ending on  $ressdateEnd.";
+    $offer = "$pmtnum $pmtfreq payments of $resamt starting $ressdate and ending on $ressdateEnd.";
     
     return $offer;
 }
@@ -41,6 +79,40 @@ function comment($comment, $s){
     }
 }
 
+function statedrop($req = false, $status = false){
+    include 'dbh.inc.php';
+    if ($status == true) {
+        $st = "SELECT * FROM servicing_states WHERE state_status='No' ORDER BY state_name ASC";
+    }else {
+        $st = "SELECT * FROM servicing_states ORDER BY state_name ASC";
+    }
+    
+    $state_q = mysqli_query($conn, $st);
+    $rows = mysqli_num_rows($state_q);
+    ?>
+    <div class="form-group">
+        <label for="state">
+            Borrower's State:
+        </label>
+        <select class="form-control"  name="state" <?php if($req == true){echo "required";}?> >
+            <option value="">Select State</option>
+            <?php
+            if($rows > 0){
+            while($row = mysqli_fetch_array($state_q)){
+            	?>
+            	<option value="<?php echo $row['id']?>" <?php if($_GET['state'] == $row['id']){echo "selected";}?>>
+            	    <?php echo $row['state_abr']." - ".$row['state_name']?>
+            	    </option>
+            	<?php
+            }
+            }
+            ?>
+        </select>
+    </div>
+    <?php
+    $conn->close();
+}
+
 function checkState($id){
     if (!empty($id)) {
         include 'dbh.inc.php';
@@ -50,8 +122,9 @@ function checkState($id){
         if ($rows_check>0) {
         	$row_check = mysqli_fetch_array($state_check);
         	$state_status = $row_check['state_status'];
+        	$state_name = $row_check['state_name'];
         	if ($state_status == "No") {
-        		$state_note = "<p>As a friendly reminder; unfortunately, we no longer lend in your state.</p>";
+        		$state_note = "<p>Unfortunately, we are no longer offering loans in the state of $state_name. This means that we will not be able to approve a new loan for you at this time.</p>";
         	}
         }
         
@@ -97,35 +170,6 @@ function finalpmtstate($id, $pmtdate){
         return $email;
         $conn->close();
     }
-}
-
-function statedrop($req = false){
-    include 'dbh.inc.php';
-    $st = "SELECT * FROM servicing_states ORDER BY state_name ASC";
-    $state_q = mysqli_query($conn, $st);
-    $rows = mysqli_num_rows($state_q);
-    ?>
-    <div class="form-group">
-        <label for="state">
-            Borrower's State:
-        </label>
-        <select class="form-control"  name="state" <?php if($req == true){echo "required";}?> >
-            <option value="">Select State</option>
-            <?php
-            if($rows > 0){
-            while($row = mysqli_fetch_array($state_q)){
-            	?>
-            	<option value="<?php echo $row['id']?>" <?php if($_GET['state'] == $row['id']){echo "selected";}?>>
-            	    <?php echo $row['state_abr']." - ".$row['state_name']?>
-            	    </option>
-            	<?php
-            }
-            }
-            ?>
-        </select>
-    </div>
-    <?php
-    $conn->close();
 }
 
 function pendingpmt($pmtdate, $pmtAmt, $s, $frm=false, $res = false){
@@ -177,7 +221,7 @@ function address($l = false, $loanid = false){
         if ($l == false) {
             if ($loanid == false) {
                 $address = "
-                    <div style='margin-left: 25px;'>
+                    <div >
                         <p>
                             Spotloan
                             <br>$ad
@@ -187,7 +231,7 @@ function address($l = false, $loanid = false){
                 ";
             }else {
                 $address = "
-                    <div style='margin-left: 25px;'>
+                    <div>
                         <p>
                             Spotloan
                             <br>$ad
@@ -268,27 +312,31 @@ function addressupdate($type=0, $street="", $city="", $state="",$zip=""){
     
 }
 
-function pmtcancelation($code, $date, $amt, $nxtpmt){
-    $date = date_create($date);
-    $date = date_format($date,"l, F jS");
-    $amt = "$".number_format($amt,2,".",",");
-    $script = "I have cancelled your ";
+function pmtcancelation($code, $date = "", $amt = "", $nxtpmt = "off"){
+    
+    
+    $script = "This email is to confirm that your loan ";
     
     if ($code == 1) {
       //payoff
-      $script .= "payoff in the amount of $amt that was scheduled for $date.";
+      $script .= "payoff has been cancelled.";
     }
     if ($code == 2) {
         //Extra Payment
-        $script .= "extra payment in the amount of $amt that was scheduled for $date.";
+        $script .= "extra payment has been cancelled.";
     }
     if ($code == 3) {
         //double payment
-        $script .= "double payment in the amount of $amt that was scheduled for $date.";
+        $script .= "double payment has been cancelled.";
     }
     if ($code == 4) {
+        $date = date_create($date);
+        $date = date_format($date,"l, F jS");
+        $amt = "$".number_format($amt,2,".",",");
+        $script = "This email is to confirm that your loan ";
         //Settlement
         if ($nxtpmt == "on") {
+            
            $script .= "settlement payment in the amount of $amt that was scheduled for $date. Keep in mind that missing this payment could void your settlement. Please contact me as soon as possible to work out your settlement.";
         }else{
             $script .= "settlement payment in the amount of $amt that was scheduled for $date. Keep in mind that missing this payment will void your settlement. Please contact me as soon as possible to work out your settlement.";
@@ -388,8 +436,8 @@ function soldacct($frm=false, $check="off", $pmtdate = "today", $pmtAmt = "0"){
     if($frm == false){
         if($check == "on"){
             $pmtAmt =  "$".number_format($pmtAmt,2,".",",");
-            $pmtdate = date_format($pmtdate,"l, F jS");
-            $script = "The last payment that we received from you was on $pmtdate for $pmtAmt";
+            $pmtdate = date_format($pmtdate,"F jS, Y");
+            $script = "The last payment that we received from you was on $pmtdate, for $pmtAmt";
         }else{
             $script ="We did not receive any payments on your loan";
         }
@@ -411,33 +459,48 @@ function soldacct($frm=false, $check="off", $pmtdate = "today", $pmtAmt = "0"){
     }
 }
 
-function soldfind($LAPro){
-    if (!empty($LAPro)) {
-       include 'dbh.inc.php';
-       $slq = "SELECT soldlist.Loan_ID, soldlist.Buyer, debtsalebuyers.Name, debtsalebuyers.PhoneNumber, soldlist.Sold_Date FROM soldlist, debtsalebuyers WHERE soldlist.Buyer = debtsalebuyers.Code AND soldlist.Loan_ID='$LAPro'";
-		$slq_result = mysqli_query($conn, $slq);
-		
-		if(mysqli_num_rows($slq_result) != 0){
-			$row = mysqli_fetch_array($slq_result);
-			$AgencyAbr =$row[1];
-			$Agency = $row[2]; 
-			$phone = $row[3];
-			$soldDate = date_create("$row[4]");
-			$output = date_format($soldDate,"F jS, Y");
-		}else{
-		    $output = '</p><div class="alert alert-warning offset25px"><b>Check LA Pro Account number, This loan was not found on the Database.</b></div><p>';
-		}
-        $conn->close();
-    }else{
-        $output = '</p><div class="alert alert-warning offset25px"><b>Check LA Pro Account number, This loan was not found on the Database.</b></div><p>';
+function soldfind($LAPro, $mode = 0){
+    $LAPro = htmlspecialchars($LAPro);
+    //Pull data from DB
+    include 'dbh.inc.php';
+    $slq = "SELECT soldlist.Loan_ID, soldlist.Buyer, debtsalebuyers.Name, debtsalebuyers.PhoneNumber, soldlist.Sold_Date FROM soldlist, debtsalebuyers WHERE soldlist.Buyer = debtsalebuyers.Code AND soldlist.Loan_ID='$LAPro'";
+    $slq_result = mysqli_query($conn, $slq);
+    if (mysqli_num_rows($slq_result) != 0) {
+        $row = mysqli_fetch_array($slq_result);
+        //assign variables
+        $AgencyAbr =$row[1];
+		$Agency = $row[2]; 
+		$phone = $row[3];
+		$soldDate = date_create("$row[4]");
+		$reporting = "off";
+    }else {
+        //DB error
+        $output = "</p><div class='alert alert-warning offset25px'><b>Check LA Pro Account number. Something went wrong.</b></div><p>";
+        $reporting = "on";
     }
+    $conn->close();
+    
+    if ($reporting = "off") {
+        if($mode == 0) {
+            $output = date_format($soldDate,"F jS, Y");
+        }else if ($mode == 1) {
+           $output = 
+           "
+           <div class='offset25px'>
+               <p>
+                   <b>Debt Buyer:</b> $Agency
+                   <br><b>Phone Number:</b> $phone
+               </p>
+           </div>
+           ";
+        }
+    }    
     return $output;
 }
 
 function brwname($name,$mode = 0){
     $name = htmlspecialchars(trim($name));
     $name = ucfirst($name);
-    
     
     if ($mode == 0) {
        $script = 
@@ -452,6 +515,13 @@ function brwname($name,$mode = 0){
         "
         <p>Hi $name,</p>
         ";
+    }if ($mode == 2) {
+       $script = 
+        "
+        <p>Hi $name,</p>
+        <p>Thank you for contacting Spotloan. My name is ".$_SESSION['SysName'].". and I will be assisting with your account today.</p>
+        "
+        ;
     }
     return $script;
 }
@@ -523,19 +593,22 @@ function emails($type){
 }
 
 function pendingpayment($type, $status = "off", $pmtAmt = "", $pmtdate =""){
+    $status = htmlspecialchars($status);
     if ($status == "on") {
+        $pmtdate = htmlspecialchars($pmtdate);
+        $pmtAmtsafe = htmlspecialchars($pmtAmt);
         $pmtdate = date_create($pmtdate);
         $pmtdate =  date_format($pmtdate,"l, F jS");
-        $pmtAmt = "$".number_format($pmtAmt,2,".",",");
+        $pmtAmt = "$".number_format($pmtAmtsafe,2,".",",");
         if ($type == 1) {
         //ACH Revokation
         $pendingNote = "<p>Unfortunately, we were unable to stop your pending payment of $pmtAmt on $pmtdate. As a reminder, we need a two business day notice for payment modifications. This payment will be the last one attempted from your account.</p>";
         }elseif ($type == 2) {
             //restructure
-            $pendingNote = "<p>Keep in mind, this restructure is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
+            $pendingNote = "<p>Keep in mind, this restructure is valid as long as your pending payment from $pmtdate, in the amount of $pmtAmt clears your bank account successfully.</p>";
         }elseif ($type == 3) {
             //payoff
-            $pendingNote = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $$pmtAmt clears your bank account successfully.</p>";
+            $pendingNote = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $pmtAmt clears your bank account successfully.</p>";
         }
     }if ($status == "off") {
         if($type == 0){
@@ -562,14 +635,181 @@ function pendingpayment($type, $status = "off", $pmtAmt = "", $pmtdate =""){
 }
 
 function hoursOfOperation($status = true){
-    if ($status == 1) {
+    if ($status == true) {
         $operations = 
-        "<p>Our Help Desk hours of operation are Monday - Friday from 7:00am CST - 4:30pm CST.</p>
-        <p>For immediate service or to make payment arrangements, please feel free to contact us at 1-888-681-6811, Monday - Friday 7:00am - 8:00pm CST or Saturdays 9:00am - 6:00pm CST.</p>
-        <br>
+        "<p>Our Help Desk hours of operation are Monday - Friday from 7:00am CST - 4:30pm CST. 
+        <br>For immediate service, please feel free to contact us at 1-888-681-6811, Monday - Friday 7:00am - 8:00pm CST or Saturdays 9:00am - 6:00pm CST.</p>
         ";
+    }
+    
+    echo $operations;
+}
+
+function nextpayment($type = 0, $entry = ""){
+    if ($type == 0) {
+        $outcome = 
+        "
+        <div>
+        <h3>
+        Next Payment Reminder
+        </h3>
+        </div>
+        <div class='form-group' id='pmtnote'>
+				<label for='nextpmtdate'>
+					Next Payment Date
+				</label>
+				<input class='form-control' type='date' id='nextpmtdate' name='nextpmtdate' required/>
+			</div>
+			<div class='form-group'>
+				<label for='nextpmtamt'>
+					Next Payment Amount
+				</label>
+				<input class='form-control' type='number' step='0.01' id='nextpmtamt' name='nextpmtamt' required/>
+			</div>
+        "
+        ;
+    }if ($type == 1) {
+        // Date
+        $entry =  htmlspecialchars($entry);
+        $date= date_create($entry);
+        $outcome = date_format($date,"l, F jS");
+    }if ($type == 2) {
+        // Outcome = amount.
+        $entry =  htmlspecialchars($entry);
+        $outcome = "$".number_format($entry,2,".",",");
+    }
+    
+    return $outcome;
+}
+
+function phonenumber($phone){
+    $phone = htmlspecialchars($phone);
+    //leave only digits
+    $phone = preg_replace("/[^\d]/","",$phone);
+    //check lenght
+    $length = strlen($phone);
+    
+    //format Phone Number
+    if($length == 10){
+        $phone = preg_replace("/^1?(\d{3})(\d{3})(\d{4})$/", "$1-$2-$3", $phone);
+        $phone = "<p>I just tried to call you at $phone and was unable to reach you. Please contact us at your earliest convenience so we can connect with you regarding your Spotloan account.</p>";
+        return $phone;
     }else {
-        $operations = "<br>";
+        $phone = "<p><b>[ERROR] - Your did not enter a valid Phone number</b>";
+        return $phone;
+    }
+    
+    
+}
+
+function definterest($mode=0,$pmtdate="", $pmtamt="", $defamt=""){
+    if ($mode==0) {
+        // Required form
+        ?>
+        <div>
+            <div class="form-group">
+                <label for="pmtdate">Missed Payment Date:</label>
+                <input class='form-control' type='date' id='pmtdate' name='pmtdate' required/>
+            </div>
+            <div class="form-group">
+                <label for="pmtamt">Missed Payment Amount:</label>
+                <input class='form-control' type='number' step='0.01' id='pmtamt' name='pmtamt' required/>
+            </div>
+            <div class="form-group">
+                <label for="defamt">Interest Amount for Deferral</label>
+                <input class='form-control' type='number' step='0.01' id='defamt' name='defamt' required/>
+            </div>
+        </div>
+        <?php
+        
+    }else{
+        // Make variables safe
+        $pmtdate = htmlspecialchars($pmtdate);
+        $pmtamt = htmlspecialchars($pmtamt);
+        $defamt = htmlspecialchars($defamt);
+        //check amount of def amount
+        if($defamt > 700){
+            $exception = "and a really high amount of additional interest may be added to your loan";
+        }else{
+            $exception = false;
+        }
+        //format Variables
+        $pmtamt  ="$".number_format($pmtamt,2,".",",");
+        $defamt  ="$".number_format($defamt,2,".",",");
+        $pmtdate = date_create($pmtdate);
+        $pmtdate = date_format($pmtdate,"l, F jS");
+        
+        //check amount of def amount
+        if($exception == false){
+            $exception = "and it could add up to $defamt in extra interest";
+        }
+        
+        if ($mode == 1) {
+            
+            $outcome = "<p>Per your request to defer, Spotloan will not be deducting your next scheduled payment of $pmtamt on $pmtdate. Please remember that deferring your payment increases your total amount due $exception. You can make up this payment at any time if you want to save money.</p>";
+            
+        }if ($mode==2) {
+            $outcome = "<p>Per your request to defer, Spotloan will not be deducting your next scheduled payment of $pmtamt on $pmtdate. Please remember that deferring your payment increases your total amount due and it could add up to $defamt in extra interest. You can make up this payment at any time if you want to save money.</p>";
+        }
+        return $outcome;
+    }
+    
+    
+}
+
+function checkday($date){
+    //secure entry
+    $one_day_sec = 86400;
+    $date = htmlspecialchars($date);
+    $date = strtotime($date)/$one_day_sec;
+    $today = date("Y-m-d");
+    $today = strtotime($today)/$one_day_sec;
+    $difference = $date-$today;
+    switch($difference){
+        case -1:
+            return "yesterday";
+            break;
+        case 0:
+            return "today";
+            break;
+    }
+}
+
+function sp($mode=0,$date="", $amtinit="", $newamt=""){
+    if ($mode == 0) {
+       ?>
+        <div class='form-group'>
+			<label for='pmt_date'>
+				New Payment Date:
+			</label>
+			<input class='form-control' type='date' id='pmt_date' name='pmt_date' required/>
+		</div>
+		<div class='form-group'>
+			<label for='old_pmt'>
+				Original Payment Amount:
+			</label>
+			<input class='form-control' type='number' step='0.01' id='old_pmt' name='old_pmt' required/>
+		</div>
+		<div class='form-group'>
+			<label for='new_pmt'>
+				New Payment Amount:
+			</label>
+			<input class='form-control' type='number' step='0.01' id='new_pmt' name='new_pmt' required/>
+		</div>
+       <?php
+    }else if($mode == 1){
+        //make variables safe.
+        $date = htmlspecialchars($date);
+        $amtinit = htmlspecialchars($amtinit);
+        $newamt = htmlspecialchars($newamt);
+        //formating
+        $date = date_create($date);
+        $date = date_format($date,"l, F jS");
+        $amtinit = "$".number_format($amtinit,2,".",",");
+        $newamt = "$".number_format($newamt,2,".",",");
+        //Outcome
+        $product = "Per your request, we have adjusted your payment for $date from $amtinit to $newamt. Please remember that interest will accrue for the remaining amount of the payment.";
+        return $product;
     }
 }
 

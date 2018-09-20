@@ -1,13 +1,12 @@
 <div class="row">
     <div class="col-md-3">
         <h2>
-			Payment Confirmation Email
+			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>If requested by borrower.
+				<b>Template Usage: </b>Use this template when a borrower makes a one-time payment with a debit card.
 				<br>
-				<b>Action: </b> Manual - Agent to edit and send
 			</h5>
 		</font>
     </div>
@@ -15,7 +14,6 @@
         <?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
 			$pmtAmt = htmlspecialchars($_GET['pmtAmt']);
 			$pmtdate = date_create($_GET['pmtdate']);
             $bankname = nl2br(htmlspecialchars($_GET['bankname']));
@@ -35,23 +33,19 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p>
-				<strong>Subject:</strong> $<?php echo number_format($pmtAmt,2,".",","); ?> Spotloan payment confirmation
-			</p>
-			<br>
-
-			<?php echo brwname($_GET['brwName']);?>
+			
+			<?php echo brwname($_GET['brwName'],1);?>
 		    
 		    
 			<p><b>Payment Receipt</b></p>
 			<?php
 			if($_GET['ach'] == "on"){
 				?>
-				<p>This is an email confirmation that you made a payment of $<?php echo number_format($pmtAmt,2,".",","); ?> on <?php echo date_format($pmtdate,"l, F jS"); ?>, from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?>. Thanks!</p>
+				<p>This email is a receipt of your one-time payment in the amount of $<?php echo number_format($pmtAmt,2,".",","); ?> paid on <?php echo date_format($pmtdate,"l, F jS"); ?>, from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?>.</p>
 				<?php
 			}elseif ($_GET['dc'] == "on") {
 				?>
-				<p>This is an email confirmation that you made a one time payment in the amount of $<?php echo number_format($pmtAmt,2,".",","); ?> today, <?php echo date_format($pmtdate,"F jS, Y"); ?>, with your debit card. Thanks!</p>
+				<p>This email is a receipt of your one-time payment in the amount of $<?php echo number_format($pmtAmt,2,".",","); ?> paid on <?php echo date_format($pmtdate,"l, F jS"); ?>.</p>
 				
 				<p>
 					Your confirmation ID is: <?php echo $pmtconf;?>
@@ -60,17 +54,15 @@
 			}elseif ($_GET['mail'] == "on") {
 				?>
 				<p>
-					This email is to confirm that we have received your <?php echo $mailpmttype;?> in the amount of $<?php echo number_format($pmtAmt,2,".",","); ?> on <?php echo date_format($pmtdate,"F jS, Y");?>. Thanks!
+					This email is a receipt of your one-time <?php echo $mailpmttype;?> payment in the amount of $<?php echo number_format($pmtAmt,2,".",",");?> received on <?php echo date_format($pmtdate,"F jS, Y");?>.
 				</p>
 				<?php
 			}
 			?>
-			<p>I really appreciate having you as a customer!</p>
 			
 			<?php
 			echo checkState($_GET['state']);
 			?>
-			<br />
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -86,6 +78,7 @@
 			<form class="fom form-vertical" method="get">
 				<input type="hidden" name="cs"/>
 				<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
+				<!--
 				<div>
 					<div>
 						<div class="checkbox">
@@ -105,6 +98,7 @@
 						</div>
 					</div>
 				</div>
+				-->
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
@@ -113,11 +107,31 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
-						<?php
-                        statedrop();
-                        ?>
 					</div>
-					<div id="landform"></div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="pmtdate">
+								Payment Date:
+							</label>
+							<input class="form-control" type="date" name="pmtdate" required/>
+						</div>
+						<div class="form-group">
+							<label for="pmtAmt">
+								Payment Amount:
+							</label>
+							<input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<input type="hidden" value="on" name="dc">
+						<div class="form-group">
+							<label for="pmtconf">
+								DC Payment Confirmation ID:
+							</label>
+							<input class="form-control" type="text" name="pmtconf" required/>
+						</div>
+					</div>
+					<!--<div id="landform"></div>-->
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email

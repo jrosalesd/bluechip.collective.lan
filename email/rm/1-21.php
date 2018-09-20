@@ -5,7 +5,7 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests to defer a payment, but it’s within the two business day window.
+				<b>Template Usage: </b>Use this template when a  borrower misses their payment.s
 				<br>
 			</h5>
 		</font>
@@ -14,9 +14,8 @@
 		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			//$status = false;
-			$pmtAmt = $_GET['pmtAmt'];
-			$pmtdate = date_create($_GET['pmtdate']);
+			//status = false;
+			$pastdue = htmlspecialchars($_GET['pastdue']);
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
@@ -33,10 +32,15 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-
-			<?php echo brwname($_GET['brwName']);?>
+	
+			<?php echo brwname($_GET['brwName'],2);?>
 		    
-		    <p>As a reminder, we require a two business day notice to make changes to your payment due dates. This means that I will not be able to adjust your payment of $<?php echo number_format($pmtAmt,2,".",","); ?> that is due <?php echo date_format($nextpmtdate,"l, F jS");?>. Please call us if we can assist with any other options going forward.</p>
+		    <p>Something went wrong with your most recent Spotloan payment. We need you to contact us as soon as possible so that we can get this taken care of.</p>
+		    <p>Your account is now <?php echo $pastdue;?> days past due.</p>
+		    <p>Missing a payment extends the life of your loan. This can result in extra payments if you don’t make it up soon.</p>
+		    <p>We look forward to hearing from you as soon as possible.</p>
+		    
+			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -61,20 +65,14 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
+						<div class="form-group">
+							<label for="pastdue">
+								Borrower´s First Name:
+							</label>
+							<input class="form-control" type="text" name="pastdue" id="pastdue" required/>
+						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
-                        <label for="pmtdate">
-                            Payment Date:
-                        </label>
-                        <input class="form-control" type="date" name="pmtdate" required/>
-	                    </div>
-	                    <div class="form-group">
-	                        <label for="pmtAmt">
-	                            Payment Amount:
-	                        </label>
-	                        <input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
-	                    </div>
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

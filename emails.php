@@ -10,30 +10,6 @@ if (strtotime("now") < strtotime("first Sunday of November $current") && strtoti
 }
 
 include 'includes/dbh.inc.php';
-$state_id= $_GET['state'];
-$st_check = "SELECT * FROM servicing_states WHERE id='$state_id'";
-$state_check = mysqli_query($conn, $st_check);
-$rows_check = mysqli_num_rows($state_check);
-if ($rows_check>0) {
-	$row_check = mysqli_fetch_array($state_check);
-	$state_status = $row_check['state_status'];
-	if ($state_status == "No") {
-		$state_note = "As a friendly reminder; unfortunately, we no longer lend in your state.";
-	}
-}
-
-$st = "SELECT * FROM servicing_states ORDER BY state_name ASC";
-$state_q = mysqli_query($conn, $st);
-$rows = mysqli_num_rows($state_q);
-
-$dbquery = "SELECT * FROM sp_contact where status=1 and address_type='Mailing Address'";
-$dbinit = mysqli_query($conn, $dbquery);
-$dbrow = mysqli_num_rows($dbinit);
-
-
-?>
-
-<?php
 if (isset($_GET['cs'])) {
 	//email Template
 	$emID = $_GET['id'];
@@ -135,8 +111,6 @@ if (isset($_GET['cs'])) {
             </ul>
         </div>
         <hr>
-        <div>
-        <br>
         <?php
         if (!file_exists("./email/$emtype/$emcat-$emid2.php")) {
             $page_name = "Error: #404 page Not Found";
@@ -255,7 +229,7 @@ if (isset($_GET['cs'])) {
                 </div>
                 <hr>
                 <div>
-                    <h3 class="text-center"><font color="#3793D2">Specific To Payment Issues</font></h3>
+                    <h3 class="text-center"><font color="#3793D2">Payment Related Emails</font></h3>
                 </div>
                 <br>
                 <div>
@@ -294,7 +268,7 @@ if (isset($_GET['cs'])) {
                 </div>
                 
                 <div>     
-                    <h3 class="text-center"><font color="#3793D2">General Payment Issues</font></h3>  
+                    <h3 class="text-center"><font color="#3793D2">Servicing Related Emails</font></h3>  
                 </div>
                 <div>
                     <div class="row">
@@ -329,8 +303,8 @@ if (isset($_GET['cs'])) {
                     ?>
         		        </ul>
         		    </div>
-                </div> 
-                
+                </div>
+                <!--
                 <div>  
                     <h3 class="text-center"><font color="#3793D2">General Emails</font></h3>  
                 </div>
@@ -368,6 +342,7 @@ if (isset($_GET['cs'])) {
         		        </ul>
         		    </div>
                 </div>
+                -->
             </div>
         </div>
     <?php
@@ -552,7 +527,7 @@ if (isset($_GET['cs'])) {
                ?>
                <table class="table table-bordered">
                     <tr>
-                        <td>
+                        <td class="wrap">
                             <?php 
                             echo ucwords($row['name'])." [Filename: $docname.php]";
                             ?>
@@ -586,16 +561,16 @@ if (isset($_GET['cs'])) {
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="row">
-                                                <a class="col-md-4 btn btn-success" href="?cs&id=<?php echo $_GET['id'];?>">Open Template</a>
-                                                <a class="col-md-4 btn btn-warning" href="editor.php?p=<?php echo "$doclocation&edit=$docname.php&env=ace";?>&return=emails.php?edit&id=<?php echo $_GET['id'];?>">Edit Code</a>
-                                                <a class="col-md-4 btn btn-warning" href="editor.php?p=<?php echo "$doclocation&dl=$docname.php";?>">Download</a>                                            </div>
+                                                <a class="col-md btn btn-success" href="?cs&id=<?php echo $_GET['id'];?>" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Open Template</a>
+                                                <a class="col-md btn btn-warning" href="editor.php?p=<?php echo "$doclocation&edit=$docname.php&env=ace";?>&return=emails.php?edit&id=<?php echo $_GET['id'];?>">Edit Code</a>
+                                                <a class="col-md btn btn-warning" href="editor.php?p=<?php echo "$doclocation&dl=$docname.php";?>">Download</a>                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="row">
                                                 <form method="POST">
                                                     <input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
-                                                    <input type="submit" class="col-md-6 btn btn-danger" name="unlink" value="Delete File">
-                                                    <input type="submit" class="col-md-6 btn btn-danger" name="delete" value="DeleteFromDB">
+                                                    <input type="submit" class="col-md btn btn-danger" name="unlink" value="Delete File">
+                                                    <input type="submit" class="col-md btn btn-danger" name="delete" value="DeleteFromDB">
                                                 </form>
                                             </div>
                                         </div>
@@ -665,6 +640,9 @@ if (isset($_GET['cs'])) {
                                         </a>
                                         <a href="?edit&id=<?php echo $row['ID'];?>" class="btn btn-warning">
                                             <span class="glyphicon glyphicon-edit"></span> Edit
+                                        </a>
+                                        <a href="?cs&id=<?php echo $row['ID'];?>" target="_blank" class="btn btn-info">
+                                            <span class="glyphicon glyphicon-new-window"></span> Open Template
                                         </a>
                                     </div>
                                 </td>

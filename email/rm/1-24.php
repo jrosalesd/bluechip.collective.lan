@@ -1,13 +1,11 @@
 <div class="row">
     <div class="col-md-3">
         <h2>
-			Restructure Loan Notification Email  
-			<small>(RM should probably call on this one)</small>
+			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>when you restructure account and need to notify customer before account restructure is updated.
-				
+				<b>Template Usage: </b>Use this template when you have arranged a restructure for a borrower.
 			</h5>
 		</font>
     </div>
@@ -15,7 +13,6 @@
         <?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
 			
 			$pmt_new = htmlspecialchars($_GET['pmt_new']);
 			$pmt_number_new = htmlspecialchars($_GET['pmt_number_new']);
@@ -37,27 +34,24 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p>
-				<strong>
-					Subject:
-				</strong> 
-				Your Spotloan Change in progress.
-			</p>
-			<br>
-		<p>
-		    	Hi <?php echo ucfirst($brwName);?>,
-		    </p>
-		    <br>
+			
+			<?php echo brwname($_GET['brwName'],1);?>
 		    
 		    
-			<p>I’m glad we could make adjustments so that you can stay on track with paying off your loan.</p>
-
-		    <p>I did restructure your payment schedule as follows:</p>
-		    <p>Your new schedule is now <?php echo $pmt_number_new." ".$pmt_freq_new;?> payments of $<?php echo number_format($pmt_new,2,".",","); ?>.
-		    <br> Your first payment is on <?php echo date_format($pmt_start_date,"F jS, Y"); ?>, and your last payment will be on <?php echo date_format($pmt_end_date,"F jS, Y"); ?>.</p>
-		    <?php
-		    echo pendingpmt($pmtdate, $pmtAmt,$_GET['pendingclick'], 0, 1);
-		    ?>
+			<p>hank you for contacting Spotloan. Per your request, here is your new payment schedule:</p>
+			<div class="offset25px">
+				<p>
+					<b>NEW SCHEDULE:</b>
+					<br>Payment Frequency: <?php echo $pmt_freq_new;?>
+					<br>First Payment Date: <?php echo date_format($pmt_start_date,"F jS, Y");?>
+					<br>Last Payment Date: <?php echo date_format($pmt_end_date,"F jS, Y");?>
+					<br>Payment Amount: $<?php echo number_format($pmt_new,2,".",",");?>
+				</p>
+			</div>
+			<p>If you miss any payments, the life of your loan will be extended. Please let me know if you have any additional questions or concerns.</p>
+			
+		    <?php echo pendingpayment(2, $_GET['pendingclick'], $_GET['pennextpmtamt'], $_GET['datepending']);?>
+		    
 		    <?php
 			include('includes/signature.inc.php');
 			?>	
@@ -98,12 +92,12 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
+						<!--<div class="form-group">
 							<label for="pmt_number_new">
 								Number Of Payments:
 							</label>
 							<input class="form-control" type="text" name="pmt_number_new" required/>
-						</div>
+						</div>-->
 						<div class="form-group">
 							<label for="pmt_new">
 								New Payment Amount:
@@ -123,7 +117,7 @@
 						</div>
 					</div>
 				</div>
-				<?php pendingpmt(0,0,0, 1, 1);?>
+				<?php pendingpayment(0)?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

@@ -14,7 +14,8 @@
 		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			//$status = 0;
+			//$status = false;
+			$balance = htmlspecialchars($_GET['bal']);
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
@@ -34,9 +35,8 @@
 				
 			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p>Thank you for contacting Spotloan. Your account balance is $[Outstanding Loan Balance] and your next payment of $[Scheduled Payment Amount] is due on [Next Scheduled Payment Date (Tuesday, January 7)].</p>
-		    
-			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
+		    <p>Thank you for contacting Spotloan. Your account balance is $<?php echo number_format($balance,2,".",",");?> and your next payment of $<?php echo number_format($nextpmtamt,2,".",",");?> is due on <?php echo date_format($nextpmtdate,"l, F jS"); ?>.</p>
+		    <p>As a friendly reminder, interest accrues on a daily basis.</p>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -67,7 +67,18 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						
+						<div class='form-group' id='pmtnote'>
+							<label for='nextpmtdate'>
+								Next Payment Date
+							</label>
+							<input class='form-control' type='date' id='nextpmtdate' name='nextpmtdate' required/>
+						</div>
+						<div class='form-group'>
+							<label for='nextpmtamt'>
+								Next Payment Amount
+							</label>
+							<input class='form-control' type='number' step='0.01' id='nextpmtamt' name='nextpmtamt' required/>
+						</div>
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

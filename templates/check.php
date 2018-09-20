@@ -22,4 +22,4 @@ if ($numrows > 0) {
 $conn->close();*/
 
 //echo restructure("2019-25-05", $pmtnum, "Semi-Monthly");
-emails(1);
+echo checkday("2018-9-18");

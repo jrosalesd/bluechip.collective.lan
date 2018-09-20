@@ -5,7 +5,7 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests to defer a payment, but it’s within the two business day window.
+				<b>Template Usage: </b>Use this template when a borrower wants to cancel their loan.
 				<br>
 			</h5>
 		</font>
@@ -15,8 +15,7 @@
 		if($_GET['set'] == "on"){
 			//variables to complete template
 			//$status = false;
-			$pmtAmt = $_GET['pmtAmt'];
-			$pmtdate = date_create($_GET['pmtdate']);
+			$loanamt = htmlspecialchars($_GET['loanamt']);
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
@@ -36,7 +35,9 @@
 
 			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p>As a reminder, we require a two business day notice to make changes to your payment due dates. This means that I will not be able to adjust your payment of $<?php echo number_format($pmtAmt,2,".",","); ?> that is due <?php echo date_format($nextpmtdate,"l, F jS");?>. Please call us if we can assist with any other options going forward.</p>
+		    <p>We have attempted to stop your loan deposit. Unfortunately, we were not able to. Spotloan allows three business days to pay back a loan interest-free.</p>
+		    <p>Please let us know if you would like to return the <?php echo $loanamt;?> deposit. We can make arrangements to have the deposit deducted from your bank account within two business days. If the funds are not returned in this timeframe, you will be responsible for the loan and interest paybacks.</p>
+		    <p>We look forward to hearing from you as soon as you can.</p>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -64,17 +65,22 @@
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-                        <label for="pmtdate">
-                            Payment Date:
-                        </label>
-                        <input class="form-control" type="date" name="pmtdate" required/>
-	                    </div>
-	                    <div class="form-group">
-	                        <label for="pmtAmt">
-	                            Payment Amount:
-	                        </label>
-	                        <input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
-	                    </div>
+							<label for="loanamt">
+								Original Loan Amount:
+							</label>
+							<select class='form-control' id="loanloanamtlife" name="loanamt" required>
+								<option value="">Select One</option>
+								<?php
+								for ($i = 300 ; $i <= 800; $i+=100) {
+									 ?>
+									 <option value="$<?php echo number_format($i,2,".",",");?>">
+									 	$<?php echo number_format($i,2,".",",");?>
+									 </option>
+									 <?php
+								}
+								?>
+							</select>
+						</div>
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

@@ -72,7 +72,6 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
-						
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

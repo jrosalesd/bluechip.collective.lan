@@ -1,15 +1,12 @@
 <div class="row">
     <div class="col-md-3">
         <h2>
-			Pay-Off Request<small> (Customer Inquiry)</small>
+			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>Copy and Paste 
+				<b>Template Usage: </b>Use this template when a borrower requests to pay off their loan.
 				<br>
-				<b>Template: </b>When someone contacts  RM requesting Payoff amount.
-				<br>
-				<b>Action: </b>Manual - Agent to edit and send
 			</h5>
 		</font>
     </div>
@@ -38,37 +35,20 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p>
-				<strong>Subject:</strong> This Would be your payoff as of <?php echo date_format($payoffdate,"l, F jS"); ?>
-			</p>
-			<br>
+			
 			
 
 			<?php echo brwname($_GET['brwName']);?>
 		    
 			<p>
-				To pay off your account you will need to call us two business days in advance to set up the payoff. When you pay off your account through ACH, you will need to wait 5-7 business days from the day the payment is processed to reapply.
+				To pay off your loan, you will need to contact us two business days in advance.
 			</p>
 			<p>
-				Your account payoff balance for <?php echo date_format($payoffdate,"l, F jS"); ?> is $<?php echo number_format($payoffamt,2,".",","); ?> and your next payment of $<?php echo number_format($nextpmtamt,2,".",","); ?> is due on <?php echo date_format($nextpmtdate,"l, F jS"); ?>. Remember, your account balance changes daily to reflect interest.
+				Your account balance for <?php echo date_format($payoffdate,"l, F jS"); ?> is $<?php echo number_format($payoffamt,2,".",","); ?> and your next payment of $<?php echo number_format($nextpmtamt,2,".",","); ?> is due on <?php echo date_format($nextpmtdate,"l, F jS"); ?>.
 			</p>
-			<?php
-			if(isset($_GET['pendingclick'])){
-				?>
-				<p>
-					Keep in mind, this payoff is valid as long as your pending payment from <?php echo date_format($pmtdate,"l, F jS");?>, in the amount of $<?php echo number_format($pmtAmt,2,".",",");?> clears your bank account successfully.
-				</p>
-				<?php
-			}
-			if ($state_status == "No"){
-				?>
-				<p>
-					<?php echo $state_note;?>
-				</p>
-				<?php
-			}
-			?>
-		    <br>
+			<?php echo pendingpayment(3, $_GET['pendingclick'], $_GET['pennextpmtamt'], $_GET['datepending']);?>
+			
+			<?php echo checkState($_GET['state']);?>
 		    
 			<?php
 			include('includes/signature.inc.php');
@@ -127,18 +107,7 @@
 					</div>
 				</div>
 				<div>
-                    <div>
-                        <div class="checkbox">
-                            <label for="pendingclick">
-                                <input type="checkbox"  id="pendingclick" name="pendingclick" onclick="pendingpmt()"/><b>Is there any PENDING PAYMENTS?</b>
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="col-md-6">
-                            <g id="pendingForm"></g>
-                        </div>
-                    </div>
+                    <?php pendingpayment(0);?>
                 </div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email

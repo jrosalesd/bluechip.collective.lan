@@ -1,22 +1,25 @@
 <div class="row">
-    <div class="col-md-3">
-        <h2>
+	<div class="col-md-3">
+		<h2>
 			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests their payment history.
+				<b>Template Usage: </b>Use this template when a
 				<br>
 			</h5>
 		</font>
-    </div>
-    <div class="col-md-9" id="embody" style="border-left: solid;">
-        <?php
+	</div>
+	<div class="col-md-9" style="border-left: solid;">
+		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
-			$pmthist =  nl2br($_GET['pmthist']);
+			//status = false;
 			
+			//next payment
+			$pmtnote = htmlspecialchars($_GET['pmtnote']);
+			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -30,19 +33,20 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-
 			<?php echo brwname($_GET['brwName']);?>
 		    
-			<p>You can find your payment history below. Please let me know if you have any questions.</p>
-			<h3>Date - Status - Amount</h3>
-			<p>
-				<?php
-				$pmthist = str_ireplace("\t"," - ",$pmthist);
-				$pmthist = str_ireplace(" "," - ",$pmthist);
-				echo $pmthist;
-				?>
-			</p>
+		    <p>We’re sorry to hear that you’re having issues accessing your online account.</p>
+		    <p>To change your password, please go to our website at http://www.spotloan.com and follow the steps below:</p>
+		    <div class="offset25px">
+		    	<p>
+		    		1. At the top of the website, click on the "Login" tab.
+		    		<br>2. At the bottom of the login page, click "Forgot Password".
+		    		<br>3. Fill out the required information and you will then receive an email explaining how to reset your password.
+		    	</p>
+		    </div>
 		    
+			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -67,24 +71,13 @@
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
 					</div>
-					<div class="col-md-8">
-						<div class="form-group">
-							<label for="brwName">
-								Date - Status - Amount
-							</label>
-							<textarea class="form-control text-left " name="pmthist" rows="10" required></textarea>
-						</div>
-							
-					</div>
 				</div>
-				
-				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
+				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>
 			</form>
-			
 			<?php
 		}
 		?>
-    </div>
+	</div>
 </div>

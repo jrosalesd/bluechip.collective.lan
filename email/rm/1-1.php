@@ -1,23 +1,20 @@
 <div class="row">
     <div class="col-md-3">
         <h2>
-            Payment Arrangement Email <small>(Bank/Payoff)</small>
+            <?php echo $emname;?>
         </h2>
         <font color="red">
             <h5>
-                <b>Generate: </b>Copy and Paste 
-                <br>
-                <b>Template: </b>When a customer contacts an agent to pay off her loan and it is set up.
-                <br>
-                <b>Action: </b>Manual - Agent to update and send accordingly.
-            </h5>
+				<b>Template Usage: </b>Use this template when a customer requests a paid-off email.
+				<br>
+			</h5>
         </font>
     </div>
     <div class="col-md-9" id="embody" style="border-left: solid;">
         <?php
         if($_GET['set'] == "on"){
             //variables to complete template
-            $brwName = htmlspecialchars(trim($_GET['brwName']));	
+            
             $payoffDate = date_create($_GET['payoffDate']);
             $payoffAmt = $_GET['payoffAmt'];
             $bankname = $_GET['bankname'];
@@ -37,28 +34,25 @@
             <hr>
             <div>
                 <!-- Email Temaplate -->
+                
+                <?php echo brwname($_GET['brwName'],1);?>
+                
                 <p>
-                    <strong>Subject:</strong>
-                    Your payoff – $<?php echo number_format($payoffAmt,2,".",",");?> due on <?php echo date_format($payoffDate,"l, F jS");?>
+                    You’re all set to pay off your loan in the amount of $<?php echo number_format($payoffAmt,2,".",",");?> from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?> on <?php echo date_format($payoffDate,"l, F jS");?>.
                 </p>
-                <br>
-                <p>
-                    Hi <?php echo ucfirst($brwName);?>,
-                </p>
-                <br>
+                <!--
                 <p>
                     You’re all set to pay off your loan on <?php echo date_format($payoffDate,"l, F jS");?>, in the amount of $<?php echo number_format($payoffAmt,2,".",",");?> from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?>.
                 </p>
-                
+                -->
                 <p>
-                    Let me know if anything changes so we can keep you on track.
+                    Please let me know if you need to make any changes.
                 </p>
             
             <?php
-            echo pendingpmt($pmtdate, $pmtAmt,$_GET['pendingclick']);
+            echo pendingpayment(3, $_GET['pendingclick'], $_GET['pennextpmtamt'], $_GET['datepending']);
 			echo checkState($_GET['state']);
             ?>
-            <br>
             
             <?php
             include('includes/signature.inc.php');
@@ -83,7 +77,7 @@
                             <input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
                         </div>
                         <?php
-                        statedrop();
+                        statedrop(true);
                         ?>
                     </div>
                     <div class="col-md-4">
@@ -116,18 +110,7 @@
                     </div>
                 </div>
                 <div>
-                    <div>
-                        <div class="checkbox">
-                            <label for="pendingclick">
-                                <input type="checkbox"  id="pendingclick" name="pendingclick" onclick="pendingpmt()"/><b>Is there any PENDING PAYMENTS?</b>
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="col-md-6">
-                            <g id="pendingForm"></g>
-                        </div>
-                    </div>
+                    <?php pendingpayment(0);?>
                 </div>
                 <button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
                 Generate Email

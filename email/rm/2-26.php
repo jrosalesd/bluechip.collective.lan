@@ -5,7 +5,7 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests to defer a payment, but it’s within the two business day window.
+				<b>Template Usage: </b>Use this template when a borrower updates their contact information with us.
 				<br>
 			</h5>
 		</font>
@@ -15,8 +15,7 @@
 		if($_GET['set'] == "on"){
 			//variables to complete template
 			//$status = false;
-			$pmtAmt = $_GET['pmtAmt'];
-			$pmtdate = date_create($_GET['pmtdate']);
+			$infoup = htmlspecialchars($_GET['infoup']);
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
@@ -36,7 +35,8 @@
 
 			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p>As a reminder, we require a two business day notice to make changes to your payment due dates. This means that I will not be able to adjust your payment of $<?php echo number_format($pmtAmt,2,".",","); ?> that is due <?php echo date_format($nextpmtdate,"l, F jS");?>. Please call us if we can assist with any other options going forward.</p>
+		    <p>Thank you for contacting Spotloan. We appreciate you updating your contact information with us. Per your request, here is the information that was adjusted internally on your Spotloan account: <?php echo lcfirst($infoup);?></p>
+		    <?php NxtPmt($nextpmtdate, $nextpmtamt, "on")?>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -63,18 +63,15 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
-                        <label for="pmtdate">
-                            Payment Date:
-                        </label>
-                        <input class="form-control" type="date" name="pmtdate" required/>
-	                    </div>
-	                    <div class="form-group">
-	                        <label for="pmtAmt">
-	                            Payment Amount:
-	                        </label>
-	                        <input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
-	                    </div>
+							<div class="form-group">
+								<label for="infoup">
+									Information Updated:
+								</label>
+								<input class="form-control" type="text" placeholder="i. e. Emailm phone, Etc" name="infoup" required/>
+							</div>
+					</div>
+					<div class="col-md-4">
+						<?php echo nextpayment();?>
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

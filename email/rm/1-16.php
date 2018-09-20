@@ -1,27 +1,24 @@
 <div class="row">
-    <div class="col-md-3">
-        <h2>
-			Cancelled Payment Email
+	<div class="col-md-3">
+		<h2>
+			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Generate: </b>When a customer sets up a payment through their online account or when they call to make special arrangements with their agent -- and then decide they can’t/don’t want to go through with it. 
+				<b>Template Usage: </b>Use this template when a borrower cancels their scheduled payoff.
 				<br>
-				<b>Action: </b>Manual - Agent to edit and send
 			</h5>
 		</font>
-    </div>
-    <div class="col-md-9" id="embody" style="border-left: solid;">
-        <?php
+	</div>
+	<div class="col-md-9" style="border-left: solid;">
+		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
-			
+			//$status = false;
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
-			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt']);
-			
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -34,27 +31,15 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			<p>
-				<strong>Subject:</strong> Cancelled Payment Confirmations
-			</p>
-			<br />
-			
-			<p>
-				Hi <?php echo ucfirst($brwName);?>,
-			</p>
-			<br />
-			
-			<p>
-				Thanks for contacting me.
-			</p>
-			<p>
-				<?php echo pmtcancelation(htmlspecialchars(trim($_GET['pmtType'])), $_GET['pmtdate'], htmlspecialchars($_GET['pmtAmt']),$pmtnote); ?>
-			</p>
-			<?php
-			echo checkState($id);
-            NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
-            comment($comment, $s);
-            ?>
+
+			<?php echo brwname($_GET['brwName'],1);?>
+		    
+		    <!--
+		    	<p><?php echo pmtcancelation($_GET['pmtType']);?></p>
+		    -->
+		    <p>Thank you for contacting Spotloan. This email is to confirm that your loan payoff has been cancelled.</p>
+
+		   <p>As a friendly reminder, your next scheduled payment of <?php echo nextpayment(2,$_GET['nextpmtamt']);?> will be due on <?php echo nextpayment(1,$_GET['nextpmtdate']);?>.</p>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -80,38 +65,19 @@
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
 						<?php
-                        statedrop();
-                        ?>
+						//pmtcncldrop();
+						?>						
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
-                            <label for="pmtAmt">
-                                Cancelled Payment Amount:
-                            </label>
-                            <input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="pmtdate">
-                                Cancelled Payment Date:
-                            </label>
-                            <input class="form-control" type="date" name="pmtdate" required/>
-                        </div>
-					</div>
-					<div class="col-md-4">
-						<?php
-						pmtcncldrop();
-						?>
+						<?php echo nextpayment();?>
 					</div>
 				</div>
-				<?php
-				nxtpmtcheck();
-				?>
-				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
+				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>
 			</form>
 			<?php
 		}
 		?>
-    </div>
+	</div>
 </div>

@@ -5,7 +5,7 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests to defer a payment, but it’s within the two business day window.
+				<b>Template Usage: </b>Use this template when someone requests more information on their denial.
 				<br>
 			</h5>
 		</font>
@@ -15,8 +15,7 @@
 		if($_GET['set'] == "on"){
 			//variables to complete template
 			//$status = false;
-			$pmtAmt = $_GET['pmtAmt'];
-			$pmtdate = date_create($_GET['pmtdate']);
+			$appdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
@@ -34,10 +33,13 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],2);?>
 		    
-		    <p>As a reminder, we require a two business day notice to make changes to your payment due dates. This means that I will not be able to adjust your payment of $<?php echo number_format($pmtAmt,2,".",","); ?> that is due <?php echo date_format($nextpmtdate,"l, F jS");?>. Please call us if we can assist with any other options going forward.</p>
-			
+		    <p>
+		    	We received your Spotloan application on <?php echo date_format($appdate,"F jS, Y");?>. In response to that, we sent you an email to inform you that we were unable to give you a loan at that time. If you did not see this email, please check your spam folder. Unfortunately, once the email is sent out we have no control over where your email provider routes the message.
+		    </p>
+		    <p>While you did not qualify for a Spotloan this time, you are welcome to apply again in 45 days. We appreciate your interest in Spotloan.</p>
+		    <p>If you have any other questions, please contact us.</p>
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -63,18 +65,12 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
-                        <label for="pmtdate">
-                            Payment Date:
-                        </label>
-                        <input class="form-control" type="date" name="pmtdate" required/>
-	                    </div>
-	                    <div class="form-group">
-	                        <label for="pmtAmt">
-	                            Payment Amount:
-	                        </label>
-	                        <input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
-	                    </div>
+						<div class='form-group' id='pmtnote'>
+							<label for='appdate'>
+								Application Date:
+							</label>
+							<input class='form-control' type='date' id='appdate' name='appdate' required/>
+						</div>
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

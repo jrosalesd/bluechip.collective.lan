@@ -5,7 +5,7 @@
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests to defer a payment, but it’s within the two business day window.
+				<b>Template Usage: </b>Use this template when an email was not completed in time.
 				<br>
 			</h5>
 		</font>
@@ -14,9 +14,8 @@
 		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			//$status = false;
-			$pmtAmt = $_GET['pmtAmt'];
-			$pmtdate = date_create($_GET['pmtdate']);
+			//status = false;
+			$nostoppmt = date_create(htmlspecialchars($_GET['nostoppmt']));
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
@@ -33,10 +32,13 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-
+			
 			<?php echo brwname($_GET['brwName']);?>
 		    
-		    <p>As a reminder, we require a two business day notice to make changes to your payment due dates. This means that I will not be able to adjust your payment of $<?php echo number_format($pmtAmt,2,".",","); ?> that is due <?php echo date_format($nextpmtdate,"l, F jS");?>. Please call us if we can assist with any other options going forward.</p>
+		    <p>We attempted to stop your payment due <?php echo date_format($nostoppmt,"l, F jS");?>. However, due to an overwhelming amount of emails, we were unable to honor your request in a timely manner. We apologize for any inconvenience this may have caused.</p>
+		    <p>Once you confirm that the payment was successful or if any fees were incurred, please provide a bank statement at your earliest convenience to expedite a refund.</p>
+		    
+			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -63,18 +65,12 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="form-group">
-                        <label for="pmtdate">
-                            Payment Date:
-                        </label>
-                        <input class="form-control" type="date" name="pmtdate" required/>
-	                    </div>
-	                    <div class="form-group">
-	                        <label for="pmtAmt">
-	                            Payment Amount:
-	                        </label>
-	                        <input class="form-control" type="number" step="0.01" name="pmtAmt" required/>
-	                    </div>
+						<div class='form-group'>
+							<label for='nostoppmt'>
+								Date Of Non Stop Payment:s
+							</label>
+							<input class='form-control' type='date' step='0.01' id='nostoppmt' name='nostoppmt' required/>
+						</div>
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

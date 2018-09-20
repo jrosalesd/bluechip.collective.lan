@@ -379,27 +379,34 @@ td {
   margin: 1px;
   background-color: #ffffff;
  }
-.schl {
-  margin-left: 35px;
-}
+
 .schl li {
   font-size: 18px;
   font-weight: 500;
-}
-
-ul {
-    list-style: none; /* Remove HTML bullets */
-    padding: 0;
-    margin: 0;
-    
-}
-
-ul.p_list {
-  font-size: 18px;
-  font-weight: inherit;
 }
 .offset50px{
   margin-left: 50px;
     margin-bottom: 10px;
     margin-top: 5px;
+}
+ul .p_list {
+  font-size: 18px;
+  font-weight: inherit;
+}
+ul .p_list_disc {
+  list-style-type: disc;
+  font-size: 18px;
+  font-weight: inherit;
+}
+ol li .p_list_decimal {
+  font-size: 18px;
+  list-style-type:decimal;
+  font-weight: inherit;
+}
+ol .p_list_decimal {
+  font-size: 18px;
+  font-weight: inherit;
+}
+.wrap {
+  word-wrap: break-word;
 }

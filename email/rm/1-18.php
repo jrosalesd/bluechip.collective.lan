@@ -1,22 +1,25 @@
 <div class="row">
-    <div class="col-md-3">
-        <h2>
+	<div class="col-md-3">
+		<h2>
 			<?php echo $emname;?>
-		</h2>
+		</h2 
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests their payment history.
+				<b>Template Usage: </b>Use this template when a borrower breaks a promise to pay.
 				<br>
 			</h5>
 		</font>
-    </div>
-    <div class="col-md-9" id="embody" style="border-left: solid;">
-        <?php
+	</div>
+	<div class="col-md-9" style="border-left: solid;">
+		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
-			$pmthist =  nl2br($_GET['pmthist']);
-			
+			//$status = false;
+			$doa = date_create($_GET['doa']);
+			//next payment
+			$pmtnote = htmlspecialchars($_GET['pmtnote']);
+			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -29,20 +32,14 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			
 
 			<?php echo brwname($_GET['brwName']);?>
 		    
-			<p>You can find your payment history below. Please let me know if you have any questions.</p>
-			<h3>Date - Status - Amount</h3>
-			<p>
-				<?php
-				$pmthist = str_ireplace("\t"," - ",$pmthist);
-				$pmthist = str_ireplace(" "," - ",$pmthist);
-				echo $pmthist;
-				?>
-			</p>
+		    <p> When we last connected, you agreed you would make a payment on <?php echo date_format($doa,"l, F jS");?>. Unfortunately, this payment was not made. We are willing to work with you, but need your cooperation in return.</p>
+		    <p>Please call us at 888-681-6811 at your earliest convenience.</p>
 		    
+			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -67,24 +64,21 @@
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
 					</div>
-					<div class="col-md-8">
+					<div class="col-md-4">
 						<div class="form-group">
-							<label for="brwName">
-								Date - Status - Amount
-							</label>
-							<textarea class="form-control text-left " name="pmthist" rows="10" required></textarea>
-						</div>
-							
+	                        <label for="doa">
+	                            Date of Arrangement:
+	                        </label>
+	                        <input class="form-control" type="date" name="doa" required/>
+	                    </div>
 					</div>
 				</div>
-				
-				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
+				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>
 			</form>
-			
 			<?php
 		}
 		?>
-    </div>
+	</div>
 </div>

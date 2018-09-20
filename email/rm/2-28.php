@@ -1,22 +1,25 @@
 <div class="row">
-    <div class="col-md-3">
-        <h2>
+	<div class="col-md-3">
+		<h2>
 			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>
-				<b>Template Usage: </b>Use this template when a borrower requests their payment history.
+				<b>Template Usage: </b>Use this template when a borrower inquires about where their deposit is.
 				<br>
 			</h5>
 		</font>
-    </div>
-    <div class="col-md-9" id="embody" style="border-left: solid;">
-        <?php
+	</div>
+	<div class="col-md-9" style="border-left: solid;">
+		<?php
 		if($_GET['set'] == "on"){
 			//variables to complete template
-			$brwName = htmlspecialchars(trim($_GET['brwName']));
-			$pmthist =  nl2br($_GET['pmthist']);
-			
+			//$status = false;
+			$confdate = $_GET['confdate'];
+			//next payment
+			$pmtnote = htmlspecialchars($_GET['pmtnote']);
+			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -29,20 +32,14 @@
 			<hr>
 			<div>
 			<!-- Email Temaplate -->
-			
 
 			<?php echo brwname($_GET['brwName']);?>
 		    
-			<p>You can find your payment history below. Please let me know if you have any questions.</p>
-			<h3>Date - Status - Amount</h3>
-			<p>
-				<?php
-				$pmthist = str_ireplace("\t"," - ",$pmthist);
-				$pmthist = str_ireplace(" "," - ",$pmthist);
-				echo $pmthist;
-				?>
-			</p>
-		    
+		    <p>Thank you for contacting Spotloan.  All deposits take 1-2 business days. Since you’ve accepted your loan <?php echo checkday($confdate)?> you should receive your funds no later than <?php echo nextBD($_GET['confdate'],2,3);?>.</p>
+		    <p>
+		    	Please let me know if there is anything else that I can assist you with.
+		    </p>
+			
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -67,24 +64,21 @@
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
 					</div>
-					<div class="col-md-8">
-						<div class="form-group">
-							<label for="brwName">
-								Date - Status - Amount
+					<div class="col-md-4">
+						<div class='form-group' id='pmtnote'>
+							<label for='confdate'>
+								Loan Confirmation Date:
 							</label>
-							<textarea class="form-control text-left " name="pmthist" rows="10" required></textarea>
+							<input class='form-control' type='date' id='confdate' name='confdate' required/>
 						</div>
-							
 					</div>
 				</div>
-				
-				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
+				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>
 			</form>
-			
 			<?php
 		}
 		?>
-    </div>
+	</div>
 </div>

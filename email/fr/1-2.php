@@ -193,17 +193,6 @@
 							Thank you for resolving this debt and fulfilling your commitment. Please let me know if you have any questions or if there’s anything else I can do to help.
 						</p>
 						<?php
-						if ($state_status == "No"){
-							?>
-							<p>
-								<?php echo $state_note;?>
-							</p>
-							<?php
-						}
-						?>
-						<br>
-						
-						<?php
 						include('includes/signature.inc.php');
 						?>
 						</div>
@@ -256,23 +245,6 @@
 											Borrower´s First Name:
 										</label>
 										<input class="form-control" type="text" name="brwName" value="<?php echo $_GET['brwName']; ?>" required/>
-									</div>
-									<div class="form-group">
-										<label for="state">
-											Borrower's State:
-										</label>
-										<select class="form-control"  name="state" required>
-											<option value="">Select</option>
-											<?php
-											if($rows > 0){
-												while($row = mysqli_fetch_array($state_q)){
-													?>
-													<option value="<?php echo $row['id']?>" <?php if($_GET['state'] == $row['id']){echo "selected";}?>><?php echo $row['state_name']?></option>
-													<?php
-												}
-											}
-											?>
-										</select>
 									</div>
 									<div class="form-group">
 										<label for="loanID">

@@ -55,14 +55,6 @@ $errorMsg = $_GET['login'];
                 </div>
                 <div class="col-md-4"></div> 
             </div>
-            <div class="text-center">
-                <p>
-                    <script>
-                        var date = new Date();
-                        document.write("&copy;Julio R 2015-"+date.getFullYear());
-                    </script>
-                </p>
-            </div>           
-        </div>
-    </body>
-</html>
+           <?php
+include 'footer.php'
+?>

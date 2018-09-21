@@ -102,7 +102,7 @@
 						</div>
 						<div class="form-group">
 							<label for="loanid">
-								Borrower´s First Name:
+								Borrower's Loan ID:
 							</label>
 							<input class="form-control" type="text" placeholder="2356246" id="loanid" name="loanid" required/>
 						</div>

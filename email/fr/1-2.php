@@ -213,7 +213,7 @@
 										<label for="bal">
 											Oustading Balance
 										</label>
-										<input class="form-control" type="number" id="bal" onchange="settlement()">
+										<input class="form-control" step="0.01" type="number" id="bal" onchange="settlement()">
 									</div>
 									<div class="form-group">
 										<label for="disc">
@@ -227,11 +227,11 @@
 										</label>
 										<input class="form-control" type="text" id="pmtnums">
 									</div>
-									<div class="form-group">
+									<!--<div class="form-group">
 										<label for="frst">
 											<input type="checkbox" id="frst" onclick="enterform()">is there a initial payment?
 										</label>
-									</div>
+									</div>-->
 									<div id="frst_enter"></div>
 								</div>
 								<div class="col-md-8">

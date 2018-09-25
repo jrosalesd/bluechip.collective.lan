@@ -38,7 +38,7 @@
 				Here goes the subject for this email
 			</p>
 	
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>Per your request, the automatic debit option for your upcoming payments has been activated using your bank account that is now on file, ending in <?php echo $lastfour;?>.</p>
 		    

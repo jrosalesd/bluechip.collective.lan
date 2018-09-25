@@ -35,7 +35,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>We have updated our records to reflect your current bank account information.</p>
 		    

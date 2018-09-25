@@ -34,7 +34,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>As a reminder, we require a two business day notice to make changes to your payment due dates. This means that I will not be able to adjust your payment of $<?php echo number_format($pmtAmt,2,".",","); ?> that is due <?php echo date_format($nextpmtdate,"l, F jS");?>. Please call us if we can assist with any other options going forward.</p>
 			
@@ -77,6 +77,7 @@
 	                    </div>
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

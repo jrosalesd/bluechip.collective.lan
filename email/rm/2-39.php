@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'],1);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>As promised, you will find a copy of the requested email below. Please let me know if there is anything else I can do to further assist you.</p>
 			

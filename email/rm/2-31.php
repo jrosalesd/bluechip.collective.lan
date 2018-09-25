@@ -35,7 +35,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>We have received <?php echo $communication;?> from you and would be happy to explain.</p>
 		    <p>You missed <?php echo $missedpmt;?> payments. Interest on your loan is added daily based on the outstanding principal balance; for every day that you carry a principal balance on your loan, you are charged interest. So when you miss a payment, you end up paying more in interest charges.</p>

@@ -373,7 +373,9 @@ function stlbroken($s){
 }
 
 function nxtpmtcheck(){
+    
     ?>
+    <?php supCorr();?>
     <div class="row">
 		<div class="col-md-3">
 			<div class="checkbox">
@@ -498,31 +500,39 @@ function soldfind($LAPro, $mode = 0){
     return $output;
 }
 
-function brwname($name,$mode = 0){
+function brwname($name, $corr="off", $mode = 0){
     $name = htmlspecialchars(trim($name));
     $name = ucfirst($name);
-    
-    if ($mode == 0) {
-       $script = 
-        "
-        <p>Hi $name,</p>
-        <p>Thank you for contacting Spotloan.</p>
-        "
-        ;
-    }
-    if ($mode == 1) {
+        
+    if ($corr == "on") {
         $script =
-        "
-        <p>Hi $name,</p>
-        ";
-    }if ($mode == 2) {
-       $script = 
-        "
-        <p>Hi $name,</p>
-        <p>Thank you for contacting Spotloan. My name is ".$_SESSION['SysName'].". and I will be assisting with your account today.</p>
-        "
-        ;
+            "
+            <p>Hi $name,</p>
+            ";
+        $script .= "<p>My name is ".$_SESSION['SysName'].", Manager here at Spotloan. Please disregard the previously sent email, as it was the incorrect one. Please see below the correct email confirmation for the actions taken today on your loan.</p>";
+    }else {
+       if ($mode == 0) {
+           $script = 
+            "
+            <p>Hi $name,</p>
+            <p>Thank you for contacting Spotloan.</p>
+            "
+            ;
+        }elseif ($mode == 1) {
+            $script =
+            "
+            <p>Hi $name,</p>
+            ";
+        }elseif ($mode == 2) {
+           $script = 
+            "
+            <p>Hi $name,</p>
+            <p>Thank you for contacting Spotloan. My name is ".$_SESSION['SysName'].". and I will be assisting with your account today.</p>
+            "
+            ;
+        }
     }
+    
     return $script;
 }
 
@@ -614,6 +624,7 @@ function pendingpayment($type, $status = "off", $pmtAmt = "", $pmtdate =""){
         if($type == 0){
             ?>
             <div>
+                <?php supCorr();?>
                 <div>
                     <div class="checkbox">
                         <label for="pendingclick">
@@ -814,8 +825,14 @@ function sp($mode=0,$date="", $amtinit="", $newamt=""){
 }
 
 function paidoffloan(){
-    
 }
+
+function supCorr(){
+    if ($_SESSION['usersec'] < 3) {
+        $corr = '<div><div class="checkbox"><label for="sup-correction"><input type="checkbox"  id="sup-correction" name="sup-correction"/><b>Is this a Correction email?</b></label></div></div>';
+    }
+        echo $corr;
+}   
 
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){

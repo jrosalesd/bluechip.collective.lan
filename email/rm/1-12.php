@@ -34,7 +34,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName'],1);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    
 			<p><b>Payment Receipt</b></p>
@@ -133,6 +133,7 @@
 					</div>
 					<!--<div id="landform"></div>-->
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

@@ -40,7 +40,7 @@
 				Here goes the subject for this email
 			</p>
 	
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>Here is the body of the the email</p>
 		    
@@ -82,6 +82,7 @@
 				</div>
 				<?php
 	            pendingpayment(0);
+	            supCorr();
 	            ?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email

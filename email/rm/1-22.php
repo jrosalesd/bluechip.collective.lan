@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'], 1);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'], 1);?>
 		    
 		    <p>This is a friendly reminder that your Spotloan payment of <?php echo nextpayment(2,$_GET['nextpmtamt']);?> is scheduled for <?php echo nextpayment(1,$_GET['nextpmtdate']);?>. Please ensure that funds are available in your account listed above to ensure your payment is processed on time. Please let me know if you have any questions. To make changes, please contact us two business days before your scheduled payment so that we can make arrangements.</p>
 			
@@ -64,6 +64,7 @@
 						<?php echo nextpayment();?>
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

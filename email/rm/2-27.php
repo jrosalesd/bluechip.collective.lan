@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'],2);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],2);?>
 		    
 		    <p>
 		    	We received your Spotloan application on <?php echo date_format($appdate,"F jS, Y");?>. In response to that, we sent you an email to inform you that we were unable to give you a loan at that time. If you did not see this email, please check your spam folder. Unfortunately, once the email is sent out we have no control over where your email provider routes the message.

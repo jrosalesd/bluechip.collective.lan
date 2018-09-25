@@ -41,7 +41,7 @@
 			<br>
 			
 	
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 			<p>
 				You’re all set to make a payment of $<?php echo number_format($pmtAmt,2,".",",");?> from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?> on <?php echo date_format($pmtdate,"l, F jS");?>.
@@ -108,7 +108,9 @@
 					</div>
 				</div>
 				<div>
-					<?php nxtpmtcheck();?>
+					<?php 
+					nxtpmtcheck();
+					?>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email

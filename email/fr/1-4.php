@@ -43,7 +43,7 @@
 				A quick follow up
 			</p>
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 			
 			<p>
@@ -128,6 +128,7 @@
 						</div>
 					</div>
 				</div>
+				
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

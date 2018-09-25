@@ -34,7 +34,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>To apply for a Spotloan, you will need:</p>
 		    <div class="offset25px">

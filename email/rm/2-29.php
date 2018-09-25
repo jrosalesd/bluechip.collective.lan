@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'],2);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],2);?>
 		    
 		    <p>This is to inform you that the funds you applied for have now returned. You may go back online and fill out a new application. Please be sure to apply with correct banking information. Keep in mind, a second approval is not always guaranteed.</p>
 		    <p>If you have any questions or concerns, please feel free to contact us back.</p>

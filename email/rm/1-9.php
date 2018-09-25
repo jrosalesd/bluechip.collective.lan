@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <?php echo definterest(1,$_GET['pmtdate'], $_GET['pmtamt'], $_GET['defamt']);?>
 		    
@@ -69,6 +69,7 @@
 						<?php echo nextpayment();?>
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

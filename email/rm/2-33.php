@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName'],2);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],2);?>
 		    
 		    <p>Please call us as soon as you can. Due to the sensitivity of this information, a Relationship Manager will be more than happy to assist you with your request over the phone. Please have your bank account information available for verification purposes.</p>
 		    

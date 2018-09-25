@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>I want to inform you that due to the delinquency on your account, your loan is now in the process of being sold to a third party collections company.</p>
 		    <p>You will be receiving an email from Spotloan providing you with the contact information for the third party once the sale is complete.</p>

@@ -38,7 +38,7 @@
 			
 			
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 			<p>
 				To pay off your loan, you will need to contact us two business days in advance.

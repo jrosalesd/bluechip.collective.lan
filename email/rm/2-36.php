@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>We attempted to stop your payment due <?php echo date_format($nostoppmt,"l, F jS");?>. However, due to an overwhelming amount of emails, we were unable to honor your request in a timely manner. We apologize for any inconvenience this may have caused.</p>
 		    <p>Once you confirm that the payment was successful or if any fees were incurred, please provide a bank statement at your earliest convenience to expedite a refund.</p>

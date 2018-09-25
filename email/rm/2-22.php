@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>For security reasons, we are unable to update your banking information via email. Please call us at your earliest convenience and we would be happy to assist you. Your payment of <?php echo nextpayment(2,$_GET['nextpmtamt']);?>, due on <?php echo nextpayment(1,$_GET['nextpmtdate']);; ?>, can then be drawn from the updated bank account on file. Please have the following information available at the time of your call: </p>
 		    <div class="offset50px">

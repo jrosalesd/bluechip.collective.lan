@@ -71,7 +71,7 @@
 			<p><strong>Subject:</strong> Your Spotloan Online Access</p>
 			<br>
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 
 		    <p>In regards to the online account, Once you have signed the loan agreement, click ‘next step’</p>

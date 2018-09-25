@@ -32,7 +32,7 @@ if (isset($_GET['cs'])) {
 	        if($seclevel < 2)
 	        {
 	            ?>
-	            <a class="btn btn-info" href="?edit&id=<?php echo $emID;?>">Edit Email</a>
+	            <a class="btn btn-info" href="?edit&id=<?php echo $emID;?>" target="_blank">Edit Email</a>
 	            <?php
 	        }
 	        ?>

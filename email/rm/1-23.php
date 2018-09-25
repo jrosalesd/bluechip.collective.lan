@@ -30,7 +30,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 			<p>Your current balance is <?php echo number_format($bal,2,".",","); ?>. Your remaining payment schedule as of today can be found below:</p>
 			

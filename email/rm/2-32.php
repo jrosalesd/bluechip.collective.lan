@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>We have attempted to stop your loan deposit. Unfortunately, we were not able to. Spotloan allows three business days to pay back a loan interest-free.</p>
 		    <p>Please let us know if you would like to return the <?php echo $loanamt;?> deposit. We can make arrangements to have the deposit deducted from your bank account within two business days. If the funds are not returned in this timeframe, you will be responsible for the loan and interest paybacks.</p>

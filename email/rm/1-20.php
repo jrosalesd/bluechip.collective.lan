@@ -34,7 +34,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'],1);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>This email is confirmation of your opt-out of auto-debit payments. You can mail in your payments via check or money order to our address below:</p>
 		    <div class="offset50px">
@@ -53,9 +53,9 @@
 		    <div class="offset50px">
 		    	<ul class="schl">
 		    		<?php
-			    	$hist = str_ireplace(" ",",",$pmthist);
-	    			$hist = str_ireplace("\n",",",$hist);
+	    			$hist = str_ireplace("\n",",",$pmthist);
 	    			$hist = str_ireplace("\t",",",$hist);
+			    	$hist = str_ireplace(" ",",",$hist);
 	    			$hist = explode(",",$hist);
 	    			$dates = array();
 	    			$amount = array();
@@ -116,6 +116,7 @@
 						</div>
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 	
-			<?php echo brwname($_GET['brwName'],2);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],2);?>
 		    
 		    <p>Something went wrong with your most recent Spotloan payment. We need you to contact us as soon as possible so that we can get this taken care of.</p>
 		    <p>Your account is now <?php echo $pastdue;?> days past due.</p>
@@ -75,6 +75,7 @@
 					<div class="col-md-4">
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

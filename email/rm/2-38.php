@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName'],1);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>Congratulations, you have paid off your Spotloan! To apply for another loan, please visit our website at www.spotloan.com to complete a new application.</p>
 		    

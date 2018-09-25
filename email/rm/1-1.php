@@ -35,7 +35,7 @@
             <div>
                 <!-- Email Temaplate -->
                 
-                <?php echo brwname($_GET['brwName'],1);?>
+                <?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
                 
                 <p>
                     You’re all set to pay off your loan in the amount of $<?php echo number_format($payoffAmt,2,".",",");?> from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?> on <?php echo date_format($payoffDate,"l, F jS");?>.
@@ -110,7 +110,9 @@
                     </div>
                 </div>
                 <div>
-                    <?php pendingpayment(0);?>
+                <?php 
+                pendingpayment(0);
+                ?>
                 </div>
                 <button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
                 Generate Email

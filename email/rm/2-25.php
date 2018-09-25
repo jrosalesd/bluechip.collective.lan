@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>After reviewing your application, we see that you have successfully accepted your Spotloan agreement. This means that a confirmation number is no longer necessary. </p>
 		    <p>Your loan paperwork and agreement is sent in a separate email. This agreement is printer-friendly and titled <i>"Loan Confirmation"</i>.</p>

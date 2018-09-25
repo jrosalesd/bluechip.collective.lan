@@ -50,7 +50,7 @@
 			Special Spotloan offer for you
 		</p>
 	
-		<?php echo brwname($_GET['brwName']);?>
+		<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		
 		<p>
 			Great news – You’re eligible for a settlement with Spotloan! I’ve taken a look at your account and right now you have an outstanding balance of $<?php echo number_format($balance,2,".",",");?> However, we are willing to settle your account in full if you pay a portion of the remaining balance.
@@ -173,6 +173,7 @@
 					</button>
 				</div>
 			</div>
+			
 		</form>
 		<?php
 	}

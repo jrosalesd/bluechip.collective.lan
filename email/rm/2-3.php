@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 				
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>Thank you for contacting Spotloan. Your account balance is $<?php echo number_format($balance,2,".",",");?> and your next payment of $<?php echo number_format($nextpmtamt,2,".",",");?> is due on <?php echo date_format($nextpmtdate,"l, F jS"); ?>.</p>
 		    <p>As a friendly reminder, interest accrues on a daily basis.</p>

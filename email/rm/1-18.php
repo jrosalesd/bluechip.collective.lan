@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p> When we last connected, you agreed you would make a payment on <?php echo date_format($doa,"l, F jS");?>. Unfortunately, this payment was not made. We are willing to work with you, but need your cooperation in return.</p>
 		    <p>Please call us at 888-681-6811 at your earliest convenience.</p>
@@ -73,6 +73,7 @@
 	                    </div>
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

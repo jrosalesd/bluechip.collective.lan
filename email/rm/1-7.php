@@ -38,7 +38,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName'],2);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],2);?>
 		    
 		    
 			
@@ -91,7 +91,7 @@
 							<input class="form-control" type="date" name="pmtdate" required/>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-6">
 						<h4 class="text-center">Restructure Option</h4>
 						<div class="form-group">
 							<label for="pmtnum">Number Of Payments</label>
@@ -127,6 +127,7 @@
 						</div>
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

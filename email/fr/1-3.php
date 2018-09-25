@@ -37,7 +37,7 @@
 				Voided Settlement
 			</p>
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 			
 			<p>
 				This is a notification that the settlement you agreed to is now null and void because you failed to make the payments as discussed. You currently owe $<?php echo number_format($outBal,2,".",",");?>. Please keep in mind that your balance changes daily to reflect the interest accrued.
@@ -86,6 +86,7 @@
 						</div>
 					</div>
 				</div>
+				
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

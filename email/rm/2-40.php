@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'],1);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>Congratulations, your settlement is now complete! This means you have paid off your Spotloan and your account now reflects a zero balance.</p>
 			

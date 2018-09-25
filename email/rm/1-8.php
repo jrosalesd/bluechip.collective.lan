@@ -45,7 +45,7 @@
 			</p>
 			<br>
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    
 			<p>

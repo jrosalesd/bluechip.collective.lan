@@ -63,7 +63,7 @@
 							Your Spotloan Settlement Agreement
 						</p>
 						
-						<?php echo brwname($_GET['brwName']);?>
+						<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 						
 						<p>
 							I would like to recap our conversation and confirm that we have reached an agreement to settle your Spotloan account for the amount of $<?php echo number_format($stl,2,".",",");?>.
@@ -204,40 +204,43 @@
 						</h2>
 						<br>
 						<br>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="bal">
+										Oustading Balance
+									</label>
+									<input class="form-control" step="0.01" type="number" id="bal" onchange="settlement()">
+								</div>
+								<div class="form-group">
+									<label for="disc">
+										Discount %
+									</label>
+									<input class="form-control" type="text" id="disc">
+								</div>
+								<div class="form-group">
+									<label for="pmtnums">
+										Number of Payments
+									</label>
+									<input class="form-control" type="text" id="pmtnums">
+								</div>
+								<div class="form-group">
+									<label for="frst">
+										<input type="checkbox" id="frst" onclick="enterform()">is there a initial payment?
+									</label>
+								</div>
+								<div id="frst_enter"></div>
+							</div>
+							<div class="col-md-8">
+								<p id="stl0"></p>
+							</div>
+							
+						</div>
 						<form class="fom form-vertical" method="get">
 							<input type="hidden" name="cs"/>
 							<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
-							<div class="row">
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="bal">
-											Oustading Balance
-										</label>
-										<input class="form-control" step="0.01" type="number" id="bal" onchange="settlement()">
-									</div>
-									<div class="form-group">
-										<label for="disc">
-											Discount %
-										</label>
-										<input class="form-control" type="text" id="disc">
-									</div>
-									<div class="form-group">
-										<label for="pmtnums">
-											Number of Payments
-										</label>
-										<input class="form-control" type="text" id="pmtnums">
-									</div>
-									<!--<div class="form-group">
-										<label for="frst">
-											<input type="checkbox" id="frst" onclick="enterform()">is there a initial payment?
-										</label>
-									</div>-->
-									<div id="frst_enter"></div>
-								</div>
-								<div class="col-md-8">
-									<p id="stl0"></p>
-								</div>
-							</div>
+						
+								
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
@@ -292,13 +295,22 @@
 									</div>
 								</div>
 							</div>
+							
 							<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 								Generate Email
 							</button>
 						</form>
 						<script>
+							function enterform(){
+								var status, landform, child_in, child_out;
+								status = document.getElementById('frst').checkd;
+								landform = document.getElementById('frst_enter');
+								child_in = '<div id="frst_enter"><div class="form-group"><label for="bal">First Payment Amount</label><input class="form-control" step="0.01" type="number" id="frst_pmt"></div></div>';
+								child_out = '<div id="frst_enter"></div>';
+							}
 							document.getElementById('disc').onchange=function() {settlement()};
 							document.getElementById('pmtnums').onchange=function() {settlement()};
+							
 
 						    function settlement() {
 						        var bal = document.getElementById('bal').value;

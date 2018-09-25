@@ -31,7 +31,7 @@
 			<!-- Email Temaplate -->
 			
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 			<p>You can find your payment history below. Please let me know if you have any questions.</p>
 			<h3>Date - Status - Amount</h3>

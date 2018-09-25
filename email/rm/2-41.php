@@ -34,7 +34,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName'],1);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 			
 			<p>Thank you for your recent <?php echo $comm?> regarding your loan status.</p>
 			<p>

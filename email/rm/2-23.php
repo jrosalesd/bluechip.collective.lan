@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>We have noted that you have filed bankruptcy in our records.  We will no longer contact you regarding your Spotloan.</p>
 		    <p>If you have any other questions or we can assist otherwise, please contact us.</p>

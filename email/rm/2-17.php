@@ -35,7 +35,7 @@
 			<!-- Email Temaplate -->
 			
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>Thank you for contacting Spotloan. Unfortunately, we are only able to offer one loan at a time. After paying off your current loan, you may re-apply. </p>
 			

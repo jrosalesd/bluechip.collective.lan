@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>Your current application is incomplete. This means that all required fields throughout the application were not filled out.</p>
 		    <p>Please revisit the website at www.spotloan.com to re-apply and to complete a new loan application.</p>

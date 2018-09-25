@@ -35,13 +35,13 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 			<p>We want to ensure that your payments are taken according to the days you get paid.</p>
 			<p>Here is what we can offer you:</p>
 			<div class="offset25px">
 				<p>
 					<b>NEW SCHEDULE:</b>
-					<br>Payment Frequency: <?php echo $pmt_freq_new;?>
+					<br>Payment Frequency: <?php echo $pmt_number_new." ".$pmt_freq_new." ";if($pmt_number_new == 1){echo "payment";}else{echo "payments";}?>
 					<br>First Payment Date: <?php echo date_format($pmt_start_date,"F jS, Y");?>
 					<br>Last Payment Date: <?php echo date_format($pmt_end_date,"F jS, Y");?>
 					<br>Payment Amount: $<?php echo number_format($pmt_new,2,".",",");?>
@@ -93,14 +93,14 @@
 							</label>
 							<input class="form-control" type="date" name="pmt_end_date" required/>
 						</div>
-					</div>
-					<div class="col-md-4">
-						<!--<div class="form-group">
+						<div class="form-group">
 							<label for="pmt_number_new">
 								Number Of Payments:
 							</label>
 							<input class="form-control" type="text" name="pmt_number_new" required/>
-						</div>-->
+						</div>
+					</div>
+					<div class="col-md-4">
 						<div class="form-group">
 							<label for="pmt_new">
 								New Payment Amount:

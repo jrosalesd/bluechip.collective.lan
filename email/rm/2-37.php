@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>We’re sorry to hear that you’re having issues accessing your online account.</p>
 		    <p>To change your password, please go to our website at http://www.spotloan.com and follow the steps below:</p>

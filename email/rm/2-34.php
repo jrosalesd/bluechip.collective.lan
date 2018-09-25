@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 			
-			<?php echo brwname($_GET['brwName']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 		    <p>Unfortunately, the bank account used for your Spotloan application does not meet the application guidelines. Please read below for more details:</p>
 		    <p><i>A qualifying bank account can be a checking or savings account that is under your name at a bank or credit union and is not associated with other accounts at Spotloan. We do not accept prepaid cards. </i></p>

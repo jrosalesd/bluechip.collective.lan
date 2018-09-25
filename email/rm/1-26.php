@@ -32,7 +32,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'],2);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],2);?>
 		    
 		    <p><?php echo sp(1, $_GET['pmt_date'], $_GET['old_pmt'], $_GET['new_pmt']);?></p>
 			

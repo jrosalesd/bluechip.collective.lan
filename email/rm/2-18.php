@@ -40,7 +40,7 @@
 				Here goes the subject for this email
 			</p>
 	
-			<?php echo brwname($_GET['brwName']);
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);
 			
 			addressupdate(1, $_GET['street'], $_GET['city'], $_GET['state'],$_GET['zip']);
 		    

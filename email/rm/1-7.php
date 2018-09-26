@@ -91,7 +91,7 @@
 							<input class="form-control" type="date" name="pmtdate" required/>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-5">
 						<h4 class="text-center">Restructure Option</h4>
 						<div class="form-group">
 							<label for="pmtnum">Number Of Payments</label>

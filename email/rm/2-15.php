@@ -37,7 +37,7 @@
 				Here goes the subject for this email
 			</p>
 	
-			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>
 		    	Thank you for contacting Spotloan. We understand that you have revoked your consent to automatic debit withdrawals. We have noted your revocation and we will not attempt to automatically debit your account again.
@@ -92,7 +92,7 @@
 								Next Payment Amount
 							</label>
 							<input class='form-control' type='number' step='0.01' id='nextpmtamt' name='nextpmtamt' required/>
-						</div>"
+						</div>
 					</div>
 				</div>
 				<?php

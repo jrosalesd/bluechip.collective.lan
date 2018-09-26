@@ -288,7 +288,7 @@
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
-										<label for="stl">
+										<label for="fpmtamt">
 											First Payment Amount(If Applicable):
 										</label>
 										<input class="form-control" type="number" step="0.01" name="fpmtamt" id="fpmtamt" value="<?php echo $_GET['fpmtamt']; ?>"/>
@@ -303,50 +303,38 @@
 						<script>
 							function enterform(){
 								var status, landform, child_in, child_out;
-								status = document.getElementById('frst').checkd;
+								status = document.getElementById('frst').checked;
 								landform = document.getElementById('frst_enter');
 								child_in = '<div id="frst_enter"><div class="form-group"><label for="bal">First Payment Amount</label><input class="form-control" step="0.01" type="number" id="frst_pmt"></div></div>';
 								child_out = '<div id="frst_enter"></div>';
+								if(status){
+									landform.innerHTML = child_in;
+								}else{
+									landform.innerHTML = child_out;
+								}
 							}
-							document.getElementById('disc').onchange=function() {settlement()};
-							document.getElementById('pmtnums').onchange=function() {settlement()};
 							
+							document.getElementById('disc').onchange=function() {settlement();};
+							document.getElementById('pmtnums').onchange=function() {settlement();};
 
 						    function settlement() {
-						        var bal = document.getElementById('bal').value;
-						        var disc = document.getElementById('disc').value;
-						        var pmtnum = document.getElementById('pmtnums').value;
+						    	var stl, bal,disc,pmtnum,pmts, w,x,y,z, pmtcheck;
+						        bal = document.getElementById('bal').value;
+						        disc = document.getElementById('disc').value;
+						        pmtnum = document.getElementById('pmtnums').value;
 						        
-						        var stl =bal-(bal*(disc/100));
-						        var pmts = stl/pmtnum;
-						    
-						        var x = document.getElementById('stl0');
-						        var y = document.getElementById('stl');
-						        var z = document.getElementById('pmtnum1');
-						        
-						        x.innerHTML = disc+"% Settlement would be in the Amout of $" + stl.toFixed(2)
-						        +"<br>"
-						        +"This can be solved in " + pmtnum + " payments of $" + pmts.toFixed(2);
-						        y.value = stl.toFixed(2);
-						        z.value = pmtnum;
-						    }
-						    function enterform(){
-						    	var status, landform, leaveform, child;
-						    	status = document.getElementById('frst').checked;
-						    	landform = document.getElementById('frst_enter');
-						    	leaveform = '<div id="frst_enter"></div>';
-						    	
-						    	if (status) {
-						    		child = 
-						    		'<div class="form-group" id="frst_enter">'
-						    			+'<label for="pmtnums">'
-											+'Additional Payment amount'
-										+'</label>'
-										+'<input class="form-control" type="text" id="pmtnums">'
-						    		+'</div>'
-						    		;
-						    	}
-						    }
+						        w = document.getElementById('fpmtamt');
+						        x = document.getElementById('stl0');
+						        y = document.getElementById('stl');
+						        z = document.getElementById('pmtnum1');
+						        	stl =bal-(bal*(disc/100));
+							        pmts = stl/pmtnum;
+							        x.innerHTML = disc+"% Settlement would be in the Amout of $" + stl.toFixed(2)
+							        +"<br>"
+							        +"This can be solved in " + pmtnum + " payments of $" + pmts.toFixed(2);
+							        y.value = stl.toFixed(2);
+							        z.value = pmtnum;
+						        }
 						</script>
 						<?php
 					}

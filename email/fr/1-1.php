@@ -50,7 +50,7 @@
 			Special Spotloan offer for you
 		</p>
 	
-		<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
+		<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		
 		<p>
 			Great news – You’re eligible for a settlement with Spotloan! I’ve taken a look at your account and right now you have an outstanding balance of $<?php echo number_format($balance,2,".",",");?> However, we are willing to settle your account in full if you pay a portion of the remaining balance.
@@ -152,7 +152,7 @@
 							Payment Frequency:
 						</label>
 						<select class="form-control"  name="optTwoFreq" required>
-							<option value=""></option>
+							<option value="">Choose One</option>
 							<option value="bi-weekly">Bi-Weekly</option>
 							<option value="semi-monthly">Semi-Monthly</option>
 							<option value="monthly">Monthly</option>
@@ -160,6 +160,7 @@
 					</div>
 				</div>
 			</div>
+				<?php supCorr();?>
 			<div class="row">
 				<div class="col-md-6">
 					<button type="submit" name="set" class="btn btn-success" value="on">

@@ -375,8 +375,10 @@ function stlbroken($s){
 function nxtpmtcheck(){
     
     ?>
-    <?php supCorr();?>
     <div class="row">
+		<div class="col-md-4">
+            <?php supCorr();?>
+		</div>
 		<div class="col-md-3">
 			<div class="checkbox">
 				<label for="pmtnote">
@@ -829,7 +831,7 @@ function paidoffloan(){
 
 function supCorr(){
     if ($_SESSION['usersec'] < 3) {
-        $corr = '<div><div class="checkbox"><label for="sup-correction"><input type="checkbox"  id="sup-correction" name="sup-correction"/><b>Is this a Correction email?</b></label></div></div>';
+        $corr = '<div class="checkbox"><label for="sup-correction"><input type="checkbox"  id="sup-correction" name="sup-correction"/><b>Is this a Correction email?</b></label></div>';
     }
         echo $corr;
 }   

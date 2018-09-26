@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>Thank you for contacting Spotloan.  All deposits take 1-2 business days. Since you’ve accepted your loan <?php echo checkday($confdate)?> you should receive your funds no later than <?php echo nextBD($_GET['confdate'],2,3);?>.</p>
 		    <p>
@@ -73,6 +73,7 @@
 						</div>
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

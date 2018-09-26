@@ -36,11 +36,11 @@
 		    
 		    <p>For security reasons, we are unable to update your banking information via email. Please call us at your earliest convenience and we would be happy to assist you. Your payment of <?php echo nextpayment(2,$_GET['nextpmtamt']);?>, due on <?php echo nextpayment(1,$_GET['nextpmtdate']);; ?>, can then be drawn from the updated bank account on file. Please have the following information available at the time of your call: </p>
 		    <div class="offset50px">
-		    	<ul class="p_list_disc">
-		    		<li>Routing Number</li>
-		    		<li>Account Number</li>
-		    		<li>Type of Account (Checking or Savings)</li>
-		    	</ul>
+		        <p>
+		            Routing Number
+		            <br />Account Number
+		            <br />Type of Account (Checking or Savings)
+		        </p>
 		    </div>
 		    <p>Please keep in mind, we require a two-business day notice in order to make any changes on your Spotloan account.</p>
 		    
@@ -71,12 +71,10 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-                    	<div>
-							<h3>Next Payment</h3>
-						</div>
                     	<?php echo nextpayment();?>
                     </div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

@@ -35,7 +35,7 @@
 			<!-- Email Temaplate -->
 			
 			
-			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>Thank you for contacting Spotloan. Unfortunately, we are only able to offer one loan at a time. After paying off your current loan, you may re-apply. </p>
 			
@@ -65,6 +65,7 @@
 						
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

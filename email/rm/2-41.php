@@ -93,6 +93,7 @@
                     </div>
 					<div class="col-md-4"></div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

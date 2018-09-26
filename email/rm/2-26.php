@@ -33,7 +33,7 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>Thank you for contacting Spotloan. We appreciate you updating your contact information with us. Per your request, here is the information that was adjusted internally on your Spotloan account: <?php echo lcfirst($infoup);?></p>
 		    <?php NxtPmt($nextpmtdate, $nextpmtamt, "on")?>
@@ -74,6 +74,7 @@
 						<?php echo nextpayment();?>
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

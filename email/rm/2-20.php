@@ -38,12 +38,12 @@
 		    
 		    <p>To apply for a Spotloan, you will need:</p>
 		    <div class="offset25px">
-		    	<ul class="p_list">
-		    		<li>--A regular source of income.</li>
-		    		<li>--A valid email address and phone number.</li>
-		    		<li>--To be at least 18 years of age.</li>
-		    		<li>--Your own checking or savings account at a qualifying bank or credit union. (Non-traditional or prepaid accounts are not Spotloan-friendly).</li>
-		    	</ul>
+		    	<p>
+		    	    --A regular source of income.
+		    		<br />--A valid email address and phone number.
+		    		<br />--To be at least 18 years of age.
+		    		<br />--Your own checking or savings account at a qualifying bank or credit union. (Non-traditional or prepaid accounts are not Spotloan-friendly).
+		    	</p>
 		    </div>
 		    <p>Please let us know if you have any other questions.</p>
 		    
@@ -74,6 +74,7 @@
 						</div>
 					</div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

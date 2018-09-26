@@ -529,7 +529,7 @@ if (isset($_GET['cs'])) {
                     <tr>
                         <td class="wrap">
                             <?php 
-                            echo ucwords($row['name'])." [Filename: $docname.php]";
+                            echo ucwords($row['name'])."<br />[Filename: $docname.php]";
                             ?>
                         </td>
                         <td>

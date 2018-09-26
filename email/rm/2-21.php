@@ -68,8 +68,7 @@
 					</div>
 					<div class="col-md-4">
 						<div>
-							<h3>Banking information</h3>
-							<small>New Banking information submitted for the borrower's account</small>
+							<h3 title="New Banking information submitted for the borrower's account">Banking information</h3>
 						</div>
                         <div class="form-group">
                             <label for="bankname">
@@ -84,14 +83,11 @@
                             <input class="form-control" type="text" maxlength="4"  name="lastfour" required/>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                    	<div>
-							<h3>Next Payment</h3>
-							<small>The next payment that will come out from new bank account.</small>
-						</div>
+                    <div title="The next payment that will come out from new bank account." class="col-md-4">
                     	<?php echo nextpayment();?>
                     </div>
 				</div>
+				<?php supCorr();?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

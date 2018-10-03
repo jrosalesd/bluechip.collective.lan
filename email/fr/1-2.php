@@ -207,27 +207,27 @@
 						<div class="row">
 							<div class="col-md-4">
 								<div class="form-group">
+									<label for="frst">
+										<input type="checkbox" id="frst" onclick="enterform()">is there a initial payment?
+									</label>
+								</div>
+								<div class="form-group">
 									<label for="bal">
 										Oustading Balance
 									</label>
-									<input class="form-control" step="0.01" type="number" id="bal" onchange="settlement()">
+									<input class="form-control" step="0.01" type="number" id="bal" onkeyup="settlement()">
 								</div>
 								<div class="form-group">
 									<label for="disc">
 										Discount %
 									</label>
-									<input class="form-control" type="text" id="disc">
+									<input class="form-control" type="text" id="disc" onkeyup="settlement()">
 								</div>
 								<div class="form-group">
 									<label for="pmtnums">
 										Number of Payments
 									</label>
-									<input class="form-control" type="text" id="pmtnums">
-								</div>
-								<div class="form-group">
-									<label for="frst">
-										<input type="checkbox" id="frst" onclick="enterform()">is there a initial payment?
-									</label>
+									<input class="form-control" type="text" id="pmtnums" onkeyup="settlement()">
 								</div>
 								<div id="frst_enter"></div>
 							</div>
@@ -236,6 +236,8 @@
 							</div>
 							
 						</div>
+						<hr>
+						<hr>
 						<form class="fom form-vertical" method="get">
 							<input type="hidden" name="cs"/>
 							<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
@@ -301,40 +303,7 @@
 							</button>
 						</form>
 						<script>
-							function enterform(){
-								var status, landform, child_in, child_out;
-								status = document.getElementById('frst').checked;
-								landform = document.getElementById('frst_enter');
-								child_in = '<div id="frst_enter"><div class="form-group"><label for="bal">First Payment Amount</label><input class="form-control" step="0.01" type="number" id="frst_pmt"></div></div>';
-								child_out = '<div id="frst_enter"></div>';
-								if(status){
-									landform.innerHTML = child_in;
-								}else{
-									landform.innerHTML = child_out;
-								}
-							}
 							
-							document.getElementById('disc').onchange=function() {settlement();};
-							document.getElementById('pmtnums').onchange=function() {settlement();};
-
-						    function settlement() {
-						    	var stl, bal,disc,pmtnum,pmts, w,x,y,z, pmtcheck;
-						        bal = document.getElementById('bal').value;
-						        disc = document.getElementById('disc').value;
-						        pmtnum = document.getElementById('pmtnums').value;
-						        
-						        w = document.getElementById('fpmtamt');
-						        x = document.getElementById('stl0');
-						        y = document.getElementById('stl');
-						        z = document.getElementById('pmtnum1');
-						        	stl =bal-(bal*(disc/100));
-							        pmts = stl/pmtnum;
-							        x.innerHTML = disc+"% Settlement would be in the Amout of $" + stl.toFixed(2)
-							        +"<br>"
-							        +"This can be solved in " + pmtnum + " payments of $" + pmts.toFixed(2);
-							        y.value = stl.toFixed(2);
-							        z.value = pmtnum;
-						        }
 						</script>
 						<?php
 					}

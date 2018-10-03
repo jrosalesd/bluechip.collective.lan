@@ -257,6 +257,64 @@ function offer() {
     x.value = lump.toFixed(2);
 }
 
+function enterform(){
+	var status, landform, child_in, child_out;
+	status = document.getElementById('frst').checked;
+	landform = document.getElementById('frst_enter');
+	child_in = '<div id="frst_enter"><div class="form-group"><label for="bal">First Payment Amount</label><input class="form-control" step="0.01" type="number" id="frst_pmt" onkeyup="settlement()"></div></div>';
+	child_out = '<div id="frst_enter"></div>';
+	if(status){
+		landform.innerHTML = child_in;
+	}else{
+		landform.innerHTML = child_out;
+	}
+}
+
+function settlement_offer(argument) {
+	// body...
+}
+
+
+function settlement() {
+	
+	var stl, bal,disc,pmtnum,pmts, w,x,y,z, pmtcheck, frstcheck;
+	//variables
+	
+	frstcheck = document.getElementById('frst').checked;
+    pmtcheck = document.getElementById('frst_pmt').value;
+    bal = document.getElementById('bal').value;
+    disc = document.getElementById('disc').value;
+    pmtnum = document.getElementById('pmtnums').value;
+    
+    w = document.getElementById('fpmtamt');
+    x = document.getElementById('stl0');
+    y = document.getElementById('stl');
+    z = document.getElementById('pmtnum1');
+    
+    if (frstcheck) {
+    	pmtnum -= 1;
+    	stl = bal-(bal*(disc/100));
+    	pmts = (stl-pmtcheck)/pmtnum;
+    	w.value = pmtcheck;
+    	x.innerHTML = disc+"% Settlement would be in the Amout of $" + stl.toFixed(2)
+        +"<br>"
+        +"This can be solved with a first payment of $" + pmtcheck + " and " + pmtnum + " payments of $" + pmts.toFixed(2);
+        y.value = stl.toFixed(2);
+        z.value = pmtnum;
+        
+    }if (frstcheck==false){
+    	w.value = 0;
+    	stl =bal-(bal*(disc/100));
+        pmts = stl/pmtnum;
+        x.innerHTML = disc+"% Settlement would be in the Amout of $" + stl.toFixed(2)
+        +"<br>"
+        +"This can be solved in " + pmtnum + " payments of $" + pmts.toFixed(2);
+        y.value = stl.toFixed(2);
+        z.value = pmtnum;
+    }
+    	
+}
+
 //sold account payments
 function soldpmt(){
 	var outputopn, status, landingform, outputcls;

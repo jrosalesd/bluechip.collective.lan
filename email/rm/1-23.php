@@ -32,7 +32,7 @@
 			
 			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
-			<p>Your current balance is <?php echo number_format($bal,2,".",","); ?>. Your remaining payment schedule as of today can be found below:</p>
+			<p>Your current balance is $<?php echo number_format($bal,2,".",","); ?>. Your remaining payment schedule as of today can be found below:</p>
 			
 			<h3 class="offset25px">Payment Schedule</h3>
     		<div class="offset25px">

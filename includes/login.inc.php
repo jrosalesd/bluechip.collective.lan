@@ -54,9 +54,9 @@
                        }elseif ($hashedPwdCheck == true) {
                            //set Session variables
                             $_SESSION['uid'] = $row['user_id'];
-                            $_SESSION['SysName'] = $row['user_shortname'];
+                            $_SESSION['SysName'] = ucfirst($row['user_shortname']);
                             $_SESSION['email'] = $row['user_email'];
-                            $_SESSION['role'] = $row['user_role'];
+                            $_SESSION['role'] = ucfirst($row['user_role']);
                             $_SESSION['username'] = $row['user_uid'];
                             $_SESSION['status'] = $row['user_status'];
                             $_SESSION['usersec'] = $row['user_sec_profile'];

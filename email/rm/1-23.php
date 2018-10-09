@@ -39,11 +39,10 @@
     			    <ul class="schl">
     			        <?php
             			$hist = str_ireplace("\n",",",$pmthist);
-            			$hist = str_ireplace(" ",",",$hist);
-            			$hist = str_ireplace("\t",",",$hist);
             			$hist = explode(",",$hist);
             			$dates = array();
             			$amount = array();
+            			//var_dump($hist);
             			foreach ($hist as $k => $v) {
                             if ($k % 2 == 0) {
                                 $dates[] = date_create($v);
@@ -54,7 +53,7 @@
                         }
             			for ($i = 0; $i < count($dates); $i++) {
             				?>
-            				<li><?php echo date_format($dates[$i],"D, M jS");?> <?php echo "$".number_format($amount[$i],2,".",",");?></li>
+            				<li><?php echo date_format($dates[$i],"D, M jS");?> - <?php echo "$".number_format($amount[$i],2,".",",");?></li>
             				<?php
             			}
             			?>

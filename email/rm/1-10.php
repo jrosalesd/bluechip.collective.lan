@@ -19,8 +19,8 @@
 			$pmtdate = date_create($_GET['pmtdate']);
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
-			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
-			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
+			$nextpmtdate = date_create(htmlspecialchars($_GET['pmtdate']));
+			$nextpmtamt = htmlspecialchars($_GET['pmtAmt'])
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">

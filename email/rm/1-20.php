@@ -53,10 +53,9 @@
 		    <div class="offset50px">
 		    	<ul class="schl">
 		    		<?php
-	    			$hist = str_ireplace("\n",",",$pmthist);
-	    			$hist = str_ireplace("\t",",",$hist);
-			    	$hist = str_ireplace(" ",",",$hist);
-	    			$hist = explode(",",$hist);
+	    			
+        			$hist = str_ireplace("\n",",",$pmthist);
+        			$hist = explode(",",$hist);
 	    			$dates = array();
 	    			$amount = array();
 	    			foreach ($hist as $k => $v) {

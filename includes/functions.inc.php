@@ -621,6 +621,9 @@ function pendingpayment($type, $status = "off", $pmtAmt = "", $pmtdate =""){
         }elseif ($type == 3) {
             //payoff
             $pendingNote = "<p>Keep in mind, this payoff is valid as long as your pending payment from $pmtdate, in the amount of $pmtAmt clears your bank account successfully.</p>";
+        }elseif ($type == 4) {
+            // Schedule
+            $pendingNote = "<p>Keep in mind, the schedule on this email is valid as long as your pending payment from $pmtdate, in the amount of $pmtAmt clears your bank account successfully.</p>";
         }
     }if ($status == "off") {
         if($type == 0){

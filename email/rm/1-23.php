@@ -33,33 +33,15 @@
 			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 			<p>Your current balance is $<?php echo number_format($bal,2,".",","); ?>. Your remaining payment schedule as of today can be found below:</p>
-			
-			<h3 class="offset25px">Payment Schedule</h3>
-    		<div class="offset25px">
-    			    <ul class="schl">
-    			        <?php
-            			$hist = str_ireplace("\n",",",$pmthist);
-            			$hist = explode(",",$hist);
-            			$dates = array();
-            			$amount = array();
-            			//var_dump($hist);
-            			foreach ($hist as $k => $v) {
-                            if ($k % 2 == 0) {
-                                $dates[] = date_create($v);
-                            }
-                            else {
-                                $amount[] = str_ireplace("$","",$v);
-                            }
-                        }
-            			for ($i = 0; $i < count($dates); $i++) {
-            				?>
-            				<li><?php echo date_format($dates[$i],"D, M jS");?> - <?php echo "$".number_format($amount[$i],2,".",",");?></li>
-            				<?php
-            			}
-            			?>
-    			    
-    			    </ul>
-			</div>
+			<?php
+			$schhandler = new  Sch($pmthist);
+			if ($_GET['schType'] == 0) {
+				$schhandler->SchPost();
+			}elseif ($_GET['schType'] == 1) {
+				$schhandler->CompleteSchedule();
+			}
+			?>
+			<p><?php echo pendingpayment(4, $_GET['pendingclick'], $_GET['pennextpmtamt'], $_GET['datepending']);?></p>
 			<?php
 			include('includes/signature.inc.php');
 			?>	
@@ -92,14 +74,22 @@
 					</div>
 					<div class="col-md-8">
 						<div class="form-group">
+							<label for="schType">Schedule Outcome</label>
+							<select name="schType" id="schType" class="form-control" required>
+								<option value="">Select One</option>
+								<option value="0">Date-Amount</option>
+								<option value="1">Complete Schedule</option>
+							</select>
+						</div>
+						<div class="form-group">
 							<label for="brwName">
-								Date - Amount
+								Payment Schedule
 							</label>
 							<textarea class="form-control text-left " name="pmthist" rows="10" required></textarea>
 						</div>
-							
 					</div>
 				</div>
+				<?php pendingpayment(0);?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="3">
 					Generate Email
 				</button>

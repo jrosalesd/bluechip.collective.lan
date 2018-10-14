@@ -13,6 +13,7 @@ $pass_status = $_SESSION['pass_status'];
 
 //Files to include
 include "includes/functions.inc.php"; 
+include 'includes/class.inc.php';
 
 
 if(!isset($userid) && !isset($username)){

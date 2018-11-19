@@ -79,7 +79,7 @@
 							}else {
 								?>
 								You have agreed to make <?php echo $pmtnum;?> <?php if($daynum==14){echo "Bi-Weekly";}elseif ($daynum==30) {
-								echo "Montly";}elseif($daynum==15){echo "Semi-Montly";}?> payments of $<?php echo number_format($stlpmt,2,".",",");?>. Here’s your payment schedule:
+								echo "Monthly";}elseif($daynum==15){echo "Semi-Montly";}?> payments of $<?php echo number_format($stlpmt,2,".",",");?>. Here’s your payment schedule:
 								<?php
 							}
 							?>
@@ -187,7 +187,7 @@
 		                    ?>
 						</p>
 						<p>
-							When you make payments, it is critical that the auto-debits payments be successfully completed and not returned; and that mailed payments arrive by the due date, not just be postmarked. If you do not make your payments in full and on time, this settlement agreement will be voided and you will be responsible for repaying the full outstanding balance at the time of default. This would include any interest that would have accrued on that balance if this settlement agreement did not exist (minus any payments you made).
+							When you make payments, it is critical that the auto-debit payments be successfully completed and not returned; and that mailed payments arrive by the due date, not just be postmarked. If you do not make your payments in full and on time, this settlement agreement will be voided and you will be responsible for repaying the full outstanding balance at the time of default. This would include any interest that would have accrued on that balance if this settlement agreement did not exist (minus any payments you made).
 						</p>
 						<p>
 							Thank you for resolving this debt and fulfilling your commitment. Please let me know if you have any questions or if there’s anything else I can do to help.
@@ -208,7 +208,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="frst">
-										<input type="checkbox" id="frst" onclick="enterform()">is there a initial payment?
+										<input type="checkbox" id="frst" onclick="enterform()">is the first payment different?
 									</label>
 								</div>
 								<div class="form-group">

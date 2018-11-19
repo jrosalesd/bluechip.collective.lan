@@ -376,20 +376,32 @@ function nxtpmtcheck(){
     
     ?>
     <div class="row">
-		<div class="col-md-4">
-            <?php supCorr();?>
-		</div>
+		
 		<div class="col-md-3">
 			<div class="checkbox">
 				<label for="pmtnote">
-				    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"/><b>Next Payment Notice</b>
+				    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"  checked/><b>Next Payment Notice</b>
 				</label>
 			</div>
 		</div>
+		<?php supCorr();?>
 	</div>
 	<div class="row">
 		<div class="col-md-4">
-			<g id="pmtnotebody"></g>
+		    <div id="pmtnotebody">
+    		        <div class='form-group' id='pmtnote'>
+    				<label for='nextpmtdate'>
+    					Next Payment Date
+    				</label>
+    				<input class='form-control' type='date' id='nextpmtdate' name='nextpmtdate' required/>
+    			</div>
+    			<div class='form-group'>
+    				<label for='nextpmtamt'>
+    					Next Payment Amount
+    				</label>
+    				<input class='form-control' type='number' step='0.01' id='nextpmtamt' name='nextpmtamt' required/>
+    			</div>
+		    </div>
 		</div>
 	</div>
     <?php
@@ -834,7 +846,7 @@ function paidoffloan(){
 
 function supCorr(){
     if ($_SESSION['usersec'] < 3) {
-        $corr = '<div class="checkbox"><label for="sup-correction"><input type="checkbox"  id="sup-correction" name="sup-correction"/><b>Is this a Correction email?</b></label></div>';
+        $corr = '<div class="col-md-4"><div class="checkbox"><label for="sup-correction"><input type="checkbox"  id="sup-correction" name="sup-correction"/><b>Is this a Correction email?</b></label></div></div>';
     }
         echo $corr;
 }   

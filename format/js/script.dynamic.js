@@ -26,7 +26,14 @@ function pendingpmt(){
 function nextpmt(){
 	var pmtbody = document.getElementById('pmtnotebody');
 	var status = document.getElementById('pmtnote').checked;
-	if(status){
+	if(!status){
+		pmtbody.innerHTML = 
+		'<div class="col-md-6">'
+			+'<g id="pmtnotebody"></g>'
+		+'</div>'
+		;
+		
+	}else {
 		pmtbody.innerHTML =
 			"<div class='form-group' id='pmtnote'>"
 				+"<label for='nextpmtdate'>"
@@ -41,14 +48,7 @@ function nextpmt(){
 				+"<input class='form-control' type='number' step='0.01' id='nextpmtamt' name='nextpmtamt' required/>"
 			+"</div>"
 			;
-	}else {
-		pmtbody.innerHTML = 
-		'<div class="col-md-6">'
-			+'<g id="pmtnotebody"></g>'
-		+'</div>'
-		;
 	}
-		
 		
 }
 
@@ -281,7 +281,6 @@ function settlement() {
 	//variables
 	
 	frstcheck = document.getElementById('frst').checked;
-    pmtcheck = document.getElementById('frst_pmt').value;
     bal = document.getElementById('bal').value;
     disc = document.getElementById('disc').value;
     pmtnum = document.getElementById('pmtnums').value;
@@ -292,6 +291,8 @@ function settlement() {
     z = document.getElementById('pmtnum1');
     
     if (frstcheck) {
+    	
+    	pmtcheck = document.getElementById('frst_pmt').value;
     	pmtnum -= 1;
     	stl = bal-(bal*(disc/100));
     	pmts = (stl-pmtcheck)/pmtnum;
@@ -302,8 +303,9 @@ function settlement() {
         y.value = stl.toFixed(2);
         z.value = pmtnum;
         
-    }if (frstcheck==false){
-    	w.value = 0;
+    }
+    if (frstcheck == false) {
+    	w.value = "";
     	stl =bal-(bal*(disc/100));
         pmts = stl/pmtnum;
         x.innerHTML = disc+"% Settlement would be in the Amout of $" + stl.toFixed(2)
@@ -312,6 +314,7 @@ function settlement() {
         y.value = stl.toFixed(2);
         z.value = pmtnum;
     }
+    
     	
 }
 

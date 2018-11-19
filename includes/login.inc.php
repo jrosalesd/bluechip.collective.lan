@@ -35,7 +35,7 @@
                        exit();
                     }elseif($passreset == 0){
                        //Dehash Password
-                        $hashedPwdCheck = password_verify($password, $row['user_password']);
+                            $hashedPwdCheck = password_verify($password, $row['user_password']);
                        if($hashedPwdCheck == false){
                            header("Location: ../login.php?login=The password does not match.");
                            exit();

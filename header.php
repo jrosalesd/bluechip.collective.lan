@@ -77,6 +77,7 @@ $conn->close();
         <link rel="stylesheet" type="text/css" href="format/css/modal.css"/>
         <script src="format/js/script.js" type="text/javascript"></script>
         <script src="format/js/script.dynamic.js" type="text/javascript"></script>
+        <script src="format/js/forms.js" type="text/javascript"></script>
         
         <link rel="shortcut icon" href="format/img/icon.png" type="image/png">
         

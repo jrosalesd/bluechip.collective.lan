@@ -2,7 +2,7 @@
 class Sch{
     public $schedule;
     
-    public function __construct($schedule){
+    public function __construct($schedule =""){
         $this->schedule = $schedule;
     }
     
@@ -72,6 +72,25 @@ class Sch{
         </div>
         <?php
         
+    }
+    
+    public function forms(){
+        ?>
+			<div class="form-group">
+				<label for="schType">Schedule Outcome</label>
+				<select name="schType" id="schType" class="form-control" required>
+					<option value="">Select One</option>
+					<option value="0">Date-Amount</option>
+					<option value="1">Complete Schedule</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="brwName">
+					Payment Schedule
+				</label>
+				<textarea class="form-control text-left " name="pmthist" rows="10" required></textarea>
+			</div>
+        <?php
     }
 }
 

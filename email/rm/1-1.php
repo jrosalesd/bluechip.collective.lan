@@ -38,7 +38,7 @@
                 <?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
                 
                 <p>
-                    You’re all set to pay off your loan in the amount of $<?php echo number_format($payoffAmt,2,".",",");?> from your <?php echo $bankname;?> account ending in <?php echo $lastfour;?> on <?php echo date_format($payoffDate,"l, F jS");?>.
+                    You’re all set to pay off your loan in the amount of $<?php echo number_format($payoffAmt,2,".",",");?> on <?php echo date_format($payoffDate,"l, F jS");?>. This will be debited from your bank account on file.
                 </p>
                 <!--
                 <p>
@@ -92,20 +92,6 @@
                             Payoff Date:
                             </label>
                             <input class="form-control" type="date" name="payoffDate" required/>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="$bankname">
-                            Bank Name:
-                            </label>
-                            <input class="form-control" type="text" name="bankname" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastfour">
-                            Last 4 Bank Account:
-                            </label>
-                            <input class="form-control" type="text" maxlength="4"  name="lastfour" required/>
                         </div>
                     </div>
                 </div>

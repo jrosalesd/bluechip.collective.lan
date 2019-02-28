@@ -808,7 +808,7 @@ function sp($mode=0,$date="", $amtinit="", $newamt=""){
        ?>
         <div class='form-group'>
 			<label for='pmt_date'>
-				New Payment Date:
+				Payment Date:
 			</label>
 			<input class='form-control' type='date' id='pmt_date' name='pmt_date' required/>
 		</div>
@@ -836,7 +836,9 @@ function sp($mode=0,$date="", $amtinit="", $newamt=""){
         $amtinit = "$".number_format($amtinit,2,".",",");
         $newamt = "$".number_format($newamt,2,".",",");
         //Outcome
-        $product = "Per your request, we have adjusted your payment for $date from $amtinit to $newamt. Please remember that interest will accrue for the remaining amount of the payment.";
+        $product = "<p>Per your request, we have adjusted your payment for $date from $amtinit to $newamt. This will be drawn from your bank account of file. Please keep in mind, additional interest will accrue until this payment is made in full.</p>";
+        
+        
         return $product;
     }
 }
@@ -849,8 +851,7 @@ function supCorr(){
         $corr = '<div class="col-md-4"><div class="checkbox"><label for="sup-correction"><input type="checkbox"  id="sup-correction" name="sup-correction"/><b>Is this a Correction email?</b></label></div></div>';
     }
         echo $corr;
-}   
-
+} 
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){
     $resStart = strtotime($resStart);

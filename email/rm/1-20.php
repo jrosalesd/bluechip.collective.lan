@@ -12,6 +12,7 @@
 	</div>
 	<div class="col-md-9" style="border-left: solid;">
 		<?php
+		
 		if($_GET['set'] == "on"){
 			//variables to complete template
 			//$status = false;
@@ -50,30 +51,14 @@
 		    </div>
 		    <p>Remember, payments need to be mailed 7-10 business days before the due date for adequate time to arrive. I have attached your payment schedule for your reference. Please remember, you can always turn auto-debit back on.</p>
 		    <p>Your remaining payment schedule is as follows:</p>
-		    <div class="offset50px">
-		    	<ul class="schl">
-		    		<?php
-	    			
-        			$hist = str_ireplace("\n",",",$pmthist);
-        			$hist = explode(",",$hist);
-	    			$dates = array();
-	    			$amount = array();
-	    			foreach ($hist as $k => $v) {
-	                    if ($k % 2 == 0) {
-	                        $dates[] = date_create($v);
-	                    }
-	                    else {
-	                        $amount[] = str_ireplace("$","",$v);
-	                    }
-	                }
-	    			for ($i = 0; $i < count($dates); $i++) {
-	    				?>
-	    				<li><?php echo date_format($dates[$i],"D, M jS");?> - <?php echo "$".number_format($amount[$i],2,".",",");?></li>
-	    				<?php
-	    			}
-	    			?>
-		    	</ul>
-		    </div>
+			    <?php
+				$schhandler = new  Sch($pmthist);
+				if ($_GET['schType'] == 0) {
+					$schhandler->SchPost();
+				}elseif ($_GET['schType'] == 1) {
+					$schhandler->CompleteSchedule();
+				}
+				?>
 		    <p>Please let me know if you need further assistance.</p>
 			
 			<?php

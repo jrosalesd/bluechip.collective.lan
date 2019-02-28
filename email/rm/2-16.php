@@ -40,7 +40,7 @@
 	
 			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
-		    <p>Per your request, the automatic debit option for your upcoming payments has been activated using your bank account that is now on file, ending in <?php echo $lastfour;?>.</p>
+		    <p>Per your request, the automatic debit option for your upcoming payments has been activated using your bank account that is now on file.</p>
 		    
 		    <p>If you have any additional questions or concerns, please don’t hesitate to contact us. </p>
 		    
@@ -69,12 +69,6 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
-						<div class="form-group">
-                            <label for="lastfour">
-                                Last 4 Bank Account:
-                            </label>
-                            <input class="form-control" type="text" maxlength="4"  name="lastfour" required/>
-                        </div>
 					</div>
 					<div class="col-md-6">
 						

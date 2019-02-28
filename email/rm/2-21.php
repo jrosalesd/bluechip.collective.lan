@@ -39,7 +39,7 @@
 		    
 		    <p>We have updated our records to reflect your current bank account information.</p>
 		    
-		    <p>As a friendly reminder, your next payment of <?php echo nextpayment(2,$_GET['nextpmtamt']);?> is due on <?php echo nextpayment(1,$_GET['nextpmtdate']);?>, and will be debited from your new <?php echo $bankname;?> account ending in <?php echo $lastfour;?>.</p>
+		    <p>As a friendly reminder, your next payment of <?php echo nextpayment(2,$_GET['nextpmtamt']);?> is due on <?php echo nextpayment(1,$_GET['nextpmtdate']);?>, and will be debited from your new bank account on file.</p>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -66,23 +66,6 @@
 						</div>
 						
 					</div>
-					<div class="col-md-4">
-						<div>
-							<h3 title="New Banking information submitted for the borrower's account">Banking information</h3>
-						</div>
-                        <div class="form-group">
-                            <label for="bankname">
-                                Bank Name:
-                            </label>
-                            <input class="form-control" type="text" name="bankname" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastfour">
-                                Last 4 Bank Account:
-                            </label>
-                            <input class="form-control" type="text" maxlength="4"  name="lastfour" required/>
-                        </div>
-                    </div>
                     <div title="The next payment that will come out from new bank account." class="col-md-4">
                     	<?php echo nextpayment();?>
                     </div>

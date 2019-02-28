@@ -107,6 +107,11 @@ include 'header.php';
                         DC Payoff Calculator
                     </a>
                 </li>
+                <li>
+                    <a class="btn btn-success <?php if($_GET['c'] == 3){echo "active";}?>" href="home.php?c=3#calculators">
+                        Payment Options
+                    </a>
+                </li>
             </ul>
         </div>
         <hr>
@@ -151,7 +156,6 @@ include 'header.php';
                                                     </option>
                                                     <?php    
                                                     }
-                                                    
                                                 }
                                                 $conn->close();
                                                 ?>
@@ -296,7 +300,25 @@ include 'header.php';
                         </div>
                     </div>
                     <?php
-                    
+                }elseif ($_GET['c'] == 3) {
+                    // fractions
+                    ?>
+                    <div style="height:300;">
+                        <div class="col-md-6">
+                            <div class="from-group">
+                                <label class="control-label col-sm-6">
+                                    Regular Payment Amount:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input name="pmt" type="number" min="0" class="form-control" id="pmt" size="10" onkeyup="pmtSplit(this.value)"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="border-left:solid; height:auto;">
+                            <div id="targetresult"></div>
+                        </div>
+                    </div>
+                    <?php
                 }
             }
             ?>

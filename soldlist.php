@@ -15,10 +15,26 @@ $msg=$_GET['msg'];
                         </form>
                     </div><br/>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-6 text-right" align="right">
                     <?php
                     if($seclevel<3){
                         ?>
+                        <!--
+                        <div>
+                            <div align="right"><font color="red"><?php echo $msg?></font></div>
+                            <div class="button-group">
+                                <div class="dropdown">
+                                    <button class="col-md-3 btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">New Records</button>
+                                    
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                    <li role="presentation"><a role="menuitem" id="SigleRecord" onclick="SingleRecord()">Signle Record</a></li>
+                                    <li role="presentation"><a role="menuitem" id="fileUpload"onclick="upload">Multibple Record</a></li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div id="soldlist_landform"></div>
+                        </div>
+                        -->
                         <div align="right">
                             <div align="right"><font color="red"><?php echo $msg?></font></div>
                             <div align="right"><h4>Uploan update for SoldList</h4></div>
@@ -32,14 +48,17 @@ $msg=$_GET['msg'];
                                      </div>
                                 </div>
                             </form>
-                            <div align="right">
-                                <a href="./files/docUpload.csv">
-                                    <button align="right" type="button" class="btn btm-default col-md-4">
-                                        <span class="glyphicon glyphicon-cloud-download"></span>
-                                        Download Template
-                                    </button>
-                                </a>
+                            <div class="row">
+                                <div align="right" class="col-md">
+                                    <a href="./files/docUpload.csv">
+                                        <button align="right" type="button" class="btn btm-default col-md-4">
+                                            <span class="glyphicon glyphicon-cloud-download"></span>
+                                            Download Template
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
+                                
                         </div>
                         
                         <?php

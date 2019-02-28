@@ -32,9 +32,11 @@
 			<div>
 			<!-- Email Temaplate -->
 
-			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],2);?>
+			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
-		    <p><?php echo sp(1, $_GET['pmt_date'], $_GET['old_pmt'], $_GET['new_pmt']);?></p>
+		    <?php echo sp(1, $_GET['pmt_date'], $_GET['old_pmt'], $_GET['new_pmt']);?>
+		    
+		    <?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
 			
 			<?php
 			include('includes/signature.inc.php');
@@ -64,7 +66,10 @@
 						<?php sp();?>
 					</div>
 				</div>
-				<?php supCorr();?>
+				<?php
+	        	nxtpmtcheck();
+	        	?>
+				
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

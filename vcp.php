@@ -35,7 +35,7 @@ include 'header.php';
                 </font>
             </h4>
             <p style="text-indent:20px;">
-                "The Voided check process (VCP) requires each applicant to send in a copy of a picture I.D. (front and back) and a copy of a voided check (front and back). The Documents must be sent as high-quality, color pictures via email or they can be sent in physical mail. Scanned or back and white documents will not be accepted. The VCP agent will review the documents once they are received."
+                "The Voided check process (VCP) requires each applicant to send in a copy of a picture I.D. (front and back) and a copy of a voided check (front and back). The Documents must be sent as high-quality, color pictures via email to <b><u>verification@spotloan.com</u></b>. Scanned or black and white documents will not be accepted. The VCP agent will review the documents once they are received."
             </p>
             
             <h3 style="text-indent:-10px;"><b>What do I tell these Individuals?</b></h3>

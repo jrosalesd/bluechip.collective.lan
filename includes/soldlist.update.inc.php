@@ -36,4 +36,9 @@ if (isset($_POST['import'])) {
     }
 }else{
     header("Location: ../soldlist.php");
+    
+}
+
+if (isset($_POST['recordadd'])) {
+    
 }

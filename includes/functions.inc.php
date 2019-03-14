@@ -836,7 +836,7 @@ function sp($mode=0,$date="", $amtinit="", $newamt=""){
         $amtinit = "$".number_format($amtinit,2,".",",");
         $newamt = "$".number_format($newamt,2,".",",");
         //Outcome
-        $product = "<p>Per your request, we have adjusted your payment for $date from $amtinit to $newamt. This will be drawn from your bank account of file. Please keep in mind, additional interest will accrue until this payment is made in full.</p>";
+        $product = "<p>Per your request, we have adjusted your payment for $date from $amtinit to $newamt. This will be drawn from your bank account on file. Please keep in mind, additional interest will accrue until this payment is made in full.</p>";
         
         
         return $product;

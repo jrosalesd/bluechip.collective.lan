@@ -165,7 +165,7 @@ include 'header.php';
                 	<iframe src="https://freesecure.timeanddate.com/clock/i69q96z0/n80/tt0/tw0/tm1/td1/ts1/tb2" frameborder="0" width="183" height="18"></iframe>
                 </td>  
                 <td class="bd text-center centered">
-                	<iframe src="https://freesecure.timeanddate.com/clock/i69q96z0/n155/tt0/tw0/tm1/td1/ts1/tb2" frameborder="0" width="183" height="18"></iframe>
+                	<iframe src="https://freesecure.timeanddate.com/clock/i6o9soh3/n64/tt0/tw0/tm1/ts1/tb1" frameborder="0" width="187" height="18"></iframe>
                 </td>
                 <td class="bd text-center centered">
                 	<iframe src="https://freesecure.timeanddate.com/clock/i69q96z0/n179/tt0/tw0/tm1/td1/ts1/tb2" frameborder="0" width="183" height="18"></iframe>

@@ -22,7 +22,7 @@ include 'header.php';
     </div>
     <hr>
         <p>
-            The following are PDS blocked states:<br/> 
+            The following are PDS blocked states (WE DO LEND ON THESE STATES):<br/> 
             <?php
             include 'includes/dbh.inc.php';
             $q="SELECT  `state_name`, `state_abr` FROM  `servicing_states` WHERE  `state_status` =  'Yes' AND  `state_dc_status` =  'no'";
@@ -312,6 +312,9 @@ include 'header.php';
                                 <div class="col-sm-6">
                                     <input name="pmt" type="number" min="0" class="form-control" id="pmt" size="10" onkeyup="pmtSplit(this.value)"/>
                                 </div>
+                            </div>
+                            <div id="followup" name="followup">
+                                
                             </div>
                         </div>
                         <div class="col-md-6" style="border-left:solid; height:auto;">

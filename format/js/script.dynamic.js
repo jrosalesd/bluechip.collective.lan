@@ -318,9 +318,10 @@ function settlement() {
 }
 
 function pmtSplit(a) {
-	var half, third, double, target, dv2, dv3;
+	var half, third, double, target, dv2, dv3, followups;
 	a = Number(a);
 	target = document.getElementById('targetresult');
+	followups = document.getElementById('followup');
 	half = a/2;
 	third = a/3;
 	double = a*2;
@@ -340,10 +341,24 @@ function pmtSplit(a) {
 	target.innerHTML +="<br>";
 	target.innerHTML +="<b>Devide by 3:</b>";
 	target.innerHTML +="<br>";
-	target.innerHTML += "Make up on you next three payments by changing them to " + "$" + dv2.toFixed(2);
+	target.innerHTML += "Make up on you next three payments by changing them to " + "$" + dv3.toFixed(2);
+	target.innerHTML +="<br>";
+	target.innerHTML +="<b>The borrower was advised that additional will accrue when doing any of these changes.</b>";
 	target.innerHTML +="<br>";
 	
-	
+	followups.innerHTML = "<div>";
+	followups.innerHTML += "<br>";
+	followups.innerHTML += "<b>Devide by Two Follow up</b>";
+	followups.innerHTML += "<br>";
+	followups.innerHTML += "Please set up a payment in the amount of $" + dv2.toFixed(2) + " on [Enter date]";
+	followups.innerHTML += "</div>";
+	followups.innerHTML += "<br>";
+	followups.innerHTML += "<br>";
+	followups.innerHTML += "<div>";
+	followups.innerHTML += "<b>Devide by Thre Follow up</b>";
+	followups.innerHTML += "<br>";
+	followups.innerHTML += "Please set up a payment in the amount of $" + dv3.toFixed(2) + "on [Enter date] an reset follow to to set another payment for $" + dv3.toFixed(2) + " on [Enter date]";
+	followups.innerHTML += "</div>";
 }
 
 //sold account payments

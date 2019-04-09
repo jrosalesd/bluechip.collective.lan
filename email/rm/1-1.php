@@ -35,6 +35,50 @@
             <div>
                 <!-- Email Temaplate -->
                 
+                <div class="well well-lg">
+                    <div class="well well-sm">
+                        <?php
+                        $online = htmlspecialchars($_GET['online']);
+                        if($online > 0){
+                            $date = strtotime("Today");
+                            $date += $one_day_sec;
+                        }if ($online == 0) {
+                            $date = strtotime($_GET['payoffDate']);
+                            $date += $one_day_sec*7;
+                        }
+                        
+                        echo "<b>FOLLOW UP <br> Please set the follow up for ".date('m/d/Y',$date)."</b>";
+                        ?>
+                    </div>
+                    <?php
+                    if ($online == 1) {
+                        if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
+                            $follow_up = "Please delete the online payment set up by the borrower and reset the follow-up to waive the remaining balance is the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                        }else {
+                            $follow_up = "Please delete the online payment set up by the borrower and reset the follow-up to waive the remaining balance is the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
+                        }
+                        
+                    }elseif ($online == 2) {
+                        if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
+                            $follow_up = "Please delete the set up Special Payment and reset the follow-up to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                        }else {
+                            $follow_up = "Please delete the set up Special Payment and reset the follow-up to waive the remaining balance is the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
+                        }
+                    }elseif ($online == 0) {
+                         if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
+                            $follow_up = "Please waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                        }else {
+                            $follow_up = "Please waive the remaining balance if the the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
+                        }
+                    }
+                    ?>
+                    <i>
+                        <?php
+                        echo $follow_up;
+                        ?>
+                    </i>
+                </div>
+                
                 <?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
                 
                 <p>
@@ -92,6 +136,19 @@
                             Payoff Date:
                             </label>
                             <input class="form-control" type="date" name="payoffDate" required/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="online">
+                           Is there an online Payment that needs to be deleted?
+                            </label>
+                            <select class="form-control" name="online" required>
+                                <option value="">Select</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes - Online</option>
+                                <option value="2">Yes - SP</option>
+                            </select>
                         </div>
                     </div>
                 </div>

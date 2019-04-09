@@ -142,6 +142,8 @@ $conn->close();
                         <li><a href="spinfo.php">Things To know!</a></li>
                         <li><a href="faq.php">FAQ</a></li>
                         <li><a href="soldlist.php">Sold List</a></li>
+                        <li><a data-toggle="modal" data-target="#call" href="#"> Caller Time</a></li>
+                        
                         <?php
                         /*if($role == "Collection Manager" || $role == "Manager/Supervisor") 
                         {

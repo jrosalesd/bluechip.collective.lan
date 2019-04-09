@@ -41,7 +41,7 @@
                         $online = htmlspecialchars($_GET['online']);
                         if($online > 0){
                             $date = strtotime("Today");
-                            $date += $one_day_sec;
+                            $date = nextBD(date("m/d/y",$date),1,1);
                         }if ($online == 0) {
                             $date = strtotime($_GET['payoffDate']);
                             $date += $one_day_sec*7;
@@ -70,7 +70,7 @@
                         }else {
                             $follow_up = "Please waive the remaining balance if the the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
                         }
-                        
+                        //https://www.quora.com/How-do-you-count-conditionally-formatted-cells-using-VBA
                     }
                     ?>
                     <i>
@@ -142,7 +142,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="online">
-                           Is there an online Payment that needs to be deleted?
+                           Are there any payment that needs to be deleted?
                             </label>
                             <select class="form-control" name="online" required>
                                 <option value="">Select</option>

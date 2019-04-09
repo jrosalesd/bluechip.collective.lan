@@ -53,7 +53,7 @@
                     <?php
                     if ($online == 1) {
                         if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
-                            $follow_up = "Please delete the online payment set up by the borrower and reset the follow-up to waive the remaining balance is the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                            $follow_up = "Please delete the online payment set up by the borrower and reset the follow-up to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
                         }else {
                             $follow_up = "Please delete the online payment set up by the borrower and reset the follow-up to waive the remaining balance is the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
                         }
@@ -70,6 +70,7 @@
                         }else {
                             $follow_up = "Please waive the remaining balance if the the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
                         }
+                        
                     }
                     ?>
                     <i>

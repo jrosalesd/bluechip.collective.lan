@@ -39,6 +39,7 @@
                     <div class="well well-sm">
                         <?php
                         $online = htmlspecialchars($_GET['online']);
+                        $onlineDueDate = strtotime(htmlspecialchars($_GET['onlineDate']));
                         if($online > 0){
                             $date = strtotime("Today");
                             $date = nextBD(date("m/d/y",$date),1,1);
@@ -46,6 +47,8 @@
                             $date = strtotime($_GET['payoffDate']);
                             $date += $one_day_sec*7;
                         }
+                        $date2 = strtotime($_GET['payoffDate']);
+                        $date2 += $one_day_sec*7;
                         
                         echo "<b>FOLLOW UP <br> Please set the follow up for ".date('m/d/Y',$date)."</b>";
                         ?>
@@ -53,15 +56,15 @@
                     <?php
                     if ($online == 1) {
                         if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
-                            $follow_up = "Please delete the online payment set up by the borrower and reset the follow-up to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                            $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$date)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
                         }else {
-                            $follow_up = "Please delete the online payment set up by the borrower and reset the follow-up to waive the remaining balance is the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
+                            $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$date)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
                         }
                     }elseif ($online == 2) {
                         if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
-                            $follow_up = "Please delete the set up Special Payment and reset the follow-up to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                            $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$date).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
                         }else {
-                            $follow_up = "Please delete the set up Special Payment and reset the follow-up to waive the remaining balance is the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
+                            $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$date).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
                         }
                     }elseif ($online == 0) {
                          if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
@@ -142,13 +145,35 @@
                             <label for="online">
                            Are there any payment that needs to be deleted?
                             </label>
-                            <select class="form-control" name="online" required>
+                            <select class="form-control" name="online" id="online" onchange="load()" required>
                                 <option value="">Select</option>
                                 <option value="0">No</option>
                                 <option value="1">Yes - Online</option>
                                 <option value="2">Yes - SP</option>
                             </select>
                         </div>
+                        <script>
+                        {
+                            function load(){
+                                let value, element, fallback, landing;
+                                value = document.getElementById('online').value;
+                                landing = document.getElementById('ofall');
+                                element = '<div class="form-group">';
+                                    element += '<label for="onlineDate">';
+                                        element += 'Due date for the payment that needs to be deleted:';
+                                    element += '</label>';
+                                    element += '<input class="form-control" type="date" name="onlineDate" required/>';
+                                element += "</div>";
+                                fallback = '<div id="ofall"></div>';
+                                if(value > 0){
+                                    landing.innerHTML = element;
+                                }else{
+                                    landing.innerHTML = fallback;
+                                }
+                            };
+                        }
+                        </script>
+                        <div id="ofall"></div>
                     </div>
                 </div>
                 <div>

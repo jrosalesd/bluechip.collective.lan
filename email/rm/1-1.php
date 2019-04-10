@@ -57,7 +57,6 @@
                         }else {
                             $follow_up = "Please delete the online payment set up by the borrower and reset the follow-up to waive the remaining balance is the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
                         }
-                        
                     }elseif ($online == 2) {
                         if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
                             $follow_up = "Please delete the set up Special Payment and reset the follow-up to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
@@ -70,7 +69,6 @@
                         }else {
                             $follow_up = "Please waive the remaining balance if the the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
                         }
-                        //https://www.quora.com/How-do-you-count-conditionally-formatted-cells-using-VBA
                     }
                     ?>
                     <i>

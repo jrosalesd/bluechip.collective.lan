@@ -56,15 +56,15 @@
                     <?php
                     if ($online == 1) {
                         if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
-                            $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$date)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                            $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$onlineDueDate)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
                         }else {
-                            $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$date)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
+                            $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$onlineDueDate)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
                         }
                     }elseif ($online == 2) {
                         if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
-                            $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$date).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                            $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$onlineDueDate).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
                         }else {
-                            $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$date).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
+                            $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$onlineDueDate).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
                         }
                     }elseif ($online == 0) {
                          if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {

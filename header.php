@@ -92,6 +92,7 @@ $conn->close();
           margin: auto;
         }
 	</style>
+	
         <!- This is the navigation bar. ->
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -142,19 +143,19 @@ $conn->close();
                         <li><a href="spinfo.php">Things To know!</a></li>
                         <li><a href="faq.php">FAQ</a></li>
                         <li><a href="soldlist.php">Sold List</a></li>
-                        <li><a data-toggle="modal" data-target="#call" href="#"> Caller Time</a></li>
+                        <!--<li><button class="modal-init btn btn-default">Customer Time</button></a></li>-->
                         
                         <?php
-                        /*if($role == "Collection Manager" || $role == "Manager/Supervisor") 
-                        {
-                            if ($rowrun['id'] < 3) {
-                                ?>
-                                <li>
-                                    <a href="">Collection Tracker</a>
-                                </li>
-                                <?php
-                            }
-                        }*/
+                            /*if($role == "Collection Manager" || $role == "Manager/Supervisor") 
+                            {
+                                if ($rowrun['id'] < 3) {
+                                    ?>
+                                    <li>
+                                        <a href="">Collection Tracker</a>
+                                    </li>
+                                    <?php
+                                }
+                            }*/
                         ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -190,4 +191,7 @@ $conn->close();
         <br>
         <br>
         <br>
+            
         <body class="container" onload="localtime()">
+            
+            

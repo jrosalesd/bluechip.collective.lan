@@ -19,19 +19,19 @@ if (isset($_POST['import'])) {
             
             fclose($handle);
             if(is_uploaded_file($_FILES['file']['tmp_name'])){
-                header("Location: ../soldlist.php?msg=Upload successful");
+                header("Location: ../soldlist.php?msg=Upload successful&alert=alert-success");
                 exit();
             }else {
-                header("Location: ../soldlist.php?msg=Something went wrong, Unable to upload your file ");
+                header("Location: ../soldlist.php?msg=Something went wrong, Unable to upload your file&alert=alert-danger ");
                 exit();
             }
             
         }else {
-            header("Location: ../soldlist.php?msg=only csv files are allowed");
+            header("Location: ../soldlist.php?msg=only csv files are allowed&alert=alert-danger");
             exit();
         }
     }else{
-        header("Location: ../soldlist.php?msg=No file selected");
+        header("Location: ../soldlist.php?msg=No file selected&alert=alert-danger");
         exit();
     }
 }else{

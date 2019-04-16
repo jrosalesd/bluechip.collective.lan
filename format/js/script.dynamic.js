@@ -74,7 +74,6 @@ function addnote(){
 	}
 }
 
-
 //payment confirmation
 
 //Mailed Payment notification
@@ -192,7 +191,6 @@ function dcpmt(){
 	}
 }
 
-
 //addbox
 $(document).ready(function(){
 	var maxfields = 60;
@@ -273,7 +271,6 @@ function enterform(){
 function settlement_offer(argument) {
 	// body...
 }
-
 
 function settlement() {
 	
@@ -397,3 +394,5 @@ function SigleRecord(){
 	var soldlist_landform, form;
 	
 }
+
+//this is my personal modal

@@ -78,6 +78,8 @@ $conn->close();
         <script src="format/js/script.js" type="text/javascript"></script>
         <script src="format/js/script.dynamic.js" type="text/javascript"></script>
         <script src="format/js/forms.js" type="text/javascript"></script>
+        <script type="text/javascript" src="/format/js/clipboard.js-master/dist/clipboard.js"></script>
+        <script type="text/javascript" src="/format/js/clipboard.js-master/dist/clipboard.min.js"></script>
         
         <link rel="shortcut icon" href="format/img/icon.png" type="image/png">
         

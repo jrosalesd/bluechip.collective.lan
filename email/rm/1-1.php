@@ -74,11 +74,40 @@
                         }
                     }
                     ?>
-                    <i>
-                        <?php
-                        echo $follow_up;
-                        ?>
-                    </i>
+                    <div>
+                        
+                        
+                        <div id="follow-up">
+                              <i>
+                            <?php echo $follow_up;?>
+                            </i>
+                        </div>
+                        <div class="float-right">
+                            <div class="row">
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-4"><button id="copy-init" class="btn btn-success" onclick="copyFollowUp('follow-up')">Copy Follow-Up</button></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <script>
+                        function copyFollowUp(containerid){
+                            if (document.selection){
+                                var range = document.body.createTextRange();
+                                range.moveToElementText(document.getElementById(containerid));
+                                range.select().createTextRange();
+                                document.execCommand("copy");
+                            }else if(window.getSelection){
+                                var range = document.createRange();
+                                range.selectNode(document.getElementById(containerid));
+                                window.getSelection().addRange(range);
+                                document.execCommand("copy");
+                                alert("The follow up has been copied"); 
+                            }
+                        }
+                    </script>
+                        
                 </div>
                 
                 <?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>

@@ -107,18 +107,22 @@
 										$pmt= $stlpmt;
 										$pmtlist[] = $pmt;
 										if($daynum > 14){
-											if ($date > $start && date("t",$date-($daynum*$one_day_sec))==31 && date("d",$date) < 16) {
-												$date+=$one_day_sec;
-											}
-											if ($date > $start && date("n",$date-($daynum*$one_day_sec))==2  && date("d",$date) < 16){   
-												if(date("t",$date-($daynum*$one_day_sec))==29){
-													$date-=(1*$one_day_sec);
-									            }else{
-									            	$date-=(2*$one_day_sec);
-									            }
-											}
-											if (date('d',$date)==31) {
-												$date+=$one_day_sec;
+											if ($date > $start) {
+												if (date("d",$date) < 16) {
+													if (date("t",$date-($daynum*$one_day_sec))==31) {
+														$date+=$one_day_sec;
+													}elseif (date("n",$date-($daynum*$one_day_sec))==2) {
+														if(date("t",$date-($daynum*$one_day_sec))==29){
+															$date-=(1*$one_day_sec);
+											            }else{
+											            	$date-=(2*$one_day_sec);
+											            }
+													}
+												}else{
+													if (date('t',$date)==31) {
+														$date+=$one_day_sec;
+													}
+												}
 											}
 										}
 										$loandate[] = $date; 
@@ -130,13 +134,9 @@
 									foreach ($loandate as $date) {
 										if (date("w",$date)==6) {
 								            $date+=(2*$one_day_sec);
-								        }
-								        
-								        if (date("w",$date)==0) {
+								        }elseif (date("w",$date)==0) {
 								            $date+=$one_day_sec;
-								        }
-								        
-								        if (in_array($date,$holidays,true)) {
+								        }elseif (in_array($date,$holidays,true)) {
 								           $date+=$one_day_sec;
 								        }
 								        ?>

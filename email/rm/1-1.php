@@ -32,83 +32,73 @@
             <br>
             <br>
             <hr>
-            <div>
+            <div id="copy_notify"></div>
+            <div class="well well-lg">
+                <div class="well well-sm">
+                    <?php
+                    $online = htmlspecialchars($_GET['online']);
+                    $onlineDueDate = strtotime(htmlspecialchars($_GET['onlineDate']));
+                    if($online > 0){
+                        $date = strtotime("Today");
+                        $date = nextBD(date("m/d/y",$date),1,1);
+                    }if ($online == 0) {
+                        $date = strtotime($_GET['payoffDate']);
+                        $date += $one_day_sec*7;
+                    }
+                    $date2 = strtotime($_GET['payoffDate']);
+                    $date2 += $one_day_sec*7;
+                    
+                    echo "<b>FOLLOW UP <br> Please set the follow up for ".date('m/d/Y',$date)."</b>";
+                    ?>
+                </div>
+                <?php
+                if ($online == 1) {
+                    if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
+                        $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$onlineDueDate)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                    }else {
+                        $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$onlineDueDate)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
+                    }
+                }elseif ($online == 2) {
+                    if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
+                        $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$onlineDueDate).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                    }else {
+                        $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$onlineDueDate).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
+                    }
+                }elseif ($online == 0) {
+                     if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
+                        $follow_up = "Please waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
+                    }else {
+                        $follow_up = "Please waive the remaining balance if the the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
+                    }
+                }
+                ?>
+                <div>
+                    <div id="follow-up">
+                          <i>
+                        <?php echo $follow_up;?>
+                        </i>
+                    </div>
+                    <div class="float-right">
+                        <div class="row">
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-4"><button id="copy-init" class="btn btn-success" onclick="copyFollowUp('follow-up',this.value)" value="FollowUp">Copy Follow-Up</button></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                    
+            </div>
+            <div class="row">
+                    <div class="col-lg-4"><button id="copy-init" class="btn btn-primary" onclick="copyFollowUp('email-body',this.value)" value="email">Copy Email</button></div>
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4"></div>
+                </div>
+            <hr>
+            <div id="email-body">
                 <!-- Email Temaplate -->
                 
-                <div class="well well-lg">
-                    <div class="well well-sm">
-                        <?php
-                        $online = htmlspecialchars($_GET['online']);
-                        $onlineDueDate = strtotime(htmlspecialchars($_GET['onlineDate']));
-                        if($online > 0){
-                            $date = strtotime("Today");
-                            $date = nextBD(date("m/d/y",$date),1,1);
-                        }if ($online == 0) {
-                            $date = strtotime($_GET['payoffDate']);
-                            $date += $one_day_sec*7;
-                        }
-                        $date2 = strtotime($_GET['payoffDate']);
-                        $date2 += $one_day_sec*7;
-                        
-                        echo "<b>FOLLOW UP <br> Please set the follow up for ".date('m/d/Y',$date)."</b>";
-                        ?>
-                    </div>
-                    <?php
-                    if ($online == 1) {
-                        if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
-                            $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$onlineDueDate)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
-                        }else {
-                            $follow_up = "Please delete the online payoff set for ".date('m/d/Y',$onlineDueDate)." by the borrower. Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
-                        }
-                    }elseif ($online == 2) {
-                        if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
-                            $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$onlineDueDate).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
-                        }else {
-                            $follow_up = "Please delete the Special Payment set for ".date('m/d/Y',$onlineDueDate).". Once completed, reset the follow-up on ".date('m/d/Y',$date2)."  to send a ticket to servicing to waive the remaining balance if the payment on ".date_format($payoffDate,"m/d")." clears successfully.";
-                        }
-                    }elseif ($online == 0) {
-                         if (isset($_GET['pendingclick']) && $_GET['pendingclick'] == "on") {
-                            $follow_up = "Please waive the remaining balance if the payments on ".date_format(date_create($_GET['datepending']),"m/d")." and ".date_format($payoffDate,"m/d")." clear successfully.";
-                        }else {
-                            $follow_up = "Please waive the remaining balance if the the payments on ".date_format($payoffDate,"m/d")." clears successfully.";
-                        }
-                    }
-                    ?>
-                    <div>
-                        
-                        
-                        <div id="follow-up">
-                              <i>
-                            <?php echo $follow_up;?>
-                            </i>
-                        </div>
-                        <div class="float-right">
-                            <div class="row">
-                                <div class="col-lg-4"></div>
-                                <div class="col-lg-4"></div>
-                                <div class="col-lg-4"><button id="copy-init" class="btn btn-success" onclick="copyFollowUp('follow-up')">Copy Follow-Up</button></div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <script>
-                        function copyFollowUp(containerid){
-                            if (document.selection){
-                                var range = document.body.createTextRange();
-                                range.moveToElementText(document.getElementById(containerid));
-                                range.select().createTextRange();
-                                document.execCommand("copy");
-                            }else if(window.getSelection){
-                                var range = document.createRange();
-                                range.selectNode(document.getElementById(containerid));
-                                window.getSelection().addRange(range);
-                                document.execCommand("copy");
-                                alert("The follow up has been copied"); 
-                            }
-                        }
-                    </script>
-                        
-                </div>
                 
                 <?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
                 

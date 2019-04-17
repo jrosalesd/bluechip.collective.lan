@@ -30,8 +30,15 @@
 			<br>
 			<br>
 			<hr>
-			<div>
-			<!-- Email Temaplate -->
+			<div id="copy_notify"></div>
+			<div class="row">
+                    <div class="col-lg-4"><button id="copy-init" class="btn btn-primary" onclick="copyFollowUp('email-body',this.value)" value="email">Copy Email</button></div>
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4"></div>
+                </div>
+            <hr>
+            <div id="email-body">
+                <!-- Email Temaplate -->
 			
 			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    

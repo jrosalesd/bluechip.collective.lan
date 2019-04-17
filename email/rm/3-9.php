@@ -28,6 +28,7 @@
 			<br>
 			<br>
 			<hr>
+			<div id="copy_notify"></div>
 			<div>
 			<!-- Email Temaplate -->
 			<p><strong>Subject:</strong>Payment Options</p>

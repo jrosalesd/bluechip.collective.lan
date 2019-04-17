@@ -16,18 +16,11 @@
 				<div class="col-md-9" style="border-left: solid;">
 					<?php
 					if($_GET['set'] == "on"){
-						if (isset($_GET['inst'])) {
-							//variables to complete template
+						//variables to complete template
 							$brwName = trim($_GET['brwName']);
 							$loanID = $_GET['loanID'];
-							$start=strtotime($_GET['start']);
-							$pmtnum= $_GET['pmtnum'];
-							$daynum = $_GET['daynum'];
-							$end= $start + ($one_day_sec*($daynum * $pmtnum));
-							$fpmtamt = $_GET['fpmtamt'];
+							$start = strtotime($_GET['start']);
 							$stl = $_GET['stl'];
-							$stlpmt = $stl/$pmtnum;
-							$stlpmt2 = ($stl-$fpmtamt)/($pmtnum-1);
 							$currentYear = date('Y');
 							$holidays = [ 
 							    mktime(0, 0, 0, 1, 1,$currentYear), 
@@ -42,7 +35,7 @@
 							    mktime(0, 0, 0, 12, 25, $currentYear)
 							];
 							?>
-							<div>
+							<div id="em-nav">
 								<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
 										Reset
 									<span class="glyphicon glyphicon-refresh"></span>
@@ -55,224 +48,181 @@
 							<br>
 							<br>
 							<hr>
-							<div>
-							<!-- Email Temaplate -->
-							<p>
-								<strong>
-									Subject: 
-								</strong>
-								Your Spotloan Settlement Agreement
-							</p>
-							
-							<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
-							
-							<p>
-								I would like to recap our conversation and confirm that we have reached an agreement to settle your Spotloan account for the amount of $<?php echo number_format($stl,2,".",",");?>.
-							</p>
-							
-							<p>
+							<div class="copier">
+								<div id="copy_notify"></div>
+								<div class="row">
+				                    <div class="col-lg-4"><button id="copy-init" class="btn btn-primary" onclick="copyFollowUp('email-body',this.value)" value="email">Copy Email</button></div>
+				                    <div class="col-lg-4"></div>
+				                    <div class="col-lg-4"></div>
+				                </div>
+				            	<hr>
+							</div>
+							<div id="email-body">
+								<!-- Email Temaplate -->
+								<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
+								
+								<p>
+									I would like to recap our conversation and confirm that we have reached an agreement to settle your Spotloan account for the amount of $<?php echo number_format($stl,2,".",",");?>.
+								</p>
+								
 								<?php
-								if (!empty($fpmtamt)) {
+								if (isset($_GET['inst'])){
+									
+									$pmtnum= $_GET['pmtnum'];
+									$daynum = $_GET['daynum'];
+									$end= $start + ($one_day_sec*($daynum * $pmtnum));
+									$fpmtamt = $_GET['fpmtamt'];
+									$stlpmt = $stl/$pmtnum;
+									$stlpmt2 = ($stl-$fpmtamt)/($pmtnum-1);
+									$loandate = [];
+									$pmtlist = [];
 									?>
-									You have agreed to make your first payment of $<?php echo number_format($fpmtamt,2,".",",");?> and <?php echo $pmtnum-1;?> <?php if($daynum==14){echo "Bi-Weekly";}elseif ($daynum==30) {
-									echo "Monthly";}elseif($daynum==15){echo "Semi-Monthly";}?> payments of $<?php echo number_format($stlpmt2,2,".",",");?> for a total of <?php echo $pmtnum;?> payments. Here’s your payment schedule:
+									
+									<p>
+										<?php
+										if (!empty($fpmtamt)) {
+											?>
+											You have agreed to make your first payment of $<?php echo number_format($fpmtamt,2,".",",");?> and <?php echo $pmtnum-1;?> <?php if($daynum==14){echo "Bi-Weekly";}elseif ($daynum==30) {
+											echo "Monthly";}elseif($daynum==15){echo "Semi-Monthly";}?> payments of $<?php echo number_format($stlpmt2,2,".",",");?> for a total of <?php echo $pmtnum;?> payments. Here’s your payment schedule:
+											<?php
+										}else {
+											?>
+											You have agreed to make <?php echo $pmtnum;?> <?php if($daynum==14){echo "Bi-Weekly";}elseif ($daynum==30) {
+											echo "Monthly";}elseif($daynum==15){echo "Semi-Montly";}?> payments of $<?php echo number_format($stlpmt,2,".",",");?>. Here’s your payment schedule:
+											<?php
+										}
+										?>
+									</p>
+									<div>
+										<ul class="sch">
+											<?php
+											if (!empty($fpmtamt)) {
+												?>
+												<li>
+										        	<?php
+										                 echo date("m/d/Y", $start)." $".number_format($fpmtamt,2,".",",");
+										            ?>
+										        </li>
+												<?php
+												$stl-=$fpmtamt;
+												$start+=($daynum*$one_day_sec);
+												$stlpmt = $stl/($pmtnum-1);
+											}
+											
+											for ($date=$start; $date<$end; $date=strtotime("+$daynum days",$date)) {
+												$pmt= $stlpmt;
+												$pmtlist[] = $pmt;
+												//echo date("m-d-Y",strtotime("-1 month",$date))."<br>";
+												if($daynum > 14){
+													if ($daynum > 15) {
+														if ($date > $start) {
+															if (date("t",$date-($daynum*$one_day_sec))==31) {
+																$date+=$one_day_sec;
+															}elseif (date("n",$date-($daynum*$one_day_sec))==2) {
+																if(date("t",$date-($daynum*$one_day_sec))==29){
+																	$date-=(1*$one_day_sec);
+													            }else{
+													            	$date-=(2*$one_day_sec);
+													            }
+															}
+														}
+													}else {
+														if ($date > $start) {
+															if (date("d",$date) < 16) {
+																if (date("t",$date-($daynum*$one_day_sec))==31) {
+																	$date+=$one_day_sec;
+																}elseif (date("n",$date-($daynum*$one_day_sec))==2) {
+																	if(date("t",$date-($daynum*$one_day_sec))==29){
+																		$date-=(1*$one_day_sec);
+														            }else{
+														            	$date-=(2*$one_day_sec);
+														            }	
+																}
+															}if (date("d",$date) == 31) {
+																$date+=$one_day_sec;
+															}
+														}
+													}
+												}
+												$loandate[] = $date; 
+												$pmtlist[] = $pmt;
+											}
+											foreach ($loandate as $date) {
+												if (date("w",$date)==6) {
+										            $date+=(2*$one_day_sec);
+										        }elseif (date("w",$date)==0) {
+										            $date+=$one_day_sec;
+										        }elseif (in_array($date,$holidays,true)) {
+										           $date+=$one_day_sec;
+										        }
+										        ?>
+										        <li>
+									        		<?php
+										        	echo date("m/d/Y", $date)." $".number_format($pmt,2,".",",");
+										        	?>
+										        </lip>
+										        <?php
+											}
+											?>
+										</ul>
+									</div>
 									<?php
-								}else {
+									
+								}elseif (isset($_GET['lump'])) {
 									?>
-									You have agreed to make <?php echo $pmtnum;?> <?php if($daynum==14){echo "Bi-Weekly";}elseif ($daynum==30) {
-									echo "Monthly";}elseif($daynum==15){echo "Semi-Montly";}?> payments of $<?php echo number_format($stlpmt,2,".",",");?>. Here’s your payment schedule:
+									<p>
+										You have agreed to make a one time payment in the amount of $<?php echo number_format($stl,2,".",",");?> on <?php echo date("l, F jS", $start);?>.
+									</p>
 									<?php
 								}
 								?>
-								
-							</p>
-							<div>
-								<ul class="sch">
+								<p>
+								You have authorized us to withdraw <?php if (isset($_GET['lump'])){echo "this payment";}else{echo "these payments";}?> on the dates shown above from the bank account you provided to Spotloan. You have indicated that you understand your authorization will remain in full force and effect unless you contact us at least <u>2 business days</u> before your scheduled payment to let us know that you would like to revoke this authorization.</p>
+								</p>
+								<p>
+									To send a money order, please mail it to our mail processor at:
+								</p>
+								<p style="margin-left: 25px;">
 									<?php
-									$loandate = [];
-									$pmtlist = [];
-									if (!empty($fpmtamt)) {
-										?>
-										<li>
-								        	<?php
-								                 echo date("m/d/Y", $start)." $".number_format($fpmtamt,2,".",",");
-								            ?>
-								        </li>
-										<?php
-										$stl-=$fpmtamt;
-										$start+=($daynum*$one_day_sec);
-										$stlpmt = $stl/($pmtnum-1);
-									}
-									for ($date=$start; $date<$end; $date=strtotime("+$daynum days",$date)) {
-										$pmt= $stlpmt;
-										$pmtlist[] = $pmt;
-										if($daynum > 14){
-											if ($date > $start) {
-												if (date("d",$date) < 16) {
-													if (date("t",$date-($daynum*$one_day_sec))==31) {
-														$date+=$one_day_sec;
-													}elseif (date("n",$date-($daynum*$one_day_sec))==2) {
-														if(date("t",$date-($daynum*$one_day_sec))==29){
-															$date-=(1*$one_day_sec);
-											            }else{
-											            	$date-=(2*$one_day_sec);
-											            }
-													}
-												}else{
-													if (date('t',$date)==31) {
-														$date+=$one_day_sec;
-													}
-												}
-											}
-										}
-										$loandate[] = $date; 
-										$pmtlist[] = $pmt;
-									}
-									?>
-									
-									<?php
-									foreach ($loandate as $date) {
-										if (date("w",$date)==6) {
-								            $date+=(2*$one_day_sec);
-								        }elseif (date("w",$date)==0) {
-								            $date+=$one_day_sec;
-								        }elseif (in_array($date,$holidays,true)) {
-								           $date+=$one_day_sec;
-								        }
-								        ?>
-								        <li>
-							        		<?php
-								        	echo date("m/d/Y", $date)." $".number_format($pmt,2,".",",");
-								        	?>
-								        </lip>
-								        <?php
-									}
-									?>
-								</ul>
-							</div>
-							<p>
-								You have authorized us to withdraw these payments on the dates shown above from the bank account you provided to Spotloan. You have indicated that you understand your authorization will remain in full force and effect unless you contact us at least <u>2 business days</u> before your scheduled payment to let us know that you would like to revoke this authorization.</p>
-							</p>
-							<p>
-								To send a money order, please mail it to our mail processor at:
-							</p>
-							<p style="margin-left: 25px;">
-								<?php
-			                    include 'includes/dbh.inc.php';
-			                    $dbquery = "SELECT * FROM sp_contact where status=1 and address_type='Mailing Address'";
-			                    $dbinit = mysqli_query($conn, $dbquery);
-			                    $dbrow = mysqli_num_rows($dbinit);
-			                    if($dbrow > 0)
-			                    {
-			                        while ($dbrow=mysqli_fetch_array($dbinit)) 
-			                        {
-			                           ?>
-			                           <div>
-			                           		<p>
-			                           			Spotloan
-				                                <br><?php echo $dbrow['address1'];
-				                                if(!empty($dbrow['address2']))
-				                                {
-				                                     ?><br><?php echo $dbrow['address2'];
-				                                }
-				                                ?>
-					                            <br><?php echo $dbrow['city'].", ".$dbrow['state']." ".$dbrow['zipcode'];?>
-				                           		<br>Attention to: <?php echo $loanID;?>
-			                           		</p>
-			                           </div>
-			                           <?php
-			                        }
-			                    }
-			                    ?>
-							</p>
-							<p>
-								When you make payments, it is critical that the auto-debit payments be successfully completed and not returned; and that mailed payments arrive by the due date, not just be postmarked. If you do not make your payments in full and on time, this settlement agreement will be voided and you will be responsible for repaying the full outstanding balance at the time of default. This would include any interest that would have accrued on that balance if this settlement agreement did not exist (minus any payments you made).
-							</p>
-							<p>
-								Thank you for resolving this debt and fulfilling your commitment. Please let me know if you have any questions or if there’s anything else I can do to help.
-							</p>
+				                    include 'includes/dbh.inc.php';
+				                    $dbquery = "SELECT * FROM sp_contact where status=1 and address_type='Mailing Address'";
+				                    $dbinit = mysqli_query($conn, $dbquery);
+				                    $dbrow = mysqli_num_rows($dbinit);
+				                    if($dbrow > 0)
+				                    {
+				                        while ($dbrow=mysqli_fetch_array($dbinit)) 
+				                        {
+				                           ?>
+				                           <div>
+				                           		<p>
+				                           			Spotloan
+					                                <br><?php echo $dbrow['address1'];
+					                                if(!empty($dbrow['address2']))
+					                                {
+					                                     ?><br><?php echo $dbrow['address2'];
+					                                }
+					                                ?>
+						                            <br><?php echo $dbrow['city'].", ".$dbrow['state']." ".$dbrow['zipcode'];?>
+					                           		<br>Attention to: <?php echo $loanID;?>
+				                           		</p>
+				                           </div>
+				                           <?php
+				                        }
+				                    }
+				                    ?>
+								</p>
+								<p>
+									When you make payments, it is critical that the auto-debit payments be successfully completed and not returned; and that mailed payments arrive by the due date, not just be postmarked. If you do not make your payments in full and on time, this settlement agreement will be voided and you will be responsible for repaying the full outstanding balance at the time of default. This would include any interest that would have accrued on that balance if this settlement agreement did not exist (minus any payments you made).
+								</p>
+								<p>
+									Thank you for resolving this debt and fulfilling your commitment. Please let me know if you have any questions or if there’s anything else I can do to help.
+								</p>
+							
 							<?php
-						} elseif (isset($_GET['lump'])) {
-							$brwName = trim($_GET['brwName']);
-							$loanID = $_GET['loanID'];
-							$start= date_create($_GET['start']);
-							$stl = $_GET['stl'];
+						
+							include('includes/signature.inc.php');
 							?>
-							<div>
-								<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
-										Reset
-									<span class="glyphicon glyphicon-refresh"></span>
-								</a>
-								<a class="btn btn-warning col-md-3" href="emails.php?lump&cs&id=<?php echo $_GET['id'];?>&temp=<?php echo $_GET['temp'];?>&brwName=<?php echo $_GET['brwName'];?>&loanID=<?php echo $_GET['loanID'];?>&daynum=<?php echo $_GET['daynum'];?>&start=<?php echo $_GET['start'];?>&pmtnum=<?php echo $_GET['pmtnum'];?>&stl=<?php echo $_GET['stl'];?>&fpmtamt=<?php echo $_GET['fpmtamt'];?>&state=<?php echo $_GET['state'];?>">
-									<span class="glyphicon glyphicon-edit"></span>
-										Edit
-								</a>
 							</div>
-							<br>
-							<br>
-							<hr>
-							<div>
-							<!-- Email Temaplate -->
-							<p>
-								<strong>
-									Subject: 
-								</strong>
-								Your Spotloan Settlement Agreement
-							</p>
-							
-							<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
-							
-							<p>
-								I would like to recap our conversation and confirm that we have reached an agreement to settle your Spotloan account for the amount of $<?php echo number_format($stl,2,".",",");?>.
-							</p>
-							
-							<p>
-								You have agreed to make a one time payment in the amount of $<?php echo number_format($stl,2,".",",");?> on <?php echo date_format($start,"l, F jS");?>.
-							</p>
-							<p>
-								You have authorized us to withdraw this payment on the date shown above from the bank account you provided to Spotloan. You have indicated that you understand your authorization will remain in full force and effect unless you contact us at least <u>2 business days</u> before your scheduled payment to let us know that you would like to revoke this authorization.</p>
-							</p>
-							<p>
-								To send a money order, please mail it to our mail processor at:
-							</p>
-							<p style="margin-left: 25px;">
-								<?php
-			                    $dbquery = "SELECT * FROM sp_contact where status=1 and address_type='Mailing Address'";
-			                    $dbinit = mysqli_query($conn, $dbquery);
-			                    $dbrow = mysqli_num_rows($dbinit);
-			                    if($dbrow > 0)
-			                    {
-			                        while ($dbrow=mysqli_fetch_array($dbinit)) 
-			                        {
-			                           ?>
-			                           <div>
-			                           		<p>
-			                           			Spotloan
-				                                <br><?php echo $dbrow['address1'];
-				                                if(!empty($dbrow['address2']))
-				                                {
-				                                     ?><br><?php echo $dbrow['address2'];
-				                                }
-				                                ?>
-					                            <br><?php echo $dbrow['city'].", ".$dbrow['state']." ".$dbrow['zipcode'];?>
-				                           		<br>Attention to: <?php echo $loanID;?>
-			                           		</p>
-			                           </div>
-			                           <?php
-			                        }
-			                    }
-			                    ?>
-							</p>
-							<p>
-								When you make payments, it is critical that the auto-debit payments be successfully completed and not returned; and that mailed payments arrive by the due date, not just be postmarked. If you do not make your payment in full and on time, this settlement agreement will be voided and you will be responsible for repaying the full outstanding balance at the time of default. This would include any interest that would have accrued on that balance if this settlement agreement did not exist (minus any payments you made).
-							</p>
-							<p>
-								Thank you for resolving this debt and fulfilling your commitment. Please let me know if you have any questions or if there’s anything else I can do to help.
-							</p>
-							<?php
-						}
-						include('includes/signature.inc.php');
-						?>
 						</div>
 						<?php
 					}else{

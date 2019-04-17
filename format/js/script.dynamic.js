@@ -395,4 +395,34 @@ function SigleRecord(){
 	
 }
 
-//this is my personal modal
+//
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+//copy
+
+function copyFollowUp(containerid,value){
+    if (document.selection){
+        var range = document.body.createTextRange();
+        range.moveToElementText(document.getElementById(containerid));
+        range.select().createTextRange();
+        document.execCommand("copy");
+    }else if(window.getSelection){
+        var range = document.createRange();
+        range.selectNode(document.getElementById(containerid));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+        //alert("The "+value+" has been copied"); 
+        var alertHTML = '<div class="alert alert-success" role="alert"><strong>Success!</strong> The '+value+' has been copied</div>';
+    	document.getElementById('copy_notify').innerHTML = alertHTML;
+    	window.setTimeout(function () {
+    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
+	        $(this).remove();
+	    });
+	}, 3000);
+    }
+    
+}

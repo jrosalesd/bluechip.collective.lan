@@ -37,12 +37,7 @@
                     <div class="col-lg-4"></div>
                 </div>
             <hr>
-			<p>
-				<strong>
-					Subject:
-				</strong>
-				Here goes the subject for this email
-			</p>
+			
 	
 			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    

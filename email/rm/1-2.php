@@ -42,12 +42,7 @@
             <hr>
             <div id="email-body">
                 <!-- Email Temaplate -->
-			<p>
-				<strong>Subject:</strong> Your new payment – $<?php echo number_format($pmtAmt,2,".",",");?> due on <?php echo date_format($pmtdate,"l, F jS");?>
-			</p>
-			<br>
 			
-	
 			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    
 			<p>

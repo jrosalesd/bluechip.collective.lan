@@ -803,6 +803,7 @@ function checkday($date){
     }
 }
 
+
 function sp($mode=0,$date="", $amtinit="", $newamt=""){
     if ($mode == 0) {
        ?>
@@ -843,9 +844,11 @@ function sp($mode=0,$date="", $amtinit="", $newamt=""){
     }
 }
 
+//This function will be used to process payoffs request.
 function paidoffloan(){
 }
 
+//This funciton allows emails to be sent with a correction note by the supervisor.
 function supCorr(){
     if ($_SESSION['usersec'] < 3) {
         $corr = '<div class="col-md-4"><div class="checkbox"><label for="sup-correction"><input type="checkbox"  id="sup-correction" name="sup-correction"/><b>Is this a Correction email?</b></label></div></div>';

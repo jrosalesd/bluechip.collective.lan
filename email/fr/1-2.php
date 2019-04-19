@@ -49,7 +49,7 @@
 										Reset
 									<span class="glyphicon glyphicon-refresh"></span>
 								</a>
-								<a class="btn btn-warning col-md-3" href="<?php echo $url;?>">
+								<a class="btn btn-warning col-md-3" href="<?php echo $url;?>#form">
 									<span class="glyphicon glyphicon-edit"></span>
 										Edit
 								</a>
@@ -72,6 +72,38 @@
 									array_push ($pmtlist, (float)$fpmtamt);
 									$stl-=$fpmtamt;
 									$start+=($daynum*$one_day_sec);
+									if($daynum > 14){
+										if ($daynum > 15) {
+											
+											if (date("t",$start-($daynum*$one_day_sec))==31) {
+												$start+=$one_day_sec;
+											}elseif (date("n",$start-($daynum*$one_day_sec))==2) {
+												if(date("t",$start-($daynum*$one_day_sec))==29){
+													$start-=(1*$one_day_sec);
+									            }else{
+									            	$start-=(2*$one_day_sec);
+									            }
+											}
+											
+										}else {
+											
+											if (date("d",$start) < 16) {
+												if (date("t",$start-($daynum*$one_day_sec))==31) {
+													$start+=$one_day_sec;
+												}elseif (date("n",$start-($daynum*$one_day_sec))==2) {
+													if(date("t",$start-($daynum*$one_day_sec))==29){
+														$start-=(1*$one_day_sec);
+										            }else{
+										            	$start-=(2*$one_day_sec);
+										            }	
+												}
+											}if (date("d",$start) == 31) {
+												$start+=$one_day_sec;
+											}
+											
+										}
+									}
+									//echo date("Y/m/d",$start);
 									$stlpmt = $stl/($pmtnum-1);
 								}
 								
@@ -111,8 +143,11 @@
 									}
 									array_push ($loandate, $date); 
 									array_push ($pmtlist,$pmt);
+									
 								}
 							}
+							
+							//var_dump($loandate);
 							?>
 							<hr>
 							<div id="copy_notify"></div>
@@ -151,29 +186,35 @@
 				                	*NEW SETTLEMENT:
 									*Approved by: ".ucwords($approver).". |
 									*Working for: $assignee. |
+									*Settlement Type: ".(isset($_GET['lump']) ? "Lump Sum Payment" : "Installments")."
 									A: Current Outstanding Balance: $". number_format($outstading,2,".",",")." |
 									B: Principal of Outstanding: $". number_format($principal,2,".",",")." |
 									C: Interest and fees of Outstanding:  $". number_format($interest,2,".",",")." |
 									D: Settlement Amount: $". number_format($stl,2,".",",")." |
 									E: Payment Schedule: ";
 				                $followUpSchedule = "";
-				                $length = sizeof($loandate);
-				                for ($i = 0; $i < $length; $i++) {
-				                	
-									$date = $loandate[$i];
-									 if (date("w",$loandate[$i])==6) {
-							            $date+=$loandate[$i] + (2*$one_day_sec);
-							        }elseif (date("w",$loandate[$i])==0) {
-							            $date+=$one_day_sec;
-							        }elseif (in_array($loandate[$i],$holidays,true)) {
-							           $date+=$one_day_sec;
-										        }
-				                	 if ($i+1 < $length) {
-				                	 	$followUpSchedule .= "(".ordinalNumber($i+1)." Pmt) ". date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",")." | ";
-				                	 }else {
-				                	 	$followUpSchedule .="(".ordinalNumber($i+1).") ".  date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",");
-				                	 }
+				                if (isset($_GET['lump'])) {
+				                	$followUpSchedule = date("m/d/Y", $start).":$".number_format($stl,2,".",",");
+				                }else{
+				                	$length = sizeof($loandate);
+					                for ($i = 0; $i < $length; $i++) {
+					                	
+										$date = $loandate[$i];
+										 if (date("w",$date)==6) {
+								            $date+= (2*$one_day_sec);
+								        }elseif (date("w",$date)==0) {
+								            $date+=$one_day_sec;
+								        }elseif (in_array($date,$holidays,true)) {
+								           $date+=$one_day_sec;
+											        }
+					                	 if ($i+1 < $length) {
+					                	 	$followUpSchedule .= "(".ordinalNumber($i+1)." Pmt) ". date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",")." | ";
+					                	 }else {
+					                	 	$followUpSchedule .="(".ordinalNumber($i+1).") ".  date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",");
+					                	 }
+					                }
 				                }
+					                
 				                $follow_up .= "[ ".$followUpSchedule." ]";
 				                ?>
 				                <div class="followup">
@@ -236,11 +277,11 @@
 											<?php
 											for ($i = 0; $i < count($loandate); $i++) {
 													$date = $loandate[$i];
-												 if (date("w",$loandate[$i])==6) {
-										            $date+=$loandate[$i] + (2*$one_day_sec);
-										        }elseif (date("w",$loandate[$i])==0) {
+												 if (date("w",$date)==6) {
+										            $date+= (2*$one_day_sec);
+										        }elseif (date("w",$date)==0) {
 										            $date+=$one_day_sec;
-										        }elseif (in_array($loandate[$i],$holidays,true)) {
+										        }elseif (in_array($date,$holidays,true)) {
 										           $date+=$one_day_sec;
 										        }
 										        ?>
@@ -401,7 +442,7 @@
 							</div>
 						</div>
 						<hr>
-						<form class="fom form-vertical" method="get">
+						<form  class="fom form-vertical" method="get">
 							<input type="hidden" name="cs"/>
 							<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
 							<div class="row" style = "display: none;">
@@ -409,7 +450,7 @@
 								<input type="text" class="col-md-4" id="principalBal" name="principalBal" value="<?php echo $_GET['principalBal'];?>">
 								<input type="text" class="col-md-4" id="interetBal" name="interetBal" value="<?php echo $_GET['interetBal'];?>">
 							</div>
-							<div class="row">
+							<div íd="form" class="row">
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="approver">Who approved the Settlement?</label>

@@ -34,12 +34,7 @@
             <hr>
             <div id="email-body">
                 <!-- Email Temaplate -->
-			<p>
-				<strong>
-					Subject:
-				</strong>
-				Here goes the subject for this email
-			</p>
+			
 	
 			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
 		    

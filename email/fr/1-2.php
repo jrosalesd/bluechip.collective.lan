@@ -168,14 +168,13 @@
 							        }elseif (in_array($loandate[$i],$holidays,true)) {
 							           $date+=$one_day_sec;
 										        }
-				                	 if ($i < $length+1) {
-				                	 	$followUpSchedule .= "(".ordinalNumber($i+1).")". date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",")." | ";
-				                	 	continue;
+				                	 if ($i+1 < $length) {
+				                	 	$followUpSchedule .= "(".ordinalNumber($i+1)." Pmt) ". date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",")." | ";
 				                	 }else {
-				                	 	$followUpSchedule .= date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",");
+				                	 	$followUpSchedule .="(".ordinalNumber($i+1).") ".  date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",");
 				                	 }
 				                }
-				                $follow_up .= "[".$followUpSchedule."]";
+				                $follow_up .= "[ ".$followUpSchedule." ]";
 				                ?>
 				                <div class="followup">
 				                    <div id="follow-up">

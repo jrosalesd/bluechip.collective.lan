@@ -852,6 +852,18 @@ function supCorr(){
     }
         echo $corr;
 } 
+
+//this function changes regular numbers to ordinal numbers.
+function ordinalNumber($number) {
+    $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+if (($number %100) >= 11 && ($number%100) <= 13)
+   $abbreviation = $number. 'th';
+else
+   $abbreviation = $number. $ends[$number % 10];
+   return $abbreviation;
+}
+
+
 /*
 function Restructure($resStart, $payments, $amount, $frequecy){
     $resStart = strtotime($resStart);

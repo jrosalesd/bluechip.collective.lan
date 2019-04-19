@@ -72,7 +72,7 @@
                     }
                 }
                 ?>
-                <div>
+                <div class="followup">
                     <div id="follow-up">
                           <i>
                         <?php echo $follow_up;?>

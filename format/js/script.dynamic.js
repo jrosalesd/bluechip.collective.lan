@@ -275,19 +275,27 @@ function settlement_offer(argument) {
 function settlement() {
 	
 	var stl, bal,disc,pmtnum,pmts, w,x,y,z, pmtcheck, frstcheck;
+	//new variables
+	var aa, ab, ac, ad, principal, interest;
 	//variables
 	
-	frstcheck = document.getElementById('frst').checked;
+	frstcheck = document.getElementById('frst');
     bal = document.getElementById('bal').value;
     disc = document.getElementById('disc').value;
     pmtnum = document.getElementById('pmtnums').value;
+    principal = document.getElementById('principal').value;
+    interest = bal - principal;
     
     w = document.getElementById('fpmtamt');
     x = document.getElementById('stl0');
     y = document.getElementById('stl');
-    z = document.getElementById('pmtnum1');
+    z = document.getElementById('pmtnum');
+    aa = document.getElementById('interest');
+    ab = document.getElementById('outstanding');
+    ac = document.getElementById('principalBal');
+    ad = document.getElementById('interetBal');
     
-    if (frstcheck) {
+    if (frstcheck.checked) {
     	pmtcheck = document.getElementById('frst_pmt').value;
     	pmtnum -= 1;
     	stl = bal-(bal*(disc/100));
@@ -298,10 +306,13 @@ function settlement() {
         +"This can be solved with a first payment of $" + pmtcheck + " and " + pmtnum + " payments of $" + pmts.toFixed(2);
         y.value = stl.toFixed(2);
         z.value = pmtnum;
+        aa.innerHTML = "<b>Current interest and fees are a total of:</b> $"+interest.toFixed(2);
+        ab.value = bal;
+        ac.value = principal;
+        ad.value = interest;
         
-    }
-    if (frstcheck == false) {
-    	w.value = "";
+        
+    }else{
     	stl =bal-(bal*(disc/100));
         pmts = stl/pmtnum;
         x.innerHTML = disc+"% Settlement would be in the Amout of $" + stl.toFixed(2)
@@ -309,6 +320,11 @@ function settlement() {
         +"This can be solved in " + pmtnum + " payments of $" + pmts.toFixed(2);
         y.value = stl.toFixed(2);
         z.value = pmtnum;
+        aa.innerHTML = "<b>Current interest and fees are a total of:</b> $"+interest.toFixed(2);
+        ab.value = bal;
+        ac.value = principal;
+        ad.value = interest;
+        
     }
     
     	

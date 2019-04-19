@@ -35,18 +35,166 @@
 							    mktime(0, 0, 0, 12, 25, $currentYear)
 							];
 							?>
+							<?php
+							$url = $_SERVER[REQUEST_URI];
+							$url = explode("&",$url);
+							$del_val ="set=on";
+							if (($key = array_search($del_val, $url)) !== false) {
+							    unset($url[$key]);
+							}
+							$url = join("&",$url);
+							?>
 							<div id="em-nav">
 								<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
 										Reset
 									<span class="glyphicon glyphicon-refresh"></span>
 								</a>
-								<a class="btn btn-warning col-md-3" href="emails.php?inst&cs&id=<?php echo $_GET['id'];?>&temp=<?php echo $_GET['temp'];?>&brwName=<?php echo $_GET['brwName'];?>&loanID=<?php echo $_GET['loanID'];?>&daynum=<?php echo $_GET['daynum'];?>&start=<?php echo $_GET['start'];?>&pmtnum=<?php echo $_GET['pmtnum'];?>&stl=<?php echo $_GET['stl'];?>&fpmtamt=<?php echo $_GET['fpmtamt'];?>&state=<?php echo $_GET['state'];?>">
+								<a class="btn btn-warning col-md-3" href="<?php echo $url;?>">
 									<span class="glyphicon glyphicon-edit"></span>
 										Edit
 								</a>
 							</div>
 							<br>
 							<br>
+							<?php
+							if (isset($_GET['inst'])) {
+								$pmtnum= $_GET['pmtnum'];
+								$daynum = $_GET['daynum'];
+								$end= $start + ($one_day_sec*($daynum * $pmtnum));
+								$fpmtamt = $_GET['fpmtamt'];
+								$stlpmt = $stl/$pmtnum;
+								$stlpmt2 = ($stl-$fpmtamt)/($pmtnum-1);
+								$loandate = [];
+								$pmtlist = [];
+								
+								if (!empty($fpmtamt)) {
+									array_push ($loandate, $start);
+									array_push ($pmtlist, (float)$fpmtamt);
+									$stl-=$fpmtamt;
+									$start+=($daynum*$one_day_sec);
+									$stlpmt = $stl/($pmtnum-1);
+								}
+								
+								for ($date=$start; $date<$end; $date=strtotime("+$daynum days",$date)) {
+									$pmt= $stlpmt;
+									//echo date("m-d-Y",strtotime("-1 month",$date))."<br>";
+									if($daynum > 14){
+										if ($daynum > 15) {
+											if ($date > $start) {
+												if (date("t",$date-($daynum*$one_day_sec))==31) {
+													$date+=$one_day_sec;
+												}elseif (date("n",$date-($daynum*$one_day_sec))==2) {
+													if(date("t",$date-($daynum*$one_day_sec))==29){
+														$date-=(1*$one_day_sec);
+										            }else{
+										            	$date-=(2*$one_day_sec);
+										            }
+												}
+											}
+										}else {
+											if ($date > $start) {
+												if (date("d",$date) < 16) {
+													if (date("t",$date-($daynum*$one_day_sec))==31) {
+														$date+=$one_day_sec;
+													}elseif (date("n",$date-($daynum*$one_day_sec))==2) {
+														if(date("t",$date-($daynum*$one_day_sec))==29){
+															$date-=(1*$one_day_sec);
+											            }else{
+											            	$date-=(2*$one_day_sec);
+											            }	
+													}
+												}if (date("d",$date) == 31) {
+													$date+=$one_day_sec;
+												}
+											}
+										}
+									}
+									array_push ($loandate, $date); 
+									array_push ($pmtlist,$pmt);
+								}
+							}
+							?>
+							<hr>
+							<div id="copy_notify"></div>
+				            <div class="well well-lg">
+				            	<?php
+				            	//variables
+				            	$assignee = $SysName;
+				            	$approver = htmlspecialchars($_GET['approver']);
+				            	$outstading = $_GET['outstanding'];
+				            	$principal = $_GET['principalBal'];
+				            	$interest = $_GET['interetBal'];
+				            	/*
+				            	Follow up
+				            	*NEW SETTLEMENT:
+								*Approved by: Julio R.
+								*Working for:
+								A: Current Outstanding Balance:
+								B: Principal of Outstanding:
+								C: Interest of Outstanding: 
+								D: Settlement Amount:
+								E: Payment Schedule:
+				            	*/
+				            	?>
+				                <div class="well well-sm">
+				                    <?php
+				                    $onlineDueDate = strtotime(htmlspecialchars($_GET['start']));
+				                    $date = $onlineDueDate + 7*$one_day_sec;
+				                    
+				                    echo "<b>FOLLOW UP <br> Please set the follow up for ".date('m/d/Y',$date)."</b>";
+				                    ?>
+				                </div>
+				                <?php
+				                
+				                //Assign values to the $follow_up variable
+				                $follow_up = "
+				                	*NEW SETTLEMENT:
+									*Approved by: ".ucwords($approver).". |
+									*Working for: $assignee. |
+									A: Current Outstanding Balance: $". number_format($outstading,2,".",",")." |
+									B: Principal of Outstanding: $". number_format($principal,2,".",",")." |
+									C: Interest and fees of Outstanding:  $". number_format($interest,2,".",",")." |
+									D: Settlement Amount: $". number_format($stl,2,".",",")." |
+									E: Payment Schedule: ";
+				                $followUpSchedule = "";
+				                $length = sizeof($loandate);
+				                for ($i = 0; $i < $length; $i++) {
+				                	
+									$date = $loandate[$i];
+									 if (date("w",$loandate[$i])==6) {
+							            $date+=$loandate[$i] + (2*$one_day_sec);
+							        }elseif (date("w",$loandate[$i])==0) {
+							            $date+=$one_day_sec;
+							        }elseif (in_array($loandate[$i],$holidays,true)) {
+							           $date+=$one_day_sec;
+										        }
+				                	 if ($i < $length+1) {
+				                	 	$followUpSchedule .= "(".ordinalNumber($i+1).")". date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",")." | ";
+				                	 	continue;
+				                	 }else {
+				                	 	$followUpSchedule .= date("m/d/Y", $date).":$".number_format($pmtlist[$i],2,".",",");
+				                	 }
+				                }
+				                $follow_up .= "[".$followUpSchedule."]";
+				                ?>
+				                <div class="followup">
+				                    <div id="follow-up">
+				                          <i>
+				                        <?php echo $follow_up;?>
+				                        </i>
+				                    </div>
+				                    <div class="float-right">
+				                        <div class="row">
+				                            <div class="col-lg-4"></div>
+				                            <div class="col-lg-4"></div>
+				                            <div class="col-lg-4"><button id="copy-init" class="btn btn-success" onclick="copyFollowUp('follow-up',this.value)" value="FollowUp">Copy Follow-Up</button></div>
+				                        </div>
+				                        
+				                    </div>
+				                </div>
+				                
+				                    
+				            </div>
 							<hr>
 							<div class="copier">
 								<div id="copy_notify"></div>
@@ -67,15 +215,6 @@
 								
 								<?php
 								if (isset($_GET['inst'])){
-									
-									$pmtnum= $_GET['pmtnum'];
-									$daynum = $_GET['daynum'];
-									$end= $start + ($one_day_sec*($daynum * $pmtnum));
-									$fpmtamt = $_GET['fpmtamt'];
-									$stlpmt = $stl/$pmtnum;
-									$stlpmt2 = ($stl-$fpmtamt)/($pmtnum-1);
-									$loandate = [];
-									$pmtlist = [];
 									?>
 									
 									<p>
@@ -96,69 +235,19 @@
 									<div>
 										<ul class="sch">
 											<?php
-											if (!empty($fpmtamt)) {
-												?>
-												<li>
-										        	<?php
-										                 echo date("m/d/Y", $start)." $".number_format($fpmtamt,2,".",",");
-										            ?>
-										        </li>
-												<?php
-												$stl-=$fpmtamt;
-												$start+=($daynum*$one_day_sec);
-												$stlpmt = $stl/($pmtnum-1);
-											}
-											
-											for ($date=$start; $date<$end; $date=strtotime("+$daynum days",$date)) {
-												$pmt= $stlpmt;
-												$pmtlist[] = $pmt;
-												//echo date("m-d-Y",strtotime("-1 month",$date))."<br>";
-												if($daynum > 14){
-													if ($daynum > 15) {
-														if ($date > $start) {
-															if (date("t",$date-($daynum*$one_day_sec))==31) {
-																$date+=$one_day_sec;
-															}elseif (date("n",$date-($daynum*$one_day_sec))==2) {
-																if(date("t",$date-($daynum*$one_day_sec))==29){
-																	$date-=(1*$one_day_sec);
-													            }else{
-													            	$date-=(2*$one_day_sec);
-													            }
-															}
-														}
-													}else {
-														if ($date > $start) {
-															if (date("d",$date) < 16) {
-																if (date("t",$date-($daynum*$one_day_sec))==31) {
-																	$date+=$one_day_sec;
-																}elseif (date("n",$date-($daynum*$one_day_sec))==2) {
-																	if(date("t",$date-($daynum*$one_day_sec))==29){
-																		$date-=(1*$one_day_sec);
-														            }else{
-														            	$date-=(2*$one_day_sec);
-														            }	
-																}
-															}if (date("d",$date) == 31) {
-																$date+=$one_day_sec;
-															}
-														}
-													}
-												}
-												$loandate[] = $date; 
-												$pmtlist[] = $pmt;
-											}
-											foreach ($loandate as $date) {
-												if (date("w",$date)==6) {
-										            $date+=(2*$one_day_sec);
-										        }elseif (date("w",$date)==0) {
+											for ($i = 0; $i < count($loandate); $i++) {
+													$date = $loandate[$i];
+												 if (date("w",$loandate[$i])==6) {
+										            $date+=$loandate[$i] + (2*$one_day_sec);
+										        }elseif (date("w",$loandate[$i])==0) {
 										            $date+=$one_day_sec;
-										        }elseif (in_array($date,$holidays,true)) {
+										        }elseif (in_array($loandate[$i],$holidays,true)) {
 										           $date+=$one_day_sec;
 										        }
 										        ?>
 										        <li>
 									        		<?php
-										        	echo date("m/d/Y", $date)." $".number_format($pmt,2,".",",");
+										        	echo date("m/d/Y", $date)." $".number_format($pmtlist[$i],2,".",",");
 										        	?>
 										        </lip>
 										        <?php
@@ -177,7 +266,7 @@
 								}
 								?>
 								<p>
-								You have authorized us to withdraw <?php if (isset($_GET['lump'])){echo "this payment";}else{echo "these payments";}?> on the dates shown above from the bank account you provided to Spotloan. You have indicated that you understand your authorization will remain in full force and effect unless you contact us at least <u>2 business days</u> before your scheduled payment to let us know that you would like to revoke this authorization.</p>
+									You have authorized us to withdraw <?php if (isset($_GET['lump'])){echo "this payment on the date";}else{echo "these payments on the dates";}?>  shown above from the bank account you provided to Spotloan. You have indicated that you understand your authorization will remain in full force and effect unless you contact us at least <u>2 business days</u> before your scheduled payment to let us know that you would like to revoke this authorization.
 								</p>
 								<p>
 									To send a money order, please mail it to our mail processor at:
@@ -240,18 +329,49 @@
 						</div>
 						<hr>
 						<div class="row">
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="frst">
-										<input type="checkbox" id="frst" onclick="enterform()">is the first payment different?
-									</label>
+							<div class="col-md-6">
+								<?php
+								
+									?>
+									<div class="form-group">
+										<?php
+										if (isset($_GET['inst'])) {
+											?>
+											<label for="frst">
+												<input type="checkbox" id="frst" onclick="enterform()">is the first payment different?
+											</label>
+											<?php
+										}else if (isset($_GET['lump'])) {
+											?>
+											<input type="hidden" id="frst">
+											<?php
+										}
+										?>
+										
+									</div>
+										
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="bal">
+												Oustading Balance
+											</label>
+											<input class="form-control" step="0.01" type="number" id="bal" onkeyup="settlement()">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="principal">
+												Principal
+											</label>
+											<input class="form-control" step="0.01" type="number" id="principal" onkeyup="settlement()">
+										</div>
+										<div id="interest"></div>
+									</div>
 								</div>
-								<div class="form-group">
-									<label for="bal">
-										Oustading Balance
-									</label>
-									<input class="form-control" step="0.01" type="number" id="bal" onkeyup="settlement()">
-								</div>
+								
+								
+									
 								<div class="form-group">
 									<label for="disc">
 										Discount %
@@ -259,26 +379,80 @@
 									<input class="form-control" type="text" id="disc" onkeyup="settlement()">
 								</div>
 								<div class="form-group">
-									<label for="pmtnums">
-										Number of Payments
-									</label>
-									<input class="form-control" type="text" id="pmtnums" onkeyup="settlement()">
+									<?php
+									if (isset($_GET['inst'])) {
+										?>
+										<label for="pmtnums">
+											Number of Payments
+										</label>
+										<input class="form-control" type="text" id="pmtnums" onkeyup="settlement()">
+										<?php
+									}else if (isset($_GET['lump'])){
+										?>
+										<input type="hidden" id="pmtnums" value="1">
+										<?php
+									}
+									?>
 								</div>
+								
 								<div id="frst_enter"></div>
 							</div>
-							<div class="col-md-8">
+							<div class="col-md-6">
 								<p id="stl0"></p>
 							</div>
-							
 						</div>
 						<hr>
 						<form class="fom form-vertical" method="get">
+							<input type="hidden" name="cs"/>
+							<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
+							<div class="row" style = "display: none;">
+								<input type="text" class="col-md-4" id="outstanding" name="outstanding" value="<?php echo $_GET['outstanding'];?>">
+								<input type="text" class="col-md-4" id="principalBal" name="principalBal" value="<?php echo $_GET['principalBal'];?>">
+								<input type="text" class="col-md-4" id="interetBal" name="interetBal" value="<?php echo $_GET['interetBal'];?>">
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="approver">Who approved the Settlement?</label>
+										<select class="form-control" name="approver" id="approver" required>
+											<option value="">Choose One</option>
+											<?php
+												$sql = "SELECT * FROM users WHERE user_role = 'Manager/Supervisor'";
+												$ql_run =  mysqli_query($conn, $sql);
+												$sql_numrows = mysqli_num_rows($ql_run);
+												if ($sql_numrows > 0) {
+													while($list = mysqli_fetch_array($ql_run)){
+														?>
+														<option value="<?php echo $list['user_shortname'];?>" <?php if($_GET['approver'] == $list['user_shortname']){echo "selected";}?>>
+															<?php
+															echo(
+																ucwords(
+																	$list['user_first']." ".$list['user_last']
+																)
+															);
+																
+															?>
+														</option>
+														<?php
+													}
+												}
+											?>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group"></div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group"></div>
+								</div>
+							</div>
 							<?php
 							if (isset($_GET['lump'])) {
 								?>
-								<input type="hidden" name="cs"/>
 								<input type="hidden" name="lump"/>
-								<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
+								<input type="hidden" name="pmtnum" id="pmtnum" />
+								
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
@@ -312,9 +486,8 @@
 								<?php
 							}elseif (isset($_GET['inst'])) {
 								?>
-								<input type="hidden" name="cs"/>
 								<input type="hidden" name="inst"/>
-								<input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
+								
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
@@ -351,7 +524,7 @@
 											<label for="pmtnum">
 												Number of payments:
 											</label>
-											<input class="form-control" type="text" name="pmtnum" id="pmtnum1" value="<?php echo $_GET['pmtnum']; ?>" required/>
+											<input class="form-control" type="text" name="pmtnum" id="pmtnum" value="<?php echo $_GET['pmtnum']; ?>" required/>
 										</div>
 										<div class="form-group">
 											<label for="stl">

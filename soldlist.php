@@ -190,6 +190,9 @@ $msg=$_GET['msg'];
                                 $error = mysqli_error($conn);
                                 header("refresh: 0; url=?edit=$loanid&msg=Unable to update <b>$loanid</b> because of the following error: <b><i>$error</i></b>&alert=alert-danger");
                             }
+                       }else if(isset($_POST['cancel-update'])){
+                           $loanid = mysqli_real_escape_string($conn, $_POST['loanid']);
+                           header("refresh: 0; url=?search&term=$loanid");
                        }
                     }else {
                         echo "<p>You are not autorized on this pasge you will be redirected in 5 seconds</p>";

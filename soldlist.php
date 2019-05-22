@@ -94,7 +94,7 @@ $msg=$_GET['msg'];
                 if (isset($_GET['edit'])) {
                     if ($seclevel < 2) {
                         $edit = trim(mysqli_real_escape_string($conn,$_GET['edit']));
-                        $sql = "SELECT * FROM soldlist WHERE Loan_ID = $edit";
+                        $sql = "SELECT * FROM soldlist WHERE Loan_ID ='$edit'";
                         $run = mysqli_query($conn, $sql);
                         //Check data
                         $numrows = mysqli_num_rows($run);
@@ -185,7 +185,7 @@ $msg=$_GET['msg'];
                             ";
                             $run_update = mysqli_query($conn, $sql_save);
                             if ($run_update) {
-                                header("refresh: 0; url=?edit=$loanid&msg=$loanid has been successfully updated&alert=alert-success");
+                                header("refresh: 0; url=?search&term=$loanid&msg=$loanid has been successfully updated&alert=alert-success");
                             }else{
                                 $error = mysqli_error($conn);
                                 header("refresh: 0; url=?edit=$loanid&msg=Unable to update <b>$loanid</b> because of the following error: <b><i>$error</i></b>&alert=alert-danger");
@@ -226,7 +226,7 @@ $msg=$_GET['msg'];
                                                 <td><?php echo $row[4]; ?></td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <a class="btn btn-success" href="emails.php?cs&id=88&LAPro=<?php echo $row[0]; ?>"><span class="fa fa-envelope-o" style="font-size:16px"></span> Send Email</a>
+                                                        <a class="btn btn-success" href="emails.php?cs&id=88&LAPro=<?php echo $row[0]; ?>" target="_blank"><span class="fa fa-envelope-o" style="font-size:16px"></span> Send Email</a>
                                                         <?php 
                                                         if($seclevel < 2){
                                                             ?>
@@ -237,7 +237,6 @@ $msg=$_GET['msg'];
                                                         }
                                                         ?>
                                                     </div>
-                                                        
                                                     
                                                 </td>
                                                 

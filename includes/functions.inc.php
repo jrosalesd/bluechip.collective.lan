@@ -476,29 +476,38 @@ function soldacct($frm=false, $check="off", $pmtdate = "today", $pmtAmt = "0"){
 }
 
 function soldfind($LAPro, $mode = 0){
-    $LAPro = htmlspecialchars($LAPro);
+    
     //Pull data from DB
     include 'dbh.inc.php';
-    $slq = "SELECT soldlist.Loan_ID, soldlist.Buyer, debtsalebuyers.Name, debtsalebuyers.PhoneNumber, soldlist.Sold_Date FROM soldlist, debtsalebuyers WHERE soldlist.Buyer = debtsalebuyers.Code AND soldlist.Loan_ID='$LAPro'";
+    $LAPro = mysqli_real_escape_string($conn, $LAPro);
+    $slq = "SELECT * FROM soldlist WHERE Loan_ID='$LAPro'";
     $slq_result = mysqli_query($conn, $slq);
-    if (mysqli_num_rows($slq_result) != 0) {
-        $row = mysqli_fetch_array($slq_result);
-        //assign variables
-        $AgencyAbr =$row[1];
-		$Agency = $row[2]; 
-		$phone = $row[3];
-		$soldDate = date_create("$row[4]");
-		$reporting = "off";
+    $numrows = mysqli_num_rows($slq_result);
+    if ($numrows > 0){
+       $row = mysqli_fetch_array($slq_result);
+       $AgencyAbr = $row['Buyer'];
+       
+       //get buyer information
+       $buyerstmt = "SELECT * FROM debtsalebuyers WHERE Code ='$AgencyAbr'";
+       $buyerinfo = mysqli_query($conn, $buyerstmt);
+       $bnumrows = mysqli_num_rows($buyerinfo);
+       if ($bnumrows > 0) {
+          $brow = mysqli_fetch_array($buyerinfo);
+          $Agency = $brow['Name']; 
+          $phone = $brow['PhoneNumber'];
+       }
+       
+    	$soldDate = strtotime($row['Sold_Date']);
+    	$reporting = "off";
+        
     }else {
         //DB error
         $output = "</p><div class='alert alert-warning offset25px'><b>Check LA Pro Account number. Something went wrong.</b></div><p>";
         $reporting = "on";
     }
-    $conn->close();
-    
     if ($reporting = "off") {
         if($mode == 0) {
-            $output = date_format($soldDate,"F jS, Y");
+            $output = date("F jS, Y", $soldDate);
         }else if ($mode == 1) {
            $output = 
            "
@@ -509,8 +518,13 @@ function soldfind($LAPro, $mode = 0){
                </p>
            </div>
            ";
+        }elseif($mode == 'test'){
+            $output = $numrows;
         }
-    }    
+    } 
+    $conn->close();
+    
+       
     return $output;
 }
 

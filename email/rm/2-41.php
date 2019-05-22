@@ -12,8 +12,8 @@
     </div>
     <div class="col-md-9" id="embody" style="border-left: solid;">
         <?php
+        
 		if($_GET['set'] == "on"){
-			
 			//variables to complete template
 			
 			$LAPro =htmlspecialchars(trim($_GET['LAPro']));
@@ -92,6 +92,10 @@
     							<input class="form-control" type="text" placeholder="15D95F1JA0-06" name="LAPro"  id="LAPro" value="<?php echo $_GET['LAPro'];?>" required/>
     						</div>
 						    <?php
+						}else {
+							?>
+							<input class="form-control" type="hidden" placeholder="15D95F1JA0-06" name="LAPro"  id="LAPro" value="<?php echo $_GET['LAPro'];?>" required/>
+							<?php
 						}
 						?>
 					</div>

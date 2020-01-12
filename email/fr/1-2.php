@@ -70,7 +70,7 @@
 								if (!empty($fpmtamt)) {
 									array_push ($loandate, $start);
 									array_push ($pmtlist, (float)$fpmtamt);
-									$stl-=$fpmtamt;
+									$workbal = $stl-$fpmtamt;
 									$start+=($daynum*$one_day_sec);
 									if($daynum > 14){
 										if ($daynum > 15) {
@@ -104,7 +104,7 @@
 										}
 									}
 									//echo date("Y/m/d",$start);
-									$stlpmt = $stl/($pmtnum-1);
+									$stlpmt = $workbal/($pmtnum-1);
 								}
 								
 								for ($date=$start; $date<$end; $date=strtotime("+$daynum days",$date)) {

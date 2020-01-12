@@ -11,7 +11,7 @@
     $usertimezone =  $_SESSION['timezone'];
     $pass_status = $_SESSION['pass_status'];
     if(isset($_POST['log_in'])){
-           include 'dbh.inc.php';
+        include 'dbh.inc.php';
         $user_name = mysqli_real_escape_string($conn, $_POST['username']);
         $password = mysqli_real_escape_string($conn, $_POST['password']);
         if (empty($user_name) || empty($password)) {
@@ -29,13 +29,14 @@
                    // Check if usename is active
                    $user_status = $row['user_status'];
                    $passreset = $row['user_pass_status'];
+                   $dbhash = $row['user_password'];
                    if ($user_status == 0) {
                        
                        header("Location: ../login.php?login=This username is inactive, Contact your Administrator.");
                        exit();
                     }elseif($passreset == 0){
                        //Dehash Password
-                            $hashedPwdCheck = password_verify($password, $row['user_password']);
+                            $hashedPwdCheck = password_verify($password, $dbhash);
                        if($hashedPwdCheck == false){
                            header("Location: ../login.php?login=The password does not match.");
                            exit();

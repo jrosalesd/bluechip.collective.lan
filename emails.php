@@ -304,7 +304,7 @@ if (isset($_GET['cs'])) {
         		        </ul>
         		    </div>
                 </div>
-                <!--
+               
                 <div>  
                     <h3 class="text-center"><font color="#3793D2">General Emails</font></h3>  
                 </div>
@@ -342,7 +342,6 @@ if (isset($_GET['cs'])) {
         		        </ul>
         		    </div>
                 </div>
-                -->
             </div>
         </div>
     <?php

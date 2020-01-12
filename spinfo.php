@@ -2,8 +2,8 @@
 $page_name = "Spotloan Information";
 include 'header.php';
 
-if ($_GET['edit']==on){
-    if($_GET['change']==on) {
+if ($_GET['edit']=="on"){
+    if($_GET['change']=="on") {
         $agencyId = $_GET['id'];
         ?>
         <div class="jumbotron">
@@ -558,8 +558,7 @@ if ($_GET['edit']==on){
     </div>
     <?php
 }
-elseif(isset($_GET['newaddress']))
-{
+elseif(isset($_GET['newaddress'])){
     ?>
     <div class="jumbotron">
         <form method="post" class="form-horizontal">

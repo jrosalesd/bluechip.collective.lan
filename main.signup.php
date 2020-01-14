@@ -80,7 +80,15 @@
                                     <?php echo $row['user_uid']; ?>
                                 </td>
                                 <td class="first-capital">
-                                    <?php echo $row['user_role']; ?>
+                                    <?php echo $row['user_role']; 
+									$qforrole="SELECT * FROM user_roles WHERE id=".$row['user_role'];
+									$runquery = myspli_query($conn, $$qforrole);
+									$numrowsrole=mysqli_num_rows($runquery);
+									if($numrowsrole>0){
+										$rowforrole = mysqli_fetch_array($runquery);
+										echo ucfirst($rowforrole['role_name']);
+									}
+									?>
                                 </td>
                                 <td>
                                     <?php echo $row['user_email']; ?>

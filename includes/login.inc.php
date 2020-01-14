@@ -57,7 +57,13 @@
                             $_SESSION['uid'] = $row['user_id'];
                             $_SESSION['SysName'] = ucwords($row['user_shortname']);
                             $_SESSION['email'] = $row['user_email'];
-                            $_SESSION['role'] = ucfirst($row['user_role']);
+							    $qforrole="SELECT * FROM user_roles WHERE id=".$row['user_role'];
+								$runquery = myspli_query($conn, $$qforrole);
+								$numrowsrole=mysqli_num_rows($runquery);
+						   		if($numrowsrole>0){
+									$rowforrole = mysqli_fetch_array($runquery);
+									$_SESSION['role'] = ucfirst($rowforrole['role_name']);
+								}
                             $_SESSION['username'] = $row['user_uid'];
                             $_SESSION['status'] = $row['user_status'];
                             $_SESSION['usersec'] = $row['user_sec_profile'];

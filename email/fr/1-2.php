@@ -457,7 +457,7 @@
 										<select class="form-control" name="approver" id="approver" required>
 											<option value="">Choose One</option>
 											<?php
-												$sql = "SELECT * FROM users WHERE user_role = 'Manager/Supervisor'";
+												$sql = "SELECT * FROM users WHERE user_role=1 AND user_status=1";
 												$ql_run =  mysqli_query($conn, $sql);
 												$sql_numrows = mysqli_num_rows($ql_run);
 												if ($sql_numrows > 0) {

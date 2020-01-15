@@ -102,7 +102,7 @@ $subpage = "Name";
 	</div>
 </div>
 <?php
-}
+
 ?>
 
 

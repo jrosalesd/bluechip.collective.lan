@@ -1,39 +1,56 @@
 <?php
-$page_name = "Site Editor";
+$page_name = "Client Service Manager";
 include 'header.php';
 include 'includes/dbh.inc.php';
 
 /* Processing */
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['updaterole'])) {
-        $id = $_POST['hidden_id'];
-        $previous_name = $_POST['previous_role_name'];
-        $updated_name = $_POST['new_role_name'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {   
+    $id = $_POST['hidden_id'];
+    $previous_name = $_POST['previous_role_name'];
+    $newrole = $_POST['new_role_name'];
+    
+    if (isset($_POST['updaterole'])) {        
 
-        $q_update="UPDATE user_roles SET role_name='$updated_name' WHERE id='$id'";
+        $q_update="UPDATE user_roles SET role_name='$newrole' WHERE id=$id";
+
         $update = mysqli_query($conn, $q_update);
         if ($update) {
-            header("Refresh:0; url=backend.php?edit&id=$id&notification=This Role has been updated from <b>$previous_name </b> to <b>$updated_name</b>&class=success");
+            header("Refresh:0; url=backend.php?edit&id=$id&notification=This Role has been updated from <b>$previous_name </b> to <b>$newrole</b>&class=success");
             exit();
         }else {
-            header("Refresh:0; url=backend.php?edit&id=$id&notification=We are sorry but we were not able to update this role from <b>$previous_name </b> to <b>$updated_name</b>&class=danger");
+            header("Refresh:0; url=backend.php?edit&id=$id&notification=We are sorry but we were not able to update this role from <b>$previous_name </b> to <b>$newrole</b>&class=danger");
             exit();
         }
     }
     if (isset($_POST['newrole'])) {
         $newrole = $_POST['new_role_name'];
-        $q = "INSERT INTO user_roles VALUES('','$newrole')";
-        $insert = mysqli_query($conn, $q);
+        
+        $q_new = "INSERT INTO `user_roles`(`id`, `role_name`) VALUES ('','$newrole')";
+        $insert = mysqli_query($conn, $q_new);
         if ($insert) {
             header("Refresh:0; url=backend.php?notification=The new Role <b>$newrole </b> has been successfully saved.&class=success");
             exit();
         }else {
-            header("Refresh:0; url=backend.php?notification=The new Role <b>$newrole </b> could not be saved.&class=danger");
+            $error = mysqli_error($conn);
+            header("Refresh:0; url=backend.php?notification=The new Role <b>$newrole </b> could not be saved. Here is the error found: $error.&class=danger");
             exit();
         }
 
     }
+    if (isset($_POST['delete'])) {
+        $stmt = "DELETE FROM user_roles WHERE id= $id ";
+        $delete = mysqli_query($conn, $stmt);
+        if ($delete) {
+            header("Refresh:0; url=backend.php?notification=The Role <b>$previous_name </b> has been successfully deleted.&class=success");
+            exit();
+        }else {
+            $error = mysqli_error($conn);
+            header("Refresh:0; url=backend.php?edit&id=$id&notification=Unable to delete the <b>$newrole</b>role. Here is teh error we found: $error &class=danger");
+        }
+
+    }
+        
     
 
 }
@@ -106,12 +123,13 @@ if ($seclevel>1) {
                                 <td>
                                 <br>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <button name="updaterole" type="submit" class="btn btn-success">Update Record</button>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <a href="backend.php"><button type="button" class="btn btn-warning">Cancel/Return</button></a>
                                         </div>
+                                        <div class="col-md-4"><button name="delete" type="submit" class="btn btn-danger">Delete Role</button></div>
                                     </div>                                    
                                 </td>
                             </tr>
@@ -123,7 +141,11 @@ if ($seclevel>1) {
                         ?>
                         <tr>
                             <td><?php echo $row['role_name']?></td>
-                            <td><a class="text-right" href="?edit&id=<?php echo $row['id']?>"><span class="glyphicon glyphicon-edit"></span>Edit</a></td>
+                            <td>
+                                <a class="btn btn-primary text-right" href="?edit&id=<?php echo $row['id']?>">
+                                    <span class="glyphicon glyphicon-edit"></span>Edit
+                                </a>                                
+                            </td>
                         </tr>
                         <?php
                     }
@@ -140,8 +162,9 @@ if ($seclevel>1) {
 }
 ?>
 </div>
-
-
 <?php
+
+
+
 include 'footer.php';
 

@@ -80,7 +80,17 @@
                                     <?php echo $row['user_uid']; ?>
                                 </td>
                                 <td class="first-capital">
-                                    <?php echo $row['user_role']; ?>
+
+                                    <?php 
+                                    //Obtain the role name
+                                    $q_for_role = "SELECT * FROM user_roles WHERE  id=".$row['user_role'];
+                                    $run_query = mysqli_query($conn, $q_for_role);
+                                    $numrows_roles = mysqli_num_rows($run_query);
+                                    if ($numrows_roles > 0) {
+                                        $row_roles = mysqli_fetch_array($run_query);
+                                        echo ucfirst($row_roles['role_name']);
+                                    }
+                                    ?>
                                 </td>
                                 <td>
                                     <?php echo $row['user_email']; ?>

@@ -680,8 +680,8 @@ function pendingpayment($type, $status = "off", $pmtAmt = "", $pmtdate =""){
 function hoursOfOperation($status = true){
     if ($status == true) {
         $operations = 
-        "<p>Our Help Desk hours of operation are Monday - Friday from 7:00am CST - 4:30pm CST. 
-        <br>For immediate service, please feel free to contact us at 1-888-681-6811, Monday - Friday 7:00am - 8:00pm CST or Saturdays 9:00am - 6:00pm CST.</p>
+        "<p>Our Help Desk hours of operation are Monday - Friday from 7:00 AM - 4:30 PM CST. 
+        <br>For immediate service, please feel free to contact us at 1-888-681-6811, Monday - Friday 7:00 AM - 8:00 PM CST or Saturdays 9:00 AM - 6:00 PM CST.</p>
         ";
     }
     

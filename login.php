@@ -31,6 +31,7 @@ $errorMsg = $_GET['login'];
     </head>
     <body class="container" onload="regTime()"><br/><br/><br/><br/><br/>
     <?php
+    echo password_hash("Honduras2020", PASSWORD_DEFAULT);
     ?>
         <div>
             <div class="row">

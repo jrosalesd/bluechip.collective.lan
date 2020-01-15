@@ -36,13 +36,13 @@
 							];
 							?>
 							<?php
-							$url = $_SERVER[REQUEST_URI];
+							$url = $_SERVER['REQUEST_URI'];
 							$url = explode("&",$url);
 							$del_val ="set=on";
 							if (($key = array_search($del_val, $url)) !== false) {
 							    unset($url[$key]);
 							}
-							$url = join("&",$url);
+							$url = join("&",$url);	
 							?>
 							<div id="em-nav">
 								<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -104,7 +104,7 @@
 										}
 									}
 									//echo date("Y/m/d",$start);
-									$stlpmt = $workbal/($pmtnum-1);
+									$stlpmt = $workbal/($pmtnum);
 								}
 								
 								for ($date=$start; $date<$end; $date=strtotime("+$daynum days",$date)) {
@@ -457,7 +457,7 @@
 										<select class="form-control" name="approver" id="approver" required>
 											<option value="">Choose One</option>
 											<?php
-												$sql = "SELECT * FROM users WHERE user_role = 'Manager/Supervisor'";
+												$sql = "SELECT * FROM users WHERE user_role=1 AND user_status=1";
 												$ql_run =  mysqli_query($conn, $sql);
 												$sql_numrows = mysqli_num_rows($ql_run);
 												if ($sql_numrows > 0) {

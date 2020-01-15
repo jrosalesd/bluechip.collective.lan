@@ -178,7 +178,8 @@ $conn->close();
                                 }
                                 if($_SESSION['usersec']<2){
                                     ?>
-                                    <li><a href="editor.php"><span class="glyphicon glyphicon-edit"></span>Site Editor</a></li>
+                                    <li><a href="editor.php"><span class="glyphicon glyphicon-edit"></span> Site Editor</a></li>
+                                    <li><a href="backend.php"><span class="glyphicon glyphicon-edit" target="_bank"></span> CMS</a></li>
                                     <?php
                                 }
                                 ?>

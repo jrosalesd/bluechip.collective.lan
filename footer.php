@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-    
 
     <div class="text-center">
         <p>

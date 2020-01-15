@@ -24,6 +24,7 @@
 							$currentYear = date('Y');
 							$holidays = [ 
 							    mktime(0, 0, 0, 1, 1,$currentYear), 
+								mktime(0, 0, 0, 1, 1,$currentYear+1),
 							    strtotime("3 Mondays", mktime(0, 0, 0, 1, 1, $currentYear)), 
 							    strtotime("3 Mondays", mktime(0, 0, 0, 2, 1, $currentYear)), 
 							    strtotime("last Monday of May $currentYear"), 

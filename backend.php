@@ -24,22 +24,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     if (isset($_POST['newrole'])) {
-        $newrole = $_POST['new_role_name'];
+        $newrole = htmlspecialchars($_POST['new_role_name']);
         
-        $q_new = "INSERT INTO `user_roles`(`id`, `role_name`) VALUES ('','$newrole')";
+        $q_new = "INSERT INTO user_roles (role_name)";
+		$q_new .= "VALUES ('$newrole')";
         $insert = mysqli_query($conn, $q_new);
         if ($insert) {
             header("Refresh:0; url=backend.php?notification=The new Role <b>$newrole </b> has been successfully saved.&class=success");
             exit();
         }else {
             $error = mysqli_error($conn);
-            header("Refresh:0; url=backend.php?notification=The new Role <b>$newrole </b> could not be saved. Here is the error found: $error.&class=danger");
+            header("Refresh:0; url=backend.php?notification=The new Role <b>$newrole </b> could not be saved. Here is the error found: $error.&class=danger&");
             exit();
         }
 
     }
     if (isset($_POST['delete'])) {
-        $stmt = "DELETE FROM user_roles WHERE id= $id ";
+        $stmt = "DELETE FROM user_roles WHERE id=$id";
         $delete = mysqli_query($conn, $stmt);
         if ($delete) {
             header("Refresh:0; url=backend.php?notification=The Role <b>$previous_name </b> has been successfully deleted.&class=success");

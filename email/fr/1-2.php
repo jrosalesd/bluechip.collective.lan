@@ -105,7 +105,7 @@
 										}
 									}
 									//echo date("Y/m/d",$start);
-									$stlpmt = $workbal/($pmtnum);
+									$stlpmt = $workbal/($pmtnum-1);
 								}
 								
 								for ($date=$start; $date<$end; $date=strtotime("+$daynum days",$date)) {

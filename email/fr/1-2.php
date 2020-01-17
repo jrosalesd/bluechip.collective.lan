@@ -24,6 +24,7 @@
 							$currentYear = date('Y');
 							$holidays = [ 
 							    mktime(0, 0, 0, 1, 1,$currentYear), 
+								mktime(0, 0, 0, 1, 1,$currentYear+1),
 							    strtotime("3 Mondays", mktime(0, 0, 0, 1, 1, $currentYear)), 
 							    strtotime("3 Mondays", mktime(0, 0, 0, 2, 1, $currentYear)), 
 							    strtotime("last Monday of May $currentYear"), 
@@ -104,7 +105,7 @@
 										}
 									}
 									//echo date("Y/m/d",$start);
-									$stlpmt = $workbal/($pmtnum);
+									$stlpmt = $workbal/($pmtnum-1);
 								}
 								
 								for ($date=$start; $date<$end; $date=strtotime("+$daynum days",$date)) {

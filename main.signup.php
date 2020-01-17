@@ -1,7 +1,6 @@
 <?php
 
 ?>
-
 <div class="jumbotron">
     <h3 class="text-center">Users</h3>
     <div class="pull-right">
@@ -80,29 +79,18 @@
                                     <?php echo $row['user_uid']; ?>
                                 </td>
                                 <td class="first-capital">
-<<<<<<< HEAD
 
                                     <?php 
                                     //Obtain the role name
-                                    $q_for_role = "SELECT * FROM user_roles WHERE  id=".$row['user_role'];
+									$role_id = $row['user_role'];						
+                                    $q_for_role = "SELECT * FROM user_roles WHERE  id= $role_id";
                                     $run_query = mysqli_query($conn, $q_for_role);
                                     $numrows_roles = mysqli_num_rows($run_query);
                                     if ($numrows_roles > 0) {
                                         $row_roles = mysqli_fetch_array($run_query);
                                         echo ucfirst($row_roles['role_name']);
                                     }
-                                    ?>
-=======
-                                    <?php echo $row['user_role']; 
-									$qforrole="SELECT * FROM user_roles WHERE id=".$row['user_role'];
-									$runquery = myspli_query($conn, $$qforrole);
-									$numrowsrole=mysqli_num_rows($runquery);
-									if($numrowsrole>0){
-										$rowforrole = mysqli_fetch_array($runquery);
-										echo ucfirst($rowforrole['role_name']);
-									}
 									?>
->>>>>>> a650dfd7043a2278b046e961aa9f75edb1697ae7
                                 </td>
                                 <td>
                                     <?php echo $row['user_email']; ?>

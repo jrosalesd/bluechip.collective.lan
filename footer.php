@@ -3,7 +3,11 @@
     <div class="text-center">
         <p>
             <span class="glyphicon glyphicon-copyright-mark"></span>
+<<<<<<< HEAD
             Julio R 2015-<?php echo date("Y");?> - <g class="version">Version: 2.7.1</g>
+=======
+            Julio R 2015-<?php echo date("Y");?> - <g class="version">Version: 2.7.3</g>
+>>>>>>> parent of d3f4944... Version: 2.7.3.1 - 01162020
         </p>
     </div>
     </body>

@@ -14,16 +14,16 @@ include 'header.php';
 	<div>
 	    <h3>
 	        <a data-toggle="collapse" data-target="#esc">
-	            Escalation Queue
+	            Investigations Queue
 	        </a>
 	    </h3>
 	    <div id="esc" class="collapse">
 	        
 	        <p>
-	        	Transfer call to Credit Service Manager (
+	        	Transfer the call to a Investigation Agent (
 	        	<?php
 	        	include 'includes/dbh.inc.php';
-	        	$q = "Select * FROM users WHERE user_role='Credit Service Manager' AND user_status=1";
+	        	$q = "Select * FROM users WHERE user_role=3 AND user_status=1";
 	        	$q_result = mysqli_query($conn, $q);
 	        	$numrows=mysqli_num_rows($q_result);
 	        	if ($numrows > 0) {
@@ -51,7 +51,7 @@ include 'header.php';
 		</h3>
 		<div class="collapse" id="pc">
 			<p>
-				Transfer call to CM
+				Transfer call to Collections Specialist
 			</p>
 			<p>
 				You can take payment/Send email to FR

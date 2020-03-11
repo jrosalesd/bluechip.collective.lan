@@ -2,7 +2,7 @@
     <div class="text-center">
         <p>
             <span class="glyphicon glyphicon-copyright-mark"></span>
-            Julio R 2015-<?php echo date("Y");?> - <g class="version">Version: 2.7.3.1</g>
+            Julio R 2015-<?php echo date("Y");?> - <g class="version">Version: 2.7.3.2</g>
         </p>
     </div>
     </body>

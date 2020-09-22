@@ -6,6 +6,7 @@ if(isset($userid)){
     header("Location: home.php");
 }
 $errorMsg = $_GET['login'];
+
 ?>
 <html>
     <head>  
@@ -29,6 +30,8 @@ $errorMsg = $_GET['login'];
         <link rel="shortcut icon" href="format/img/icon.png" type="image/png"/>
     </head>
     <body class="container" onload="regTime()"><br/><br/><br/><br/><br/>
+    <?php
+    ?>
         <div>
             <div class="row">
                 <div class="col-md-4">

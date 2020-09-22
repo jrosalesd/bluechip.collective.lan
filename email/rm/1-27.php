@@ -27,37 +27,41 @@
 			<br>
 			<hr>
 			<div id="copy_notify"></div>
-			<div id="email-body">
+<div class="row">
+                    <div class="col-lg-4"><button id="copy-init" class="btn btn-primary" onclick="copyFollowUp('email-body',this.value)" value="email">Copy Email</button></div>
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4"></div>
+                </div>
+            <hr>
+            <div id="email-body">
                 <!-- Email Temaplate -->
-                <div class="row">
-                    <div class="col-lg-4"><button id="copy-init" class="btn btn-primary" onclick="copyFollowUp('email-body',this.value)" value="email">Copy Email</button></div>
-                    <div class="col-lg-4"></div>
-                    <div class="col-lg-4"></div>
-                </div>
-            <hr>
-                <div class="row">
-                    <div class="col-lg-4"><button id="copy-init" class="btn btn-primary" onclick="copyFollowUp('email-body',this.value)" value="email">Copy Email</button></div>
-                    <div class="col-lg-4"></div>
-                    <div class="col-lg-4"></div>
-                </div>
-            <hr>
 			<p>
 		    	Dear <?php echo ucfirst($brwName);?>,
 		    </p>
 		    <br>
 		    
 		    <p>
-		    	Thank you for the email regarding your Spotloan.
-		    </p>
-		    <p>
-		    	We have looked into your account and it does show that you emailed in enough time to stop your payment. Due to our help desk being so backed up with emails at this time the email was overlooked and we were unable to process your request.
-		    </p>
-		    <p>
-		    	Please send us a bank statement if the payment cleared and we will get started on getting you a refund. If the payment did not clear we can refund any overdraft fees.
-		    </p>
+            Thank you for contacting Spotloan.
+            </p>
+            <p>
+            
+            </p>
+            As agreed, you will be mailing in your money order in the amount of $[Amount] to be delivered
+            no later than [Date]. Your check or money order may be mailed in to:
+            Spotloan
+            P.O. Box 720
+            Belcourt, ND 58316
+            Please also include the following information:
+            Your Name
+            Your Address
+            Your Loan ID [Loan ID #]
+            Please note that your payoff amount will be honored as long as we receive it on or before the
+            previously mentioned date.
+            </p>
 		    
 			<?php
 			NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);
+			echo comment($_GET['additionalnote'], $_GET['additional']);
 			echo checkState($_GET['state']);
 			?>
 			<?php
@@ -84,6 +88,30 @@
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
 						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="checkbox">
+							<label for="pmtnote">
+							    <input type="checkbox"  id="pmtnote" name="pmtnote" onclick="nextpmt()"/><b>Next Payment Notice</b>
+							</label>
+						</div>
+						<div class="checkbox">
+							<label for="additional">
+								<input type="checkbox"  id="additional" name="additional" onclick="addnote()"/><b>Other Notes</b>
+							</label>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-6">
+								<g id="pmtnotebody"></g>
+							</div>
+							<div class="col-md-6">
+								<g id="notefield"></g>
+							</div>
+						</div>
 					</div>
 				</div>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">

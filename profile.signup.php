@@ -25,7 +25,15 @@
                </p class="first-capital">
                <p>
                    <strong>Role:</strong><br>
-                   <?php echo $row['user_role']; ?>
+                   <?php
+                   $query = "SELECT role_name FROM user_roles WHERE id=".$row['user_role'];
+                   $retrieve=mysqli_query($conn, $query);
+                   $numrows=mysqli_num_rows($retrieve);
+                   if ($numrows>0) {
+                       $rownew = mysqli_fetch_array($retrieve);
+                       echo $rownew['role_name'];
+                   }
+                   ?>
                </p>
                <p>
                    <strong>username:</strong><br>
@@ -147,7 +155,19 @@
                 </div>
                 <br><br><br>
                 <p class="error">
-                   <?php echo $_GET['error']; ?>
+                    <?php
+                         if (isset($_GET['error'])) {
+                            echo htmlspecialchars($_GET['error']);
+                         }else {
+                            if(isset($_GET['pwd'])){
+                                ?>
+                                Your New Temporary Password is:
+                                <br>
+                                <?php echo htmlspecialchars($_GET['pwd']);?>
+                                <?php
+                            }
+                         }
+                    ?>                   
                 </p>
            </div>
            <?php

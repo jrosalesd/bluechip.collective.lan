@@ -442,3 +442,47 @@ function copyFollowUp(containerid,value){
     }
     
 }
+
+
+{
+	var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    document.getElementById('user_last').onchange=function() {shortName()};
+    
+
+    function shortName() {
+        var fName = document.getElementById('user_first').value;
+        var lName = document.getElementById('user_last').value;
+        var replace = fName + " " + lName.substring(0,1);
+        var replaceuid = fName + lName.substring(0,1);
+        var email = fName + "." +  lName.substring(0,1) + "@spotloan.com";
+        
+    
+        var x = document.getElementById('user_shortname');
+        var y = document.getElementById('user_email');
+        var z = document.getElementById('user_uid');
+        x.value = replace;
+        y.value = email.toLowerCase();
+        z.value = replaceuid.toLowerCase();
+    }
+    document.getElementById('statuscheck').onchange=function() {updatelist()};
+    
+    function updatelist(){
+        var statuscheck = document.getElementById('statuscheck').value
+    }
+    
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    }); 
+}
+
+

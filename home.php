@@ -1,6 +1,7 @@
 <?php
 $page_name = "Home";
 include 'header.php';
+
 ?>
 <div class="jumbotron">
     <div class="row text-center">

@@ -55,6 +55,9 @@
 					<br>Payment Amount: $<?php echo number_format($pmt_new,2,".",",");?>
 				</p>
 			</div>
+			</p>
+			<?php NxtPmt($pmt_start_date, $pmt_new, "on");?>
+			<p>
 			<p>If you miss any payments, the life of your loan will be extended. Please let me know if you have any additional questions or concerns.</p>
 			
 		    <?php echo pendingpayment(2, $_GET['pendingclick'], $_GET['pennextpmtamt'], $_GET['datepending']);?>

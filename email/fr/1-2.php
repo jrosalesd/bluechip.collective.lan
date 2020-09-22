@@ -24,6 +24,7 @@
 							$currentYear = date('Y');
 							$holidays = [ 
 							    mktime(0, 0, 0, 1, 1,$currentYear), 
+								mktime(0, 0, 0, 1, 1,$currentYear+1),
 							    strtotime("3 Mondays", mktime(0, 0, 0, 1, 1, $currentYear)), 
 							    strtotime("3 Mondays", mktime(0, 0, 0, 2, 1, $currentYear)), 
 							    strtotime("last Monday of May $currentYear"), 
@@ -36,13 +37,13 @@
 							];
 							?>
 							<?php
-							$url = $_SERVER[REQUEST_URI];
+							$url = $_SERVER['REQUEST_URI'];
 							$url = explode("&",$url);
 							$del_val ="set=on";
 							if (($key = array_search($del_val, $url)) !== false) {
 							    unset($url[$key]);
 							}
-							$url = join("&",$url);
+							$url = join("&",$url);	
 							?>
 							<div id="em-nav">
 								<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -70,7 +71,7 @@
 								if (!empty($fpmtamt)) {
 									array_push ($loandate, $start);
 									array_push ($pmtlist, (float)$fpmtamt);
-									$stl-=$fpmtamt;
+									$workbal = $stl-$fpmtamt;
 									$start+=($daynum*$one_day_sec);
 									if($daynum > 14){
 										if ($daynum > 15) {
@@ -104,7 +105,7 @@
 										}
 									}
 									//echo date("Y/m/d",$start);
-									$stlpmt = $stl/($pmtnum-1);
+									$stlpmt = $workbal/($pmtnum-1);
 								}
 								
 								for ($date=$start; $date<$end; $date=strtotime("+$daynum days",$date)) {
@@ -457,7 +458,7 @@
 										<select class="form-control" name="approver" id="approver" required>
 											<option value="">Choose One</option>
 											<?php
-												$sql = "SELECT * FROM users WHERE user_role = 'Manager/Supervisor'";
+												$sql = "SELECT * FROM users WHERE user_role=1 AND user_status=1";
 												$ql_run =  mysqli_query($conn, $sql);
 												$sql_numrows = mysqli_num_rows($ql_run);
 												if ($sql_numrows > 0) {

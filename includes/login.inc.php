@@ -11,7 +11,7 @@
     $usertimezone =  $_SESSION['timezone'];
     $pass_status = $_SESSION['pass_status'];
     if(isset($_POST['log_in'])){
-           include 'dbh.inc.php';
+        include 'dbh.inc.php';
         $user_name = mysqli_real_escape_string($conn, $_POST['username']);
         $password = mysqli_real_escape_string($conn, $_POST['password']);
         if (empty($user_name) || empty($password)) {
@@ -29,13 +29,14 @@
                    // Check if usename is active
                    $user_status = $row['user_status'];
                    $passreset = $row['user_pass_status'];
+                   $dbhash = $row['user_password'];
                    if ($user_status == 0) {
                        
                        header("Location: ../login.php?login=This username is inactive, Contact your Administrator.");
                        exit();
                     }elseif($passreset == 0){
                        //Dehash Password
-                            $hashedPwdCheck = password_verify($password, $row['user_password']);
+                            $hashedPwdCheck = password_verify($password, $dbhash);
                        if($hashedPwdCheck == false){
                            header("Location: ../login.php?login=The password does not match.");
                            exit();
@@ -56,7 +57,15 @@
                             $_SESSION['uid'] = $row['user_id'];
                             $_SESSION['SysName'] = ucwords($row['user_shortname']);
                             $_SESSION['email'] = $row['user_email'];
-                            $_SESSION['role'] = ucfirst($row['user_role']);
+                            //Obtain the role name
+                            $q_for_role = "SELECT * FROM user_roles WHERE  id=".$row['user_role'];
+                            $run_query = mysqli_query($conn, $q_for_role);
+                            $numrows_roles = mysqli_num_rows($run_query);
+                            if ($numrows_roles > 0) {
+                                $row_roles = mysqli_fetch_array($run_query);
+                                $_SESSION['role'] = ucfirst($row_roles['role_name']);
+                            }
+                            
                             $_SESSION['username'] = $row['user_uid'];
                             $_SESSION['status'] = $row['user_status'];
                             $_SESSION['usersec'] = $row['user_sec_profile'];
@@ -72,4 +81,4 @@
     }else{
         header("Location: ../index.php");
         exit();
-    }
+	}

@@ -18,7 +18,11 @@
 			//next payment
 			$pmtnote = htmlspecialchars($_GET['pmtnote']);
 			$nextpmtdate = date_create(htmlspecialchars($_GET['nextpmtdate']));
-			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt'])
+			$nextpmtamt = htmlspecialchars($_GET['nextpmtamt']);
+			$balance = htmlspecialchars($_GET['Balance']);
+			$notification = htmlspecialchars($_GET['notification_type']);
+			$loanid	= htmlspecialchars($_GET['loanid'])
+
 			?>
 			<div>
 				<a class="btn btn-danger col-md-3" href="emails.php?cs&id=<?php echo $_GET['id'];?>">
@@ -40,9 +44,14 @@
             <hr>
 
 			<?php echo brwname($_GET['brwName'],$_GET['sup-correction']);?>
+
+			<p>Thank you for contacting Spotloan.</p>
 		    
-		    <p>We have noted that you have filed bankruptcy in our records.  We will no longer contact you regarding your Spotloan.</p>
-		    <p>If you have any other questions or we can assist otherwise, please contact us.</p>
+		    <p>We have received notification that you have recently <?php echo $notification;?>. Because we’ve received this notification, Spotloan has turned off your
+automatic debit to ensure no future payments will be drafted from your account.</p>
+		    <p>As of today, you have a current balance of $<?php echo number_format($balance,2,".",","); ?> and your Spotloan loan ID is <?php echo $loanid;?>.
+Please provide this information to the company you are working with for reference as needed.</p>
+
 		    
 			<?php NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);?>
 			
@@ -69,7 +78,29 @@
 							</label>
 							<input class="form-control" type="text" placeholder="i. e. David" name="brwName" required/>
 						</div>
-						
+						<div class="form-group">
+                            <label for="Balance">
+                                Payoff Balance:
+                            </label>
+                            <input class="form-control" type="number" step="0.01" name="Balance" required/>
+                        </div>						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="notification_type">Type of Notification</label>
+							<select name="notification_type" id="notification_type" class="form-control">
+								<option value="">Select One</option>
+								<option value="filed for bankruptcy">Bankruptcy</option>
+								<option value="opted to work with a Debt
+Consolidation Company">DebtConsolidation</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="loanid">
+								Loan ID:
+							</label>
+							<input class="form-control" type="text" name="loanid" id="loanid" required/>
+						</div>
 					</div>
 				</div>
 				<?php supCorr();?>

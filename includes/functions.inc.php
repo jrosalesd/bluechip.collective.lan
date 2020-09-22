@@ -1,12 +1,12 @@
 <?php
 function ResetPass($length=15) {
-    $characters = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()-_=+|/:;><";
+    $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@$%^*()[]=!";
     $charactersLength = strlen($characters);
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
-    return $randomString;
+    return trim($randomString);
 }
 
 function intWeeks($s, $e){
@@ -26,7 +26,8 @@ function nextBD($start,$count = 1,$method = 0){
     $start = strtotime($start);
     $currentYear = date('Y',$start);
     $holidays = [ 
-        date("m/d/Y",mktime(0, 0, 0, 1, 1,$currentYear)), 
+        date("m/d/Y",mktime(0, 0, 0, 1, 1,$currentYear)),
+        date("m/d/Y",mktime(0, 0, 0, 1, 1,$currentYear+1)),  
         date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 1, 1, $currentYear))), 
         date("m/d/Y",strtotime("3 Mondays", mktime(0, 0, 0, 2, 1, $currentYear))), 
         date("m/d/Y",strtotime("last Monday of May $currentYear")), 
@@ -678,9 +679,8 @@ function pendingpayment($type, $status = "off", $pmtAmt = "", $pmtdate =""){
 
 function hoursOfOperation($status = true){
     if ($status == true) {
-        $operations = 
-        "<p>Our Help Desk hours of operation are Monday - Friday from 7:00am CST - 4:30pm CST. 
-        <br>Due to COVID-19, Spotloan has temporarily updated our Phone Support hours as follows: Monday - Friday 8:00 a.m. CT - 6:30 p.m. CT, Saturday 9:00 a.m. CT - 6:00 p.m. CT.</p>		
+        $operations ="<p>Our Help Desk hours of operation are Monday - Friday from 7:00am CST - 4:30pm CST. 
+        <br>Due to COVID-19, Spotloan has temporarily updated our Phone Support hours as follows: Monday - Friday 8:00 a.m. CT - 6:30 p.m. CT, Saturday 9:00 a.m. CT - 6:00 p.m. CT.</p>
         ";
     }
     

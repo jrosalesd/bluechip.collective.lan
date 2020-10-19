@@ -297,7 +297,6 @@ function settlement() {
     
     if (frstcheck.checked) {
     	pmtcheck = document.getElementById('frst_pmt').value;
-    	pmtnum -= 1;
     	stl = bal-(bal*(disc/100));
     	pmts = (stl-pmtcheck)/pmtnum;
     	w.value = pmtcheck;

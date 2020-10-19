@@ -680,8 +680,11 @@ function pendingpayment($type, $status = "off", $pmtAmt = "", $pmtdate =""){
 function hoursOfOperation($status = true){
     if ($status == true) {
         $operations ="<p>Our Help Desk hours of operation are Monday - Friday from 7:00am CST - 4:30pm CST. 
-        <br>Due to COVID-19, Spotloan has temporarily updated our Phone Support hours as follows: Monday - Friday 8:00 a.m. CT - 6:30 p.m. CT, Saturday 9:00 a.m. CT - 6:00 p.m. CT.</p>
-        ";
+        <br>
+		Due to COVID-19, Spotloan has temporarily updated our Phone Support hours, as follows:
+		Monday - Friday, 8:00 AM CT - 6:30 PM CT.
+		Saturday, 9:00 AM CT - 6:00 PM CT.
+		";
     }
     
     echo $operations;

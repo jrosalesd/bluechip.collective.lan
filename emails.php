@@ -448,7 +448,7 @@ if (isset($_GET['cs'])) {
                         $type = mysqli_real_escape_string($conn,$_POST['emtype']);
                         $group = mysqli_real_escape_string($conn,$_POST['catid']);
                         //check DB
-                        $sql1 = "SELECT MAX(emID) FROM email WHERE catID='$group' AND type='$type'";
+                        $sql1 = "SELECT MAX(ID) FROM email WHERE catID='$group' AND type='$type'";
                         $sql1init = mysqli_query($conn, $sql1);
                         $numrows = mysqli_num_rows($sql1init);
                         if ($numrows > 0) {

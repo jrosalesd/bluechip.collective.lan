@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-3">
 		<h2>
-			Broken Agreement Email
+			<?php echo $emname;?>
 		</h2>
 		<font color="red">
 			<h5>

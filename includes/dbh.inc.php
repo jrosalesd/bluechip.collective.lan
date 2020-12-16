@@ -1,7 +1,7 @@
 <?php
 $servername = "127.0.0.1";
 $username = "juliorosales";
-$password = "Honduras2017";
+$password = "Honduras2020";
 $database = "members";
 
 // Create connection

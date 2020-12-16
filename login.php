@@ -37,6 +37,7 @@ $errorMsg = $_GET['login'];
                 <div class="col-md-4">
                 </div>
                 <div class="col-md-4 jumbotron">
+					<?php echo password_hash("Honduras2020", PASSWORD_DEFAULT);?>
                     <h2 class="text-center">Welcome Please Login!</h2>
                     <div class="text-center"><font color="red"><b><?php echo $errorMsg;?></b></font></div>
                     <div class="form-group">

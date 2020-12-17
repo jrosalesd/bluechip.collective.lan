@@ -49,6 +49,7 @@
 		    <p>
 		    	Please send us a bank statement if the payment cleared and we will get started on getting you a refund. If the payment did not clear we can refund any overdraft fees.
 		    </p>
+			<?php echo pendingpayment(3, $_GET['pendingclick'], $_GET['pennextpmtamt'], $_GET['datepending']);?>
 		    
 			<?php
 			NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote);

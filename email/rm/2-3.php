@@ -43,6 +43,9 @@
 			<?php echo brwname($_GET['brwName'],$_GET['sup-correction'],1);?>
 		    
 		    <p>Thank you for contacting Spotloan. Your account balance is $<?php echo number_format($balance,2,".",",");?> and your next payment of $<?php echo number_format($nextpmtamt,2,".",",");?> is due on <?php echo date_format($nextpmtdate,"l, F jS"); ?>.</p>
+			
+			<?php echo pendingpayment(5, $_GET['pendingclick'], $_GET['pennextpmtamt'], $_GET['datepending']);?>	
+				
 		    <p>As a friendly reminder, interest accrues on a daily basis.</p>
 			
 			<?php
@@ -88,7 +91,7 @@
 						</div>
 					</div>
 				</div>
-				<?php supCorr();?>
+				<?php pendingpayment(0);?>
 				<button type="submit" name="set" class="btn btn-success" value="on" colspan="2">
 					Generate Email
 				</button>

@@ -408,13 +408,20 @@ function nxtpmtcheck(){
     <?php
 }
 
-function NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote){
+function NxtPmt($nextpmtdate, $nextpmtamt, $pmtnote, $type=0){
     if ($pmtnote == "on") {
+		if($type=0){
         ?>
-        <p>
-            As a friendly reminder, your next scheduled payment is due on <?php echo date_format($nextpmtdate,"l, F jS");?>, in the regular amount of $<?php echo number_format($nextpmtamt,2,".",",");?>.
-        </p>
+			<p>
+				As a friendly reminder, your next scheduled payment is due on <?php echo date_format($nextpmtdate,"l, F jS");?>, in the regular amount of $<?php echo number_format($nextpmtamt,2,".",",");?>.
+			</p>
         <?php
+			
+		}else if($type=1){
+			?>
+			Your next payment is due on <?php echo date_format($nextpmtdate,"l, F jS");?>, in the amount of $<?php echo number_format($nextpmtamt,2,".",",");?>. 
+			<?php
+		}
     }
 }
 
@@ -651,6 +658,9 @@ function pendingpayment($type, $status = "off", $pmtAmt = "", $pmtdate =""){
         }elseif ($type == 4) {
             // Schedule
             $pendingNote = "<p>Keep in mind, the schedule on this email is valid as long as your pending payment from $pmtdate, in the amount of $pmtAmt clears your bank account successfully.</p>";
+        }elseif ($type == 5) {
+            // Schedule
+            $pendingNote = "<p>This is assuming your pending payment from $pmtdate of $pmtAmt was successful.</p>";
         }
     }if ($status == "off") {
         if($type == 0){

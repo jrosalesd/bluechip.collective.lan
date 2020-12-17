@@ -5,7 +5,7 @@
         </h2>
         <font color="red">
             <h5>
-				<b>Template Usage: </b>use this template when generating Lump sum settlements with discount.
+                <b>Template Usage: </b>use this template when generating Lump sum settlements with discount.
 				<br>
 			</h5>
         </font>

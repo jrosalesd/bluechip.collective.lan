@@ -1,5 +1,5 @@
 <?php
-function ResetPass($length=15) {
+function ResetPass($length=10) {
     $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@$%^*()[]=!";
     $charactersLength = strlen($characters);
     $randomString = '';
@@ -302,7 +302,7 @@ function addressupdate($type=0, $street="", $city="", $state="",$zip=""){
             $state_name = $row['state_name'];
         }
         $addessupdate = "<p>Per your request, Spotloan has updated your address to the following: $street, $city, $abbr $zip.</p>";
-        if ($service == No) {
+        if ($service == "No") {
             $addessupdate .= "<p>Please keep in mind, we no longer offer loans in $state_name. We apologize for any inconvenience.</p>";
         }
         

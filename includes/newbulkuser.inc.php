@@ -18,16 +18,18 @@ if (isset($_POST['import'])) {
                 $user_password	= password_hash(mysqli_real_escape_string($conn, $data[6]),PASSWORD_DEFAULT);
                 $user_status = mysqli_real_escape_string($conn, $data[7]);
                 $user_sec_profile = mysqli_real_escape_string($conn, $data[8]);
-                $sql = "INSERT INTO `users`(user_first, user_last, user_shortname, user_email, user_role, user_uid, user_password, user_status, user_sec_profile) VALUES ('$user_first', '$user_last', '$user_shortname', '$user_email', '$user_role', '$user_uid', '$user_password', '$user_status', '$user_sec_profile')";
+                $sql = "INSERT INTO `users`(user_first, user_last, user_shortname, user_email, user_role, user_uid, user_password, user_status, user_sec_profile) 
+                    VALUES ('$user_first', '$user_last', '$user_shortname', '$user_email', '$user_role', '$user_uid', '$user_password', '$user_status', '$user_sec_profile')";
                 mysqli_query($conn, $sql);
             }
             
             fclose($handle);
-            if(is_uploaded_file($_FILES['file']['tmp_name'])){
+            if ( is_uploaded_file ( $_FILES['file']['tmp_name'] ) ) 
+            {
                 header("Location: ../signup.php?msg=Upload successful");
                 exit();
-            }else {
-                header("Location: ../signup.php?msg=Something went wrong, Unable to upload your file ");
+            } else {
+                header ("Location: ../signup.php?msg=Something went wrong, Unable to upload your file" );
                 exit();
             }
             

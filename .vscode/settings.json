@@ -1,3 +1,18 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "b19dx79besr4dzgofo82-mysql.services.clever-cloud.com",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "Spotloan",
+            "database": "b19dx79besr4dzgofo82",
+            "username": "uu9f220rkktl0rpm",
+            "password": "uu9f220rkktl0rpm"
+        }
+    ]
 }
